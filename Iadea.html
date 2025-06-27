@@ -5,236 +5,291 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IADEA Troubleshooting</title>
   <style>
-    :root {
-      --main: #F7941D;
-      --main-light: #fde6c3;
-      --radius: 18px;
-      --progress-height: 7px;
-      --font-base: 17px;
-      --font-lg: 1.45rem;
-      --font-md: 1.07rem;
-      --step-circle: 32px;
-      --btn-height: 50px;
-      --space: 16px;
-      --space-lg: 24px;
-      --space-xl: 34px;
-      --max-width: 410px;
-    }
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0; padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      font-size: var(--font-base);
-      background: linear-gradient(135deg,#F5F5F5,#EDEDED);
-      min-height: 100vh;
-    }
-    body { display:flex; align-items:center; justify-content:center; padding: var(--space-lg);}
-    .container {
-      background:#fff; border-radius: var(--radius);
-      padding: var(--space-lg) var(--space-lg) var(--space-lg) var(--space-lg);
-      width:100%; max-width: var(--max-width);
-      box-shadow:0 10px 28px rgba(0,0,0,0.10);
-      display:flex; flex-direction:column; gap:var(--space-lg);
-      min-height: 480px;
-      margin: var(--space) 0;
-      position:relative;
-    }
-    .progress-area {
-      margin-bottom: var(--space);
-      margin-top: 0;
-      padding-top: 0;
-    }
-    .progress-bar {
-      width: 100%;
-      margin-bottom: 13px;
-      height: var(--progress-height);
-      background: var(--main-light);
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
-    }
-    .progress-bar-inner {
-      height: 100%;
-      background: var(--main);
-      border-radius: 4px;
-      width: 0;
-      transition: width 0.36s cubic-bezier(.4,1.6,.6,1);
-    }
-    .progress-steps {
-      display:flex;
-      justify-content:space-between;
-      align-items: center;
-      gap: 0;
-      width: 100%;
-      margin-bottom: 8px;
-      margin-top: 2px;
-      position: relative;
-      padding: 0 4px;
-    }
-    .progress-step {
-      width: var(--step-circle); height: var(--step-circle);
-      background: #eee; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .99em; font-weight: 600;
-      color: #888; box-shadow: 0 1px 3px #0001;
-      position: relative;
-      z-index: 1;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      border: 2px solid transparent;
-      user-select: none;
-    }
-    .progress-step.active,
-    .progress-step.completed {
-      background: var(--main);
-      color: #fff;
-    }
-    .progress-step.completed {
-      background: var(--main-light);
-      color: var(--main);
-      border: 2px solid var(--main);
-    }
-    .progress-step:not(:last-child)::after {
-      content: "";
-      position: absolute;
-      top: 50%; left: 100%; transform: translateY(-50%);
-      width: calc(100% + 2px);
-      height: 4px;
-      background: var(--main-light);
-      z-index: 0;
-    }
-    .progress-step.completed:not(:last-child)::after {
-      background: var(--main);
-    }
-    .logo img { width:80%; max-width:200px; margin: 0 auto var(--space) auto; display:block; border-radius: 14px;}
-    .heading {
-      font-size: var(--font-lg);
-      font-weight: 700;
-      line-height: 1.18;
-      margin:0 0 var(--space) 0;
-      text-align:center; color:#222;
-      letter-spacing: 0.02em;
-    }
-    .main-player-img {
-      display: flex;
-      justify-content: center;
-      margin-bottom: var(--space);
-    }
-    .main-player-img img {
-      max-width: 95px;
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      background: none;
-      border: none;
-      box-shadow: none;
-      padding: 0;
-      object-fit: contain;
-      display: block;
-      opacity: 0.99;
-      transition: box-shadow .15s;
-    }
-    .intro-text {
-      font-size: 1.05em;
-      color: #444;
-      margin-bottom: var(--space);
-      text-align: center;
-      line-height: 1.5;
-      margin-top: var(--space);
-    }
-    .image-placeholder {
-      width:100%; max-width:148px; aspect-ratio:1/1;
-      margin: 0 auto var(--space) auto;
-      border:2px dashed #e3e3e3;
-      border-radius: var(--radius); display:flex;
-      align-items:center; justify-content:center;
-      color:#bbb; font-size:1.03em;
-      padding: var(--space);
-      background: #fafafa;
-      min-height: 70px;
-    }
-    .image-placeholder img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      object-fit: contain;
-      display: block;
-      background: none;
-      box-shadow: none;
-      border: none;
-      padding: 0;
-    }
-    .question {
-      font-size: var(--font-md);
-      font-weight:600;
-      color:#222;
-      text-align:center;
-      margin:0 0 var(--space) 0;
-      padding: 4px 0;
-      min-height:52px;
-      display:flex; align-items:center; justify-content:center;
-      letter-spacing: 0.01em;
-      line-height: 1.34;
-    }
-    .buttons {
-      display:flex; flex-wrap:wrap; gap:var(--space);
-      justify-content:center;
-      margin-bottom: var(--space);
-      margin-top: 6px;
-    }
-    .buttons button {
-      flex:1 1 auto; min-width:108px;
-      height: var(--btn-height);
-      padding: 0 16px;
-      border:none; border-radius: var(--radius);
-      font-size: var(--font-md);
-      font-weight:600;
-      cursor:pointer;
-      margin-bottom: 0;
-      background: var(--main); color:#fff;
-      transition: background 0.2s, color 0.2s;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .buttons .btn-secondary {
-      background:#f3f3f3; color:#333; border:1px solid #ddd;
-    }
-    .buttons .btn-secondary:hover { background:#eaeaea; }
-    .buttons .btn-primary:hover { background:#e68317; }
-    .back-btn {
-      position: absolute;
-      left: 14px; top: 14px;
-      z-index: 10;
-      width: 38px; height: 38px; font-size:1.25em;
-    }
-    .back-btn.hidden { display:none; }
-    @media (max-width: 600px) {
-      html, body { font-size: 15px; }
-      .container {
-        gap: var(--space);
-        padding: 12px 1.5vw 16px 1.5vw;
-        min-height: 300px;
-        max-width: 99vw;
-      }
-      .progress-bar { height: 6px; }
-      .main-player-img img { max-width: 49vw; }
-      .image-placeholder { max-width: 75vw; padding: 8px;}
-      .logo img { max-width:70vw;}
-      .heading { font-size: 1.09rem; }
-      .question { min-height:38px; font-size: 1em;}
-      .buttons button { min-width:84px; height:38px; padding: 0 6px; font-size:.98em;}
-    }
+:root {
+  --main: #F7941D;
+  --main-light: #fde6c3;
+  --radius: 24px;
+  --progress-height: 9px;
+  --font-base: 17px;
+  --font-lg: 2.35rem;
+  --font-md: 1.16rem;
+  --step-circle: 38px;
+  --btn-height: 54px;
+  --space: 28px;
+  --space-lg: 44px;
+  --container-width: 480px;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: var(--font-base);
+  background: linear-gradient(135deg,#F5F5F5 0%,#ECECEC 100%);
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+body { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  padding: var(--space-lg); 
+  min-height: 100vh;
+}
+.container {
+  background: #fff; 
+  border-radius: var(--radius);
+  padding: var(--space-lg);
+  width: var(--container-width);
+  display: flex; 
+  flex-direction: column;
+  min-height: 530px;
+  margin: var(--space) 0;
+  position: relative;
+  gap: 0;
+  overflow: hidden;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+  margin-top: 12px;
+  padding: 24px 0 6px 0;
+}
+.logo img { 
+  width: 98%; 
+  max-width: 320px; 
+  border-radius: 18px;
+  display: block;
+  /* no shadow */
+}
+.heading {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  line-height: 1.14;
+  margin: 18px 0 22px 0;
+  text-align: center; color: #222;
+  letter-spacing: 0.01em;
+}
+#main-content {
+  margin-bottom: var(--space-lg);
+  margin-top: var(--space);
+}
+.main-player-img {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space);
+}
+.main-player-img img {
+  max-width: 142px;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  background: none;
+  border: none;
+  /* no shadow */
+  padding: 0;
+  object-fit: contain;
+  display: block;
+  opacity: 0.99;
+}
+.intro-text {
+  font-size: 1.23em;
+  color: #444;
+  margin-bottom: var(--space);
+  text-align: center;
+  line-height: 1.5;
+  margin-top: var(--space);
+}
+.image-placeholder {
+  width: 100%; max-width: 178px; aspect-ratio: 1/1;
+  margin: 0 auto var(--space) auto;
+  border: 2.5px dashed #e3e3e3;
+  border-radius: var(--radius); display: flex;
+  align-items: center; justify-content: center;
+  color: #bbb; font-size: 1.14em;
+  padding: var(--space);
+  background: #fafafa;
+  min-height: 96px;
+}
+.image-placeholder img {
+  width: 100%;
+  max-width: 140px;
+  max-height: 140px;
+  height: auto;
+  border-radius: 14px;
+  object-fit: contain;
+  display: block;
+  background: none;
+  /* no shadow */
+  border: none;
+  padding: 0;
+  margin: 0 auto;
+}
+.question {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: #222;
+  text-align: center;
+  margin: 16px 0 var(--space) 0;
+  padding: 2px 0 0 0;
+  min-height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  letter-spacing: 0.01em;
+  line-height: 1.38;
+}
+.buttons {
+  display: flex; flex-wrap: wrap; gap: var(--space);
+  justify-content: center;
+  margin-bottom: 0;
+  margin-top: 12px;
+}
+.buttons button {
+  flex: 1 1 auto; min-width: 128px;
+  height: var(--btn-height);
+  padding: 0 26px;
+  border: none; border-radius: var(--radius);
+  font-size: var(--font-md);
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 0;
+  background: var(--main); color: #fff;
+  transition: background 0.2s, color 0.2s;
+  display: flex; align-items: center; justify-content: center;
+  /* no shadow */
+}
+.buttons .btn-secondary {
+  background: #f3f3f3; color: #333; border: 1px solid #ddd;
+}
+.buttons .btn-secondary:hover { background: #eaeaea; }
+.buttons .btn-primary:hover { background: #e68317; }
+.back-btn {
+  position: absolute;
+  left: 34px;
+  top: 36px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--main-light);
+  color: var(--main);
+  border-radius: 99px;
+  border: none;
+  font-size: 1.1em;
+  font-weight: 600;
+  padding: 12px 28px 12px 19px;
+  /* no shadow */
+  cursor: pointer;
+  outline: none;
+  transition: background 0.15s;
+  z-index: 12;
+}
+.back-btn:hover {
+  background: #fbd49c;
+}
+.progress-area {
+  width: 100%;
+  margin-top: 38px; /* adds breathing room between page numbers and button */
+  margin-bottom: 0;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.progress-bar {
+  width: 100%;
+  margin-bottom: 0;
+  height: var(--progress-height);
+  background: var(--main-light);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.progress-bar-inner {
+  height: 100%;
+  background: var(--main);
+  border-radius: 4px;
+  width: 0;
+  transition: width 0.36s cubic-bezier(.4,1.6,.6,1);
+}
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  margin-top: 24px; /* more space above page numbers */
+  margin-bottom: 0;
+  position: relative;
+  padding: 0 4px;
+}
+.progress-step {
+  width: var(--step-circle); height: var(--step-circle);
+  background: #eee; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.13em; font-weight: 600;
+  color: #888; /* no shadow */
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  border: 2.5px solid transparent;
+  user-select: none;
+}
+.progress-step.active,
+.progress-step.completed {
+  background: var(--main);
+  color: #fff;
+}
+.progress-step.completed {
+  background: var(--main-light);
+  color: var(--main);
+  border: 2.5px solid var(--main);
+}
+.progress-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 100%; transform: translateY(-50%);
+  width: calc(100% + 2px);
+  height: 5px;
+  background: var(--main-light);
+  z-index: 0;
+}
+.progress-step.completed:not(:last-child)::after {
+  background: var(--main);
+}
+@media (max-width: 700px) {
+  html, body { font-size: 16px; }
+  .container {
+    padding: 7vw 2vw 7vw 2vw;
+    min-height: 350px;
+    width: 100vw;
+    max-width: 100vw;
+  }
+  .progress-bar { height: 8px; }
+  .main-player-img img { max-width: 62vw; }
+  .image-placeholder { max-width: 78vw; padding: 16px;}
+  .logo img { max-width: 98vw;}
+  .heading { font-size: 1.26rem; }
+  .question { min-height:34px; font-size: 1.04em;}
+  .buttons button { min-width:84px; height:46px; padding: 0 10px; font-size:.99em;}
+  .back-btn { left: 12px; top: 18px; padding: 10px 18px 10px 11px; font-size:1em;}
+  .progress-area { margin-top: 28px; }
+  .progress-steps { margin-top: 20px;}
+}
   </style>
 </head>
 <body>
   <div class="container">
+    <button id="back-btn" class="back-btn" style="display:none;" type="button" onclick="back()">&larr; Back</button>
+    <div class="logo">
+      <img src="https://i.imgur.com/fDv6d8s.png" alt="BFA Digital Logo" onerror="this.style.display='none'">
+    </div>
+    <h1 class="heading">IADEA Troubleshoot</h1>
+    <div class="progress-bar"><div class="progress-bar-inner" id="progress-bar-inner"></div></div>
+    <div id="main-content"></div>
     <div class="progress-area" id="progress-area" style="display:none">
-      <div class="progress-bar"><div class="progress-bar-inner" id="progress-bar-inner"></div></div>
       <div class="progress-steps" id="progress-steps"></div>
     </div>
-    <button id="back-btn" class="back-btn">&#8592;</button>
-    <img class="logo" src="https://i.imgur.com/fDv6d8s.png" alt="BFA Digital Logo" onerror="this.style.display='none'">
-    <h1 class="heading">IADEA Troubleshoot</h1>
-    <div id="main-content"></div>
   </div>
   <script>
     const steps = [
@@ -249,53 +304,53 @@
         buttons: [{ text: "Start Troubleshooting", next: 1 }]
       },
       { 
-        question: 'Is the internet connection stable?', 
-        image: 'https://i.imgur.com/BnWmGbS.png', // AI: router, wifi, checkmark
+        question: 'Is the internet connection stable?',
+        image: '/mnt/data/A_flat-style_digital_illustration_depicts_a_Wi-Fi_.png',
         buttons: [{ text: 'Yes', next: 2 }, { text: 'No', next: 9 }] 
       },
       { 
-        question: 'Is the TV turned on?', 
-        image: 'https://i.imgur.com/YGj1pUw.png', // AI: tv, power icon
+        question: 'Is the TV turned on?',
+        image: '/mnt/data/A_flat-style_digital_vector_illustration_features_.png',
         buttons: [{ text: 'Yes', next: 3 }, { text: 'No', next: 9 }] 
       },
       { 
-        question: 'Is the IADEA player powered and has a green LED?', 
-        image: 'https://i.imgur.com/OzEt36u.png', // AI: digital player, green LED
+        question: 'Is the IADEA player powered and has a green LED?',
+        image: '/mnt/data/A_digital_photograph_features_an_IAdea_MBR-1100_me.png',
         buttons: [{ text: 'Yes', next: 4 }, { text: 'No', next: 9 }] 
       },
       { 
         question: 'Unplug the IADEA player for 1 minute, then plug it back in.<br>Did it fix the issue?', 
-        image: 'https://i.imgur.com/W7UR3Ed.png', // AI: unplug, clock
+        image: '', 
         buttons: [{ text: 'Yes', next: 10 }, { text: 'No', next: 5 }] 
       },
       { 
         question: 'Is the HDMI cable connected properly?', 
-        image: 'https://i.imgur.com/fvQ3gOi.png', // AI: hdmi plug
+        image: '', 
         buttons: [{ text: 'Yes', next: 6 }, { text: 'No', next: 9 }] 
       },
       { 
         question: 'Do you see any error message on screen?', 
-        image: 'https://i.imgur.com/FikZk5c.png', // AI: error on screen
+        image: '', 
         buttons: [{ text: 'Yes', next: 7 }, { text: 'No', next: 8 }] 
       },
       { 
         question: 'Try restarting the TV.<br>Did that fix it?', 
-        image: 'https://i.imgur.com/BkDJn4R.png', // AI: tv remote, refresh
+        image: '', 
         buttons: [{ text: 'Yes', next: 10 }, { text: 'No', next: 8 }] 
       },
       { 
         question: 'Please wait 5 minutes to see if content appears.', 
-        image: 'https://i.imgur.com/pPbEwDl.png', // AI: clock, tv loading
+        image: '', 
         buttons: [{ text: 'It worked!', next: 10 }, { text: 'Still not working', next: 9 }] 
       },
       { 
         question: 'Contact support at <b>(647) 209-0519</b>.',
-        image: 'https://i.imgur.com/Tz5RmIc.png', // AI: support phone, speech
+        image: '', 
         buttons: [{ text: 'Restart', next: 0 }]
       },
       { 
         question: 'Great! Your system is now working.',
-        image: 'https://i.imgur.com/X2FWPku.png', // AI: happy, working TV
+        image: '', 
         buttons: [{ text: 'Restart', next: 0 }]
       }
     ];
@@ -303,16 +358,20 @@
     const mainContent = document.getElementById('main-content');
     const progressArea = document.getElementById('progress-area');
     const ps = document.getElementById('progress-steps');
-    const bb = document.getElementById('back-btn');
     const pbi = document.getElementById('progress-bar-inner');
+    const backBtn = document.getElementById('back-btn');
     const total = steps.length - 1;
     function render(i) {
       const step = steps[i];
-      progressArea.style.display = step.intro ? "none" : "block";
+      // Show/hide top bar and bottom progress
+      document.querySelector('.progress-bar').style.display = step.intro ? "none" : "block";
+      progressArea.style.display = step.intro ? "none" : "flex";
+      // Back button top left
+      backBtn.style.display = (!step.intro && i !== 0) ? "flex" : "none";
       if (step.intro) {
         mainContent.innerHTML = `
           ${step.text}
-          <div class="buttons" style="margin-top:32px">
+          <div class="buttons" style="margin-top:38px">
             ${step.buttons.map(b => `<button class="btn-primary" onclick="go(${b.next})">${b.text}</button>`).join('')}
           </div>`;
       } else {
@@ -323,6 +382,7 @@
             ${step.buttons.map(b => `<button class="btn-primary" onclick="go(${b.next})">${b.text}</button>`).join('')}
           </div>`;
       }
+      // Update progress
       if (!step.intro) {
         const pct = ((i-1) / (total-1)) * 100;
         pbi.style.width = pct + "%";
@@ -333,12 +393,21 @@
           return `<div class="${cl}" onclick="go(${j+1})">${j + 1}</div>`;
         }).join('');
       }
-      bb.classList.toggle('hidden', i === 0);
     }
-    function go(i) { if (i >= 0 && i < steps.length) { historyStack.push(current); current = i; render(i); } }
-    function back() { if (historyStack.length) go(historyStack.pop()); }
+    function go(i) { 
+      if (i >= 0 && i < steps.length) { 
+        if(current !== i) historyStack.push(current); 
+        current = i; 
+        render(i); 
+      } 
+    }
+    function back() { 
+      if (historyStack.length) {
+        current = historyStack.pop();
+        render(current);
+      }
+    }
     window.go = go; window.back = back;
-    bb.onclick = back;
     render(0);
   </script>
 </body>
