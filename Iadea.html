@@ -102,15 +102,12 @@ body {
   margin-top: var(--space);
 }
 .image-placeholder {
-  width: 100%; max-width: 178px; aspect-ratio: 1/1;
+  width: 100%; max-width: 300px; aspect-ratio: 1/1;
   margin: 0 auto var(--space) auto;
-  border: 2.5px dashed #e3e3e3;
   border-radius: var(--radius); display: flex;
   align-items: center; justify-content: center;
-  color: #bbb; font-size: 1.14em;
   padding: var(--space);
-  background: #fafafa;
-  min-height: 96px;
+  min-height: 100px;
 }
 .image-placeholder img {
   width: 100%;
@@ -285,8 +282,9 @@ body {
       <img src="https://i.imgur.com/fDv6d8s.png" alt="BFA Digital Logo" onerror="this.style.display='none'">
     </div>
     <h1 class="heading">IADEA Troubleshoot</h1>
-    <div class="progress-bar"><div class="progress-bar-inner" id="progress-bar-inner"></div></div>
     <div id="main-content"></div>
+    <div class="progress-bar"><div class="progress-bar-inner" id="progress-bar-inner"></div></div>
+    
     <div class="progress-area" id="progress-area" style="display:none">
       <div class="progress-steps" id="progress-steps"></div>
     </div>
@@ -310,47 +308,47 @@ body {
       },
       { 
         question: 'Is the TV turned on?',
-        image: '/mnt/data/A_flat-style_digital_vector_illustration_features_.png',
+        image: 'https://media.lordicon.com/icons/wired/outline/1734-tv-turn-on.gif',
         buttons: [{ text: 'Yes', next: 3 }, { text: 'No', next: 9 }] 
       },
       { 
         question: 'Is the IADEA player powered and has a green LED?',
-        image: '/mnt/data/A_digital_photograph_features_an_IAdea_MBR-1100_me.png',
+        image: 'https://media.lordicon.com/icons/wired/outline/2480-powerbank.gif',
         buttons: [{ text: 'Yes', next: 4 }, { text: 'No', next: 9 }] 
       },
       { 
         question: 'Unplug the IADEA player for 1 minute, then plug it back in.<br>Did it fix the issue?', 
-        image: '', 
+        image: 'https://media.lordicon.com/icons/wired/outline/452-plug-in-electricity.gif', 
         buttons: [{ text: 'Yes', next: 10 }, { text: 'No', next: 5 }] 
       },
       { 
         question: 'Is the HDMI cable connected properly?', 
-        image: '', 
+        image: 'https://media.lordicon.com/icons/wired/outline/1311-cable-network.gif', 
         buttons: [{ text: 'Yes', next: 6 }, { text: 'No', next: 9 }] 
       },
       { 
         question: 'Do you see any error message on screen?', 
-        image: '', 
+        image: 'https://media.lordicon.com/icons/wired/outline/2592-fail.gif', 
         buttons: [{ text: 'Yes', next: 7 }, { text: 'No', next: 8 }] 
       },
       { 
         question: 'Try restarting the TV.<br>Did that fix it?', 
-        image: '', 
+        image: 'https://media.lordicon.com/icons/wired/outline/2505-reset-text.gif', 
         buttons: [{ text: 'Yes', next: 10 }, { text: 'No', next: 8 }] 
       },
       { 
         question: 'Please wait 5 minutes to see if content appears.', 
-        image: '', 
+        image: 'https://media.lordicon.com/icons/wired/outline/472-hourglass.gif', 
         buttons: [{ text: 'It worked!', next: 10 }, { text: 'Still not working', next: 9 }] 
       },
       { 
         question: 'Contact support at <b>(647) 209-0519</b>.',
-        image: '', 
+        image: 'https://media.lordicon.com/icons/wired/outline/682-male-customer-service.gif', 
         buttons: [{ text: 'Restart', next: 0 }]
       },
       { 
         question: 'Great! Your system is now working.',
-        image: '', 
+        image: 'https://media.lordicon.com/icons/wired/outline/1736-smart-tv-layout-interface.gif', 
         buttons: [{ text: 'Restart', next: 0 }]
       }
     ];
@@ -412,3 +410,4 @@ body {
   </script>
 </body>
 </html>
+
