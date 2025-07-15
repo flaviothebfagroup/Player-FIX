@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
   <title>IADEA Troubleshooting</title>
   <style>
 :root {
@@ -84,18 +85,19 @@ body {
   margin-bottom: var(--space);
 }
 .main-player-img img {
-  max-width: 400px;
-  width: 500%;
+  width: 100%;
+  max-width: 100%;
   height: auto;
   border-radius: 16px;
   background: none;
   border: none;
-  /* no shadow */
   padding: 0;
   object-fit: contain;
   display: block;
+  margin: 0 auto;
   opacity: 0.99;
 }
+
 .intro-text {
   font-size: 1.23em;
   color: #444;
