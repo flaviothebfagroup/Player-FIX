@@ -3,82 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
   <title>IADEA Troubleshooting</title>
   <style>
 :root {
   --main: #F7941D;
   --main-light: #fde6c3;
-  --radius: 24px;
+  --radius: 22px;
+  --shadow: 0 2px 32px 0 #0001, 0 0.5px 1px #00000008;
   --progress-height: 9px;
-  --font-base: 17px;
-  --font-lg: 2.35rem;
-  --font-md: 1.16rem;
+  --font-base: 18px;
+  --font-lg: 2.1rem;
+  --font-md: 1.1rem;
   --step-circle: 38px;
-  --btn-height: 54px;
-  --space: 28px;
-  --space-lg: 44px;
-  --container-width: 600px;
+  --btn-height: 50px;
+  --space: 30px;
+  --container-width: 440px;
 }
 * { box-sizing: border-box; }
 html, body {
   margin: 0; padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   font-size: var(--font-base);
-  background: linear-gradient(135deg,#F5F5F5 0%,#ECECEC 100%);
+  background: radial-gradient(ellipse at top left, #fef7f1 60%, #f8fafb 100%);
   min-height: 100vh;
   width: 100vw;
   overflow-x: hidden;
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
 }
 body { 
-  display: flex; 
+  min-height: 100vh; width: 100vw;
+  display: flex;
   align-items: center; 
-  justify-content: center; 
-  padding: var(--space-lg); 
-  min-height: 100vh;
+  justify-content: center;
+  background: inherit;
 }
 .container {
-  background: #fff; 
+  background: #fff;
   border-radius: var(--radius);
-  padding: var(--space-lg);
-  width: 100%;
+  box-shadow: var(--shadow);
   max-width: var(--container-width);
-  display: flex; 
+  width: 100%;
+  margin: auto;
+  padding: var(--space) clamp(18px, 5vw, 38px);
+  display: flex;
   flex-direction: column;
-  min-height: 600px;
-  margin: var(--space) auto;
+  align-items: stretch;
+  min-height: 540px;
+  max-height: 98vh;
+  overflow: hidden;
   position: relative;
   gap: 0;
-  overflow: hidden;
-  box-sizing: border-box;
+  z-index: 2;
 }
 
 .logo {
   display: flex;
   justify-content: center;
-  margin-bottom: 24px;
-  margin-top: 12px;
-  padding: 24px 0 6px 0;
+  align-items: center;
+  margin-bottom: 12px;
+  margin-top: 0;
+  padding: 0;
 }
 .logo img { 
-  width: 100%; 
-  max-width: 320px; 
-  border-radius: 18px;
+  width: 88%; 
+  max-width: 188px; 
+  border-radius: 14px;
   display: block;
-  /* no shadow */
+  filter: drop-shadow(0 2px 12px #fff7);
 }
+
 .heading {
   font-size: var(--font-lg);
   font-weight: 700;
-  line-height: 1.14;
-  margin: 18px 0 22px 0;
-  text-align: center; color: #222;
+  line-height: 1.13;
+  margin: 8px 0 18px 0;
+  text-align: center; color: #20232a;
   letter-spacing: 0.01em;
+  text-shadow: 0 1px 0 #fff;
 }
+
 #main-content {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space);
   margin-top: var(--space);
+  flex: 1 1 auto;
 }
+
 .main-player-img {
   display: flex;
   justify-content: center;
@@ -86,132 +96,193 @@ body {
 }
 .main-player-img img {
   width: 100%;
-  max-width: 100%;
+  max-width: 320px;
+  min-width: 0;
   height: auto;
-  border-radius: 16px;
-  background: none;
-  border: none;
-  padding: 0;
-  object-fit: contain;
+  border-radius: 0;
+  box-shadow: none;
   display: block;
   margin: 0 auto;
-  opacity: 0.99;
+  opacity: 1;
+  background: none;
+  border: none;
 }
 
 .intro-text {
-  font-size: 1.23em;
+  font-size: 1.16em;
   color: #444;
   margin-bottom: var(--space);
   text-align: center;
-  line-height: 1.5;
+  line-height: 1.47;
   margin-top: var(--space);
 }
+
+/* BIG image, NO border/background, for question step */
 .image-placeholder {
-  width: 130%; max-width: 350px; aspect-ratio: 1/1;
+  width: 100%;
+  max-width: 320px;
+  min-width: 0;
+  aspect-ratio: 1/1;
   margin: 0 auto var(--space) auto;
-  border-radius: var(--radius); display: flex;
-  align-items: center; justify-content: center;
-  padding: var(--space);
-  min-height: 100px;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  padding: 0;
+  background: none;
+  box-shadow: none;
 }
 .image-placeholder img {
-  width: 130%;
-  max-width: 250px;
-  max-height: 250px;
+  width: 100%;
+  max-width: 320px;
+  max-height: 320px;
+  min-width: 0;
   height: auto;
-  border-radius: 14px;
+  border-radius: 0;
   object-fit: contain;
   display: block;
   background: none;
-  /* no shadow */
   border: none;
-  padding: 0;
   margin: 0 auto;
+  box-shadow: none;
 }
+
+.step-top, .step-bottom {
+  text-align: center;
+  font-size: 1.06em;
+  margin: 0 0 15px 0;
+  color: #333;
+  font-weight: 500;
+  line-height: 1.32;
+}
+.step-bottom { margin: 18px 0 15px 0; color: #222; }
+
 .question {
   font-size: var(--font-md);
-  font-weight: 700;
-  color: #222;
+  font-weight: 600;
+  color: #20232a;
   text-align: center;
-  margin: 16px 0 var(--space) 0;
-  padding: 2px 0 0 0;
-  min-height: 42px;
+  margin: 12px 0 var(--space) 0;
+  padding: 0;
+  min-height: 34px;
   display: flex; align-items: center; justify-content: center;
   letter-spacing: 0.01em;
-  line-height: 1.38;
+  line-height: 1.32;
 }
 .buttons {
-  display: flex; flex-wrap: wrap; gap: var(--space);
+  display: flex; flex-wrap: wrap; gap: 14px;
   justify-content: center;
   margin-bottom: 0;
-  margin-top: 12px;
+  margin-top: 4px;
 }
 .buttons button {
-  flex: 1 1 auto; min-width: 128px;
+  flex: 1 1 98px;
+  min-width: 88px;
   height: var(--btn-height);
-  padding: 0 26px;
-  border: none; border-radius: var(--radius);
+  padding: 0 18px;
+  border: none; border-radius: 14px;
   font-size: var(--font-md);
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 0;
   background: var(--main); color: #fff;
-  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 8px #f7941d14;
+  transition: background 0.2s, color 0.2s, box-shadow 0.25s;
   display: flex; align-items: center; justify-content: center;
-  /* no shadow */
+  outline: none;
+  letter-spacing: .01em;
+  will-change: background, color, box-shadow;
 }
 .buttons .btn-secondary {
   background: #f3f3f3; color: #333; border: 1px solid #ddd;
+  box-shadow: 0 2px 8px #ccc7;
 }
 .buttons .btn-secondary:hover { background: #eaeaea; }
-.buttons .btn-primary:hover { background: #e68317; }
+.buttons .btn-primary:hover { background: #e68317; box-shadow: 0 4px 16px #f7941d29;}
 .back-btn {
   position: absolute;
-  left: 34px;
-  top: 36px;
+  left: 18px;
+  top: 18px;
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 6px;
   background: var(--main-light);
   color: var(--main);
   border-radius: 99px;
   border: none;
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 600;
-  padding: 12px 28px 12px 19px;
-  /* no shadow */
+  padding: 10px 22px 10px 15px;
   cursor: pointer;
   outline: none;
-  transition: background 0.15s;
+  transition: background 0.15s, color 0.15s;
   z-index: 12;
+  box-shadow: 0 1px 4px #f7941d11;
 }
 .back-btn:hover {
   background: #fbd49c;
+  color: #d87104;
+}
+
+/* Progress bar and page number outside the card */
+.progress-page {
+  width: 100vw;
+  max-width: none;
+  position: fixed;
+  left: 0;
+  bottom: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  pointer-events: none;
+}
+.progress-page-number {
+  font-size: 1.12em;
+  font-weight: 600;
+  color: #f7941d;
+  background: #fffdfaee;
+  border-radius: 999px;
+  box-shadow: 0 1px 6px #0001;
+  padding: 6px 20px 6px 20px;
+  letter-spacing: 0.02em;
+  margin: 0 0 8px 0;
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 700px) {
+  .progress-page { bottom: 22px; }
+  .progress-page-number { font-size: 1em; padding: 4px 13px; }
+}
+
+.progress-bar {
+  width: 100vw;
+  max-width: none;
+  left: 0;
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
+  margin: 0;
+  border-radius: 0;
+  background: var(--main-light);
+  height: var(--progress-height);
+}
+.progress-bar-inner {
+  height: 100%;
+  background: var(--main);
+  border-radius: 0;
+  width: 0;
+  transition: width 0.36s cubic-bezier(.4,1.6,.6,1);
 }
 .progress-area {
   width: 100%;
-  margin-top: 10px; /* adds breathing room between page numbers and button */
+  margin-top: 5px;
   margin-bottom: 0;
   padding-top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.progress-bar {
-  width: 100%;
-  margin-bottom: 0;
-  height: var(--progress-height);
-  background: var(--main-light);
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-.progress-bar-inner {
-  height: 100%;
-  background: var(--main);
-  border-radius: 4px;
-  width: 0;
-  transition: width 0.36s cubic-bezier(.4,1.6,.6,1);
 }
 .progress-steps {
   display: flex;
@@ -219,22 +290,22 @@ body {
   align-items: center;
   gap: 0;
   width: 100%;
-  margin-top: 24px; /* more space above page numbers */
+  margin-top: 14px;
   margin-bottom: 0;
   position: relative;
-  padding: 0 4px;
+  padding: 0 2px;
 }
 .progress-step {
   width: var(--step-circle); height: var(--step-circle);
   background: #eee; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.13em; font-weight: 600;
-  color: #888; /* no shadow */
+  font-size: 1em; font-weight: 600;
+  color: #888;
   position: relative;
   z-index: 1;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
-  border: 2.5px solid transparent;
+  border: 2px solid transparent;
   user-select: none;
 }
 .progress-step.active,
@@ -245,40 +316,60 @@ body {
 .progress-step.completed {
   background: var(--main-light);
   color: var(--main);
-  border: 2.5px solid var(--main);
+  border: 2px solid var(--main);
 }
 .progress-step:not(:last-child)::after {
   content: "";
   position: absolute;
   top: 50%; left: 100%; transform: translateY(-50%);
   width: calc(100% + 2px);
-  height: 5px;
+  height: 4px;
   background: var(--main-light);
   z-index: 0;
 }
 .progress-step.completed:not(:last-child)::after {
   background: var(--main);
 }
-@media (max-width: 700px) {
-  html, body { font-size: 16px; }
-    .container {
-    padding: 6vw 4vw;
-    min-height: 100vh;
-    width: 100%;
-    max-width: 100%;
-    border-radius: 20;
-  }
 
-  .progress-bar { height: 10px; }
-  .main-player-img img { max-width: 72vw; }
-  .image-placeholder { max-width: 78vw; padding: 16px;}
-  .logo img { max-width: 98vw;}
-  .heading { font-size: 1.26rem; }
-  .question { min-height:34px; font-size: 1.04em;}
-  .buttons button { min-width:84px; height:46px; padding: 0 10px; font-size:.99em;}
-  .back-btn { left: 12px; top: 18px; padding: 10px 18px 10px 11px; font-size:1em;}
-  .progress-area { margin-top: 28px; }
-  .progress-steps { margin-top: 20px;}
+/* FULL MOBILE EXPERIENCE */
+@media (max-width: 650px) {
+  :root { --container-width: 99vw; }
+  .container {
+    min-width: 0;
+    max-width: 100vw;
+    border-radius: 0 0 16px 16px;
+    min-height: 98dvh;
+    height: 98dvh;
+    padding: 20px 0 10px 0;
+    box-shadow: none;
+    overflow-y: auto;
+  }
+  .logo img, .main-player-img img, .image-placeholder, .image-placeholder img {
+    max-width: 97vw;
+    min-width: 0;
+    width: 95vw;
+    max-height: 320px;
+  }
+  .image-placeholder,
+  .main-player-img {
+    min-height: 160px;
+    padding: 0;
+  }
+  .heading { font-size: 1.09rem; }
+  .question { min-height:22px; font-size: .97em;}
+  .buttons button { min-width:88px; height:37px; padding: 0 7px; font-size:.93em;}
+  .back-btn { left: 6px; top: 6px; padding: 7px 13px 7px 9px; font-size:.9em;}
+  .progress-area { margin-top: 8px; }
+  .progress-steps { margin-top: 6px;}
+  .progress-bar {
+    height: var(--progress-height);
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 375px) {
+  .logo img, .main-player-img img, .image-placeholder, .image-placeholder img { max-width: 99vw; }
+  .container { border-radius: 0;}
 }
   </style>
 </head>
@@ -290,12 +381,9 @@ body {
     </div>
     <h1 class="heading">IADEA Troubleshoot</h1>
     <div id="main-content"></div>
-    <div class="progress-bar"><div class="progress-bar-inner" id="progress-bar-inner"></div></div>
-    
-    <div class="progress-area" id="progress-area" style="display:none">
-      <div class="progress-steps" id="progress-steps"></div>
-    </div>
   </div>
+  <div id="progress-page" class="progress-page"></div>
+  <div class="progress-bar"><div class="progress-bar-inner" id="progress-bar-inner"></div></div>
   <script>
     const steps = [
       { intro: true, 
@@ -309,70 +397,79 @@ body {
         buttons: [{ text: "Start Troubleshooting", next: 1 }]
       },
       { 
-        question: 'Was the internet changed?',
+        topText: "Was the internet changed?",
         image: 'https://media.lordicon.com/icons/wired/outline/745-wifi-connection.gif',
+        bottomText: "",
         buttons: [{ text: 'Yes', next: 9 }, { text: 'No', next: 2 }] 
       },
       { 
-        question: 'Is the TV turned on?',
+        topText: "Is the TV turned on?",
         image: 'https://media.lordicon.com/icons/wired/outline/1734-tv-turn-on.gif',
+        bottomText: "",
         buttons: [{ text: 'Yes', next: 3 }, { text: 'No', next: 9 }] 
       },
       { 
-        question: 'Is the IADEA player powered and has a green LED?',
+        topText: "Is the IADEA player powered and has a green LED?",
         image: 'https://i.imgur.com/J13LMrc.gif',
+        bottomText: "",
         buttons: [{ text: 'Yes', next: 4 }, { text: 'No', next: 9 }] 
       },
       { 
-        question: 'Unplug the IADEA player for 1 minute, then plug it back in.<br>Did it fix the issue?', 
-        image: 'https://i.imgur.com/35gQgop.gif', 
+        topText: "Unplug the IADEA player for 1 minute, then plug it back in.",
+        image: 'https://i.imgur.com/Vb0pqwS.gif', 
+        bottomText: "Did it fix the issue?",
         buttons: [{ text: 'Yes', next: 10 }, { text: 'No', next: 5 }] 
       },
       { 
-        question: 'Is the HDMI cable connected properly?', 
-        image: 'https://media.lordicon.com/icons/wired/outline/1311-cable-network.gif', 
+        topText: "Is the HDMI cable connected properly?", 
+        image: 'https://i.imgur.com/35gQgop.gif', 
+        bottomText: "",
         buttons: [{ text: 'Yes', next: 6 }, { text: 'No', next: 9 }] 
       },
       { 
-        question: 'Do you see any error message on screen?', 
+        topText: "Do you see any error message on screen?", 
         image: 'https://media.lordicon.com/icons/wired/outline/2592-fail.gif', 
+        bottomText: "",
         buttons: [{ text: 'Yes', next: 7 }, { text: 'No', next: 8 }] 
       },
       { 
-        question: 'Try restarting the TV.<br>Did that fix it?', 
+        topText: "Try restarting the TV.",
         image: 'https://media.lordicon.com/icons/wired/outline/2505-reset-text.gif', 
+        bottomText: "Did that fix it?",
         buttons: [{ text: 'Yes', next: 10 }, { text: 'No', next: 8 }] 
       },
       { 
-        question: 'Please wait 5 minutes to see if content appears.', 
+        topText: "Please wait 5 minutes to see if content appears.", 
         image: 'https://media.lordicon.com/icons/wired/outline/472-hourglass.gif', 
+        bottomText: "",
         buttons: [{ text: 'It worked!', next: 10 }, { text: 'Still not working', next: 9 }] 
       },
       { 
-        question: 'Contact support at <b>(647) 209-0519</b>.',
+        topText: "Contact support at <b>(647) 209-0519</b>.",
         image: 'https://media.lordicon.com/icons/wired/outline/682-male-customer-service.gif', 
+        bottomText: "",
         buttons: [{ text: 'Restart', next: 0 }]
       },
       { 
-        question: 'Great! Your system is now working.',
+        topText: "Great! Your system is now working.",
         image: 'https://media.lordicon.com/icons/wired/outline/1736-smart-tv-layout-interface.gif', 
+        bottomText: "",
         buttons: [{ text: 'Restart', next: 0 }]
       }
     ];
     let current = 0, historyStack = [];
     const mainContent = document.getElementById('main-content');
     const progressArea = document.getElementById('progress-area');
-    const ps = document.getElementById('progress-steps');
     const pbi = document.getElementById('progress-bar-inner');
     const backBtn = document.getElementById('back-btn');
-    const total = steps.length - 1;
+    const totalSteps = steps.length - 1;
+
     function render(i) {
       const step = steps[i];
-      // Show/hide top bar and bottom progress
       document.querySelector('.progress-bar').style.display = step.intro ? "none" : "block";
-      progressArea.style.display = step.intro ? "none" : "flex";
-      // Back button top left
       backBtn.style.display = (!step.intro && i !== 0) ? "flex" : "none";
+
+      // Main content rendering
       if (step.intro) {
         mainContent.innerHTML = `
           ${step.text}
@@ -381,24 +478,30 @@ body {
           </div>`;
       } else {
         mainContent.innerHTML = `
-          <div class="image-placeholder">${step.image ? `<img src="${step.image}" alt="">` : 'Image'}</div>
-          <div class="question">${step.question}</div>
+          ${step.topText ? `<div class="step-top">${step.topText}</div>` : ""}
+          <div class="image-placeholder">
+            ${step.image ? `<img src="${step.image}" alt="">` : ''}
+          </div>
+          ${step.bottomText ? `<div class="step-bottom">${step.bottomText}</div>` : ""}
           <div class="buttons">
             ${step.buttons.map(b => `<button class="btn-primary" onclick="go(${b.next})">${b.text}</button>`).join('')}
           </div>`;
       }
-      // Update progress
+
+      // Page number with progress bar at bottom
       if (!step.intro) {
-        const pct = ((i-1) / (total-1)) * 100;
+        const page = i; // steps[0] is intro
+        let progressStepNum = (page > 0 && page < steps.length) ? page : 1;
+        document.getElementById('progress-page').innerHTML = 
+          `<span class="progress-page-number">Step ${progressStepNum} of ${totalSteps}</span>`;
+        // Progress bar width
+        const pct = ((i-1) / (totalSteps-1)) * 100;
         pbi.style.width = pct + "%";
-        ps.innerHTML = steps.slice(1).map((_, j) => {
-          let cl = "progress-step";
-          if (j < i-1) cl += " completed";
-          if (j === i-1) cl += " active";
-          return `<div class="${cl}" onclick="go(${j+1})">${j + 1}</div>`;
-        }).join('');
+      } else {
+        document.getElementById('progress-page').innerHTML = "";
       }
     }
+
     function go(i) { 
       if (i >= 0 && i < steps.length) { 
         if(current !== i) historyStack.push(current); 
@@ -417,4 +520,3 @@ body {
   </script>
 </body>
 </html>
-
