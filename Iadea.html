@@ -14,10 +14,11 @@
   --font-base: 19px;
   --font-lg: 2.25rem;
   --font-md: 1.16rem;
-  --btn-height: 58px;
+  --btn-height: 56px;
   --container-width: 470px;
 }
 
+/* Base and body */
 html, body {
   margin: 0; padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
@@ -30,35 +31,36 @@ html, body {
 body { 
   min-height: 100vh; width: 100vw;
   display: flex;
-  align-items: center; 
+  align-items: flex-start; 
   justify-content: center;
   position: relative;
+  flex-direction: column;
 }
 
-/* LOGO: top center above the card */
+/* LOGO: just image, no box */
 .top-logo {
-  position: absolute;
-  left: 50%;
-  top: 30px;
-  transform: translateX(-50%);
-  z-index: 40;
-  background: #fff;
-  border-radius: 18px;
-  padding: 12px 38px 18px 38px;
-  box-shadow: 0 2px 20px #0001, 0 1px 3px #00000008;
+  width: 100vw;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
+  margin-top: 40px;
+  margin-bottom: 0px;
+  z-index: 40;
+  pointer-events: none;
 }
 .top-logo img {
-  width: 152px;
-  max-width: 36vw;
+  width: 350px;
+  max-width: 45vw;
+  min-width: 100px;
   display: block;
-  border-radius: 14px;
+  border-radius: 17px;
+  box-shadow: none;
+  background: none;
+  pointer-events: auto;
 }
-@media (max-width: 600px) {
-  .top-logo { top: 14px; padding: 7px 10vw 9px 10vw; }
-  .top-logo img { width: 40vw; min-width: 84px; }
+@media (max-width: 700px) {
+  .top-logo { margin-bottom: 0px; margin-top: 10vw;}
+  .top-logo img { width: 100vw; min-width: 100px; }
 }
 
 /* Main card */
@@ -68,13 +70,13 @@ body {
   box-shadow: var(--shadow);
   max-width: var(--container-width);
   width: 100%;
-  margin: auto;
-  padding: 0;
+  margin: 70px auto;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  min-height: 650px;
-  max-height: 93vh;
+  min-height: 610px;
+  max-height: 90vh;
   position: relative;
   z-index: 2;
   overflow: visible;
@@ -86,95 +88,31 @@ body {
   flex-direction: column;
   align-items: stretch;
   flex: 1 1 auto;
-  padding: 54px 38px 0 38px;
+  padding: 48px 24px 24px 48px;
   box-sizing: border-box;
   position: relative;
+  min-height: 340px;
 }
-@media (max-width: 600px) {
-  .card-inner { padding: 17vw 6vw 0 6vw; }
-}
-
-/* DESKTOP: Back/Next buttons OUTSIDE card, vertically centered */
-.fixed-back-btn, .fixed-next-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  pointer-events: auto;
-}
-.fixed-back-btn {
-  left: -92px;
-}
-.fixed-next-btn {
-  right: -92px;
-}
-.fixed-back-btn button, .fixed-next-btn button {
-  background: var(--main-light);
-  color: var(--main);
-  border-radius: 99px;
-  border: none;
-  font-size: 1.11em;
-  font-weight: 600;
-  padding: 15px 34px 15px 22px;
-  cursor: pointer;
-  outline: none;
-  transition: background 0.15s, color 0.15s;
-  box-shadow: 0 1px 4px #f7941d11;
-  display: flex; align-items: center; gap: 7px;
-}
-.fixed-next-btn button {
-  padding: 15px 22px 15px 34px;
-}
-.fixed-back-btn button:hover, .fixed-next-btn button:hover {
-  background: #fbd49c;
-  color: #d87104;
-}
-
-/* MOBILE: Back/Next buttons INSIDE card, arrows only */
-.mobile-arrow-btn {
-  display: none;
-}
-@media (max-width: 700px) and (min-height: 900px) {
-  .fixed-back-btn, .fixed-next-btn { display: none !important; }
-  .mobile-arrow-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 30;
-    background: var(--main-light);
-    color: var(--main);
-    border: none;
-    border-radius: 50%;
-    width: 56px;
-    height: 56px;
-    font-size: 2.1em;
-    box-shadow: 0 2px 12px #f7941d15;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
+@media (max-width: 500px) and (min-height: 300px) {
+  .container {
+    min-height: 5vh;
+    max-width: 99vw;
     padding: 0;
-    outline: none;
+    margin: 70px auto;
   }
-  .mobile-arrow-btn:active, .mobile-arrow-btn:hover {
-    background: #fbd49c;
-    color: #d87104;
+  .card-inner {
+    padding: 12vw 2vw 12vw 2vw;
+    min-height: 340px;
   }
-  .mobile-back { left: 8px; }
-  .mobile-next { right: 8px; }
 }
 
-/* Main card content styling */
 .heading {
   font-size: var(--font-lg);
   font-weight: 700;
-  margin: 0 0 34px 0;
+  margin: 0 12px 35px 12px;
   text-align: left; color: #20232a;
   letter-spacing: 0.01em;
-  line-height: 1.08;
+  line-height: -1.08;
   min-width: 0;
   word-break: break-word;
   overflow-wrap: break-word;
@@ -186,7 +124,7 @@ body {
   align-items: stretch;
   justify-content: flex-start;
   width: 100%;
-  padding: 0;
+  padding: 50;
   box-sizing: border-box;
 }
 .intro-text {
@@ -195,22 +133,22 @@ body {
   text-align: center;
   line-height: 1.54;
   margin: 0 0 42px 0;
-  padding: 12px 0 0 0;
+  padding: 48px 0 0 0;
 }
 .image-placeholder {
   width: 100%;
-  max-width: 420px;
-  margin: 0 auto 36px auto;
+  max-width: 500px;
+  margin: 30px auto 30px auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 210px;
+  min-height: 170px;
 }
 .image-placeholder img {
-  width: 100%;
-  max-width: 390px;
+  width: 120%;
+  max-width: 300px;
   min-width: 0;
-  max-height: 250px;
+  max-height: 220px;
   height: auto;
   border-radius: 0;
   object-fit: contain;
@@ -220,25 +158,30 @@ body {
   margin: 0 auto;
   box-shadow: none;
 }
+@media (max-width: 700px) and (min-height: 900px) {
+  .image-placeholder { max-width: 130vw; min-height: 150px; }
+  .image-placeholder img { max-width: 100vw; max-height: 250px; }
+}
+
 .step-top {
   text-align: center;
-  font-size: 1.18em;
-  margin: 0 0 28px 0;
+  font-size: 1.11em;
+  margin: 0 0 50px 0;
   color: #222;
   font-weight: 500;
   line-height: 1.36;
 }
 .step-bottom {
   text-align: center;
-  font-size: 1.19em;
+  font-size: 1.09em;
   color: #333;
   font-weight: 500;
   line-height: 1.36;
-  margin: 30px 0 22px 0;
+  margin: 20px 0 50px 0;
 }
 .buttons-area {
   width: 100%;
-  padding: 0 38px 44px 38px;
+  padding: 18px 18px 24px 18px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -246,11 +189,11 @@ body {
   justify-content: flex-end;
   flex-shrink: 0;
 }
-@media (max-width: 600px) {
-  .buttons-area { padding: 0 6vw 8vw 6vw; }
+@media (max-width: 700px) and (min-height: 900px) {
+  .buttons-area { padding: 0 2vw 8vw 2vw; }
 }
 .buttons {
-  display: flex; flex-direction: column; gap: 22px;
+  display: flex; flex-direction: column; gap: 16px;
   justify-content: center; align-items: stretch;
   width: 100%;
   max-width: 420px;
@@ -260,8 +203,8 @@ body {
   width: 100%;
   min-width: 0;
   height: var(--btn-height);
-  padding: 0 18px;
-  border: none; border-radius: 17px;
+  padding: 0 10px;
+  border: none; border-radius: 14px;
   font-size: var(--font-md);
   font-weight: 600;
   cursor: pointer;
@@ -276,11 +219,12 @@ body {
 }
 .buttons .btn-secondary:hover { background: #eaeaea; }
 .buttons .btn-primary:hover { background: #e68317;}
+
 .progress-page {
   width: 100vw;
   position: fixed;
   left: 0;
-  bottom: 42px;
+  bottom: 46px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -288,15 +232,15 @@ body {
   pointer-events: none;
 }
 .progress-page-number {
-  font-size: 1.19em;
+  font-size: 1.07em;
   font-weight: 600;
   color: #f7941d;
   background: #fffdfaee;
   border-radius: 999px;
   box-shadow: 0 1px 6px #0001;
-  padding: 8px 29px;
+  padding: 6px 21px;
   letter-spacing: 0.02em;
-  margin: 0 0 8px 0;
+  margin: 50px 0 1px 0;
   pointer-events: none;
   user-select: none;
 }
@@ -318,24 +262,58 @@ body {
   width: 0;
   transition: width 0.36s cubic-bezier(.4,1.6,.6,1);
 }
+
+/* Back/Next Buttons OUTSIDE, hugging the card (mobile & desktop) */
+.attached-btn, .attached-next-btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  background: var(--main-light);
+  color: var(--main);
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 2px 8px #f7941d18;
+  width: 48px; height: 48px;
+  font-size: 1.7em;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0.98;
+}
+.attached-btn { 
+  left: 50%; 
+  margin-left: calc(-1 * (var(--container-width)/2) - 32px); 
+}
+.attached-next-btn { 
+  right: 50%; 
+  margin-right: calc(-1 * (var(--container-width)/2) - 32px); 
+}
+@media (max-width: 700px) {
+  .attached-btn {
+    left: 2vw;
+    margin-left: 0;
+    width: 40px; height: 40px; font-size: 1.3em;
+  }
+  .attached-next-btn {
+    right: 2vw;
+    margin-right: 0;
+    width: 40px; height: 40px; font-size: 1.3em;
+  }
+}
   </style>
 </head>
 <body>
-  <!-- Logo OUTSIDE card, centered horizontally above card -->
+  <!-- Logo (no box, just image) -->
   <div class="top-logo">
     <img src="https://i.imgur.com/fDv6d8s.png" alt="BFA Digital Logo" onerror="this.style.display='none'">
   </div>
-  <!-- Back button OUTSIDE card, vertically centered (desktop) -->
-  <div class="fixed-back-btn" id="fixed-back-btn" style="display:none;">
-    <button type="button" onclick="back()">&larr; Back</button>
-  </div>
-  <!-- Next button OUTSIDE card, vertically centered (desktop) -->
-  <div class="fixed-next-btn" id="fixed-next-btn" style="display:none;">
-    <button type="button" onclick="nextStep()">Next &rarr;</button>
-  </div>
-  <!-- MOBILE arrows INSIDE card, vertically centered (shown on tall mobile only) -->
-  <button id="mobile-back" class="mobile-arrow-btn mobile-back" style="display:none;" aria-label="Back">&larr;</button>
-  <button id="mobile-next" class="mobile-arrow-btn mobile-next" style="display:none;" aria-label="Next">&rarr;</button>
+  <!-- Back/Next buttons outside, hugging the card -->
+  <button class="attached-btn" id="attached-btn" style="display:none;" aria-label="Back">&larr;</button>
+  <button class="attached-next-btn" id="attached-next-btn" style="display:none;" aria-label="Next">&rarr;</button>
   <!-- Main card -->
   <div class="container">
     <div class="card-inner" id="card-inner">
@@ -426,28 +404,14 @@ body {
     const mainContent = document.getElementById('main-content');
     const buttonsArea = document.getElementById('buttons-area');
     const pbi = document.getElementById('progress-bar-inner');
-    const backBtnDiv = document.getElementById('fixed-back-btn');
-    const nextBtnDiv = document.getElementById('fixed-next-btn');
-    const mobileBack = document.getElementById('mobile-back');
-    const mobileNext = document.getElementById('mobile-next');
-    const cardInner = document.getElementById('card-inner');
+    const backBtn = document.getElementById('attached-btn');
+    const nextBtn = document.getElementById('attached-next-btn');
     const totalSteps = steps.length - 1;
 
     function updateNavButtons() {
-      const isMobile = window.matchMedia('(max-width: 700px) and (min-height: 900px)').matches;
-      // Desktop: outside card
-      if (!isMobile) {
-        backBtnDiv.style.display = (!steps[current].intro && current !== 0) ? "block" : "none";
-        nextBtnDiv.style.display = (!steps[current].intro && current < steps.length - 1) ? "block" : "none";
-        mobileBack.style.display = 'none';
-        mobileNext.style.display = 'none';
-      } else {
-        // Mobile: inside card, only arrows, hide on intro
-        backBtnDiv.style.display = 'none';
-        nextBtnDiv.style.display = 'none';
-        mobileBack.style.display = (!steps[current].intro && current !== 0) ? 'flex' : 'none';
-        mobileNext.style.display = (!steps[current].intro && current < steps.length - 1) ? 'flex' : 'none';
-      }
+      // Show attached buttons only when not intro and valid
+      backBtn.style.display = (!steps[current].intro && current !== 0) ? "flex" : "none";
+      nextBtn.style.display = (!steps[current].intro && current < steps.length - 1) ? "flex" : "none";
     }
 
     function render(i) {
@@ -509,12 +473,10 @@ body {
         render(current);
       }
     }
-    // Mobile arrow click handlers
-    mobileBack.onclick = () => back();
-    mobileNext.onclick = () => nextStep();
-
+    backBtn.onclick = () => back();
+    nextBtn.onclick = () => nextStep();
     window.go = go; window.back = back; window.nextStep = nextStep;
-    window.addEventListener('resize', () => updateNavButtons());
+    window.addEventListener('resize', updateNavButtons);
     render(0);
   </script>
 </body>
