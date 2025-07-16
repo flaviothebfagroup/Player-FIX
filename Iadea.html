@@ -2,815 +2,1152 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>IADEA Troubleshooting</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#F7941D">
+  <title>IADEA Support</title>
   <style>
-:root {
-  --main: #F7941D;
-  --main-light: #fde6c3;
-  --radius: 22px;
-  --shadow: 0 2px 32px 0 #0001, 0 0.5px 1px #00000008;
-  --progress-height: 9px;
-  --font-base: 19px;
-  --font-lg: 2.25rem;
-  --font-md: 1.16rem;
-  --btn-height: 56px;
-  --container-width: 470px;
-}
-
-html, body {
-  margin: 0; padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  font-size: var(--font-base);
-  background: radial-gradient(ellipse at top left, #fef7f1 60%, #f8fafb 100%);
-  min-height: 100vh;
-  width: 100vw;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body { 
-  min-height: 100vh; 
-  width: 100vw;
-  display: flex;
-  align-items: flex-start; 
-  justify-content: center;
-  position: relative;
-  flex-direction: column;
-}
-
-/* LOGO: Better mobile scaling */
-.top-logo {
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  margin-top: 54px;
-  margin-bottom: -48px;
-  z-index: 40;
-  pointer-events: none;
-}
-
-.top-logo img {
-  width: 220px;
-  max-width: 50vw;
-  min-width: 110px;
-  display: block;
-  border-radius: 17px;
-  box-shadow: none;
-  background: none;
-  pointer-events: auto;
-  transition: all 0.3s ease;
-}
-
-@media (max-width: 700px) {
-  .top-logo { 
-    margin-top: max(20px, 4vh); 
-    margin-bottom: -30px;
-  }
-  .top-logo img { 
-    width: min(60vw, 280px); 
-    max-width: 280px; 
-    min-width: 120px;
-  }
-}
-
-/* Main card - Better mobile layout */
-.container {
-  background: #fff;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  max-width: var(--container-width);
-  width: 100%;
-  margin: 90px auto 0 auto;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  min-height: 570px;
-  max-height: 94vh;
-  position: relative;
-  z-index: 2;
-  overflow: visible;
-  transition: all 0.3s ease;
-}
-
-@media (max-width: 700px) {
-  .container {
-    max-width: 95vw;
-    margin: max(120px, 18vh) auto 0 auto;
-    min-height: max(500px, 70vh);
-    max-height: 85vh;
-    box-shadow: 0 4px 20px rgba(247, 148, 29, 0.15);
-    border-radius: 18px;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    max-width: 96vw;
-    margin: max(100px, 16vh) auto 0 auto;
-    min-height: max(450px, 65vh);
-    border-radius: 16px;
-  }
-}
-
-/* Card content - Better scrolling */
-.card-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  flex: 1 1 auto;
-  padding: 60px 32px 0 32px;
-  box-sizing: border-box;
-  position: relative;
-  min-height: 380px;
-  max-height: 63vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  transition: padding 0.3s ease;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-@media (max-width: 700px) {
-  .card-inner {
-    padding: max(40px, 8vh) 6vw 0 6vw;
-    min-height: 300px;
-    max-height: 55vh;
-  }
-}
-
-@media (max-width: 480px) {
-  .card-inner {
-    padding: max(30px, 6vh) 5vw 0 5vw;
-    min-height: 280px;
-    max-height: 50vh;
-  }
-}
-
-.heading {
-  font-size: var(--font-lg);
-  font-weight: 700;
-  margin: 0 0 44px 0;
-  text-align: left; 
-  color: #20232a;
-  letter-spacing: 0.01em;
-  line-height: 1.08;
-}
-
-@media (max-width: 700px) {
-  .heading {
-    font-size: max(1.8rem, 6vw);
-    margin: 0 0 max(30px, 5vh) 0;
-    text-align: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .heading {
-    font-size: max(1.6rem, 7vw);
-    margin: 0 0 max(25px, 4vh) 0;
-  }
-}
-
-#main-content {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.intro-text {
-  font-size: 1.15em;
-  color: #3c3c3c;
-  text-align: center;
-  line-height: 1.54;
-  margin: 0 0 34px 0;
-  padding: 22px 0 0 0;
-}
-
-@media (max-width: 700px) {
-  .intro-text {
-    font-size: max(1.1em, 4.5vw);
-    margin: 0 0 max(25px, 4vh) 0;
-    padding: max(15px, 3vh) 0 0 0;
-  }
-}
-
-/* Image improvements */
-.image-placeholder {
-  width: 100%;
-  max-width: 500px;
-  margin: 36px auto 38px auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 140px;
-}
-
-.image-placeholder img {
-  width: 100%;
-  max-width: 380px;
-  min-width: 0;
-  max-height: 240px;
-  height: auto;
-  border-radius: 0;
-  object-fit: contain;
-  display: block;
-  background: none;
-  border: none;
-  margin: 0 auto;
-  box-shadow: none;
-  transition: all 0.3s ease;
-}
-
-@media (max-width: 700px) {
-  .image-placeholder {
-    max-width: 90vw;
-    margin: max(20px, 4vh) auto max(25px, 5vh) auto;
-    min-height: max(120px, 15vh);
-  }
-  .image-placeholder img {
-    max-width: 85vw;
-    max-height: max(180px, 20vh);
-  }
-}
-
-@media (max-width: 480px) {
-  .image-placeholder {
-    margin: max(15px, 3vh) auto max(20px, 4vh) auto;
-    min-height: max(100px, 12vh);
-  }
-  .image-placeholder img {
-    max-width: 80vw;
-    max-height: max(160px, 18vh);
-  }
-}
-
-.step-top {
-  text-align: center;
-  font-size: 1.19em;
-  margin: 0 0 32px 0;
-  color: #222;
-  font-weight: 500;
-  line-height: 1.36;
-}
-
-@media (max-width: 700px) {
-  .step-top {
-    font-size: max(1.1em, 4.8vw);
-    margin: 0 0 max(20px, 4vh) 0;
-    line-height: 1.4;
-  }
-}
-
-.step-bottom {
-  text-align: center;
-  font-size: 1.12em;
-  color: #333;
-  font-weight: 500;
-  line-height: 1.36;
-  margin: 24px 0 32px 0;
-}
-
-@media (max-width: 700px) {
-  .step-bottom {
-    font-size: max(1.05em, 4.5vw);
-    margin: max(15px, 3vh) 0 max(20px, 4vh) 0;
-    line-height: 1.4;
-  }
-}
-
-/* Better button area */
-.buttons-area {
-  width: 100%;
-  padding: 0 18px 70px 18px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-end;
-  flex-shrink: 0;
-  margin-top: auto;
-}
-
-@media (max-width: 700px) {
-  .buttons-area { 
-    padding: 0 4vw max(60px, 12vh) 4vw; 
-  }
-}
-
-@media (max-width: 480px) {
-  .buttons-area { 
-    padding: 0 3vw max(50px, 10vh) 3vw; 
-  }
-}
-
-.buttons {
-  display: flex; 
-  flex-direction: column; 
-  gap: 22px;
-  justify-content: center; 
-  align-items: stretch;
-  width: 100%;
-  max-width: 460px;
-  margin: 0 auto;
-}
-
-@media (max-width: 700px) {
-  .buttons {
-    gap: max(18px, 3vh);
-  }
-}
-
-.buttons button {
-  width: 100%;
-  min-width: 0;
-  height: var(--btn-height);
-  padding: 0 10px;
-  border: none; 
-  border-radius: 15px;
-  font-size: var(--font-md);
-  font-weight: 600;
-  cursor: pointer;
-  background: var(--main); 
-  color: #fff;
-  box-shadow: 0 2px 8px #f7941d16;
-  transition: all 0.2s ease;
-  outline: none;
-  letter-spacing: 0.01em;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-@media (max-width: 700px) {
-  .buttons button {
-    height: max(50px, 8vh);
-    font-size: max(1.1rem, 4.5vw);
-    border-radius: 12px;
-    padding: 0 4vw;
-  }
-}
-
-@media (max-width: 480px) {
-  .buttons button {
-    height: max(48px, 7vh);
-    font-size: max(1rem, 4.2vw);
-    border-radius: 10px;
-  }
-}
-
-.buttons .btn-secondary {
-  background: #f3f3f3; 
-  color: #333; 
-  border: 1px solid #ddd;
-}
-
-.buttons .btn-secondary:hover { 
-  background: #eaeaea; 
-}
-
-.buttons .btn-primary:hover { 
-  background: #e68317;
-}
-
-.buttons .btn-primary:active {
-  transform: translateY(1px);
-  box-shadow: 0 1px 4px #f7941d16;
-}
-
-/* Progress improvements */
-.progress-page {
-  width: 100vw;
-  position: fixed;
-  left: 0;
-  bottom: 54px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  pointer-events: none;
-  transition: all 0.28s ease;
-}
-
-@media (max-width: 700px) {
-  .progress-page {
-    bottom: max(40px, 8vh);
-  }
-}
-
-.progress-page-number {
-  font-size: 1.11em;
-  font-weight: 600;
-  color: #f7941d;
-  background: rgba(255, 253, 250, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 999px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  padding: 8px 22px;
-  letter-spacing: 0.02em;
-  margin: 0 0 10px 0;
-  pointer-events: none;
-  user-select: none;
-}
-
-@media (max-width: 700px) {
-  .progress-page-number {
-    font-size: max(1rem, 4.2vw);
-    padding: max(6px, 1vh) max(18px, 4vw);
-  }
-}
-
-.progress-bar {
-  width: 100vw;
-  left: 0;
-  position: fixed;
-  bottom: 0;
-  z-index: 1;
-  margin: 0;
-  border-radius: 0;
-  background: var(--main-light);
-  height: var(--progress-height);
-}
-
-@media (max-width: 700px) {
-  .progress-bar {
-    height: max(8px, 1.5vh);
-  }
-}
-
-.progress-bar-inner {
-  height: 100%;
-  background: var(--main);
-  border-radius: 0;
-  width: 0;
-  transition: width 0.36s cubic-bezier(0.4, 1.6, 0.6, 1);
-}
-
-.progress-page.hide-progress {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none;
-}
-
-/* Navigation buttons - Better mobile positioning */
-.attached-btn, .attached-next-btn {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 30;
-  background: var(--main-light);
-  color: var(--main);
-  border-radius: 50%;
-  border: none;
-  box-shadow: 0 4px 16px rgba(247, 148, 29, 0.25);
-  width: 50px; 
-  height: 50px;
-  font-size: 1.55em;
-  cursor: pointer;
-  outline: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  opacity: 0.97;
-  transition: all 0.2s ease;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.attached-btn { 
-  left: 50%; 
-  margin-left: calc(-1 * (var(--container-width)/2) - 30px); 
-}
-
-.attached-next-btn { 
-  right: 50%; 
-  margin-right: calc(-1 * (var(--container-width)/2) - 30px); 
-}
-
-.attached-btn:active, .attached-next-btn:active {
-  transform: translateY(-50%) scale(0.95);
-  box-shadow: 0 2px 8px rgba(247, 148, 29, 0.3);
-}
-
-@media (max-width: 700px) {
-  .attached-btn {
-    left: 3vw;
-    margin-left: 0;
-    width: max(44px, 7vh); 
-    height: max(44px, 7vh); 
-    font-size: max(1.17em, 4vw);
-  }
-  .attached-next-btn {
-    right: 3vw;
-    margin-right: 0;
-    width: max(44px, 7vh); 
-    height: max(44px, 7vh); 
-    font-size: max(1.17em, 4vw);
-  }
-}
-
-@media (max-width: 480px) {
-  .attached-btn {
-    left: 2vw;
-    width: max(40px, 6vh); 
-    height: max(40px, 6vh); 
-    font-size: max(1.1em, 3.8vw);
-  }
-  .attached-next-btn {
-    right: 2vw;
-    width: max(40px, 6vh); 
-    height: max(40px, 6vh); 
-    font-size: max(1.1em, 3.8vw);
-  }
-}
-
-/* Safe area for modern phones */
-@supports (padding: max(0px, env(safe-area-inset-bottom))) {
-  .buttons-area {
-    padding-bottom: max(70px, calc(env(safe-area-inset-bottom) + 40px));
-  }
-  
-  @media (max-width: 700px) {
-    .buttons-area {
-      padding-bottom: max(60px, calc(env(safe-area-inset-bottom) + 30px));
+    /* Custom Properties */
+    :root {
+      --orange: #F7941D;
+      --orange-dark: #E6831A;
+      --orange-light: #FFA94D;
+      --orange-pale: #FFF3E6;
+      --orange-ultra-pale: #FFFAF5;
+      
+      --gray-900: #0F0F0F;
+      --gray-800: #1A1A1A;
+      --gray-700: #2D2D2D;
+      --gray-600: #4A4A4A;
+      --gray-500: #6B6B6B;
+      --gray-400: #8E8E8E;
+      --gray-300: #B8B8B8;
+      --gray-200: #E1E1E1;
+      --gray-100: #F5F5F5;
+      --gray-50: #FAFAFA;
+      
+      --success: #00C851;
+      --warning: #FF8800;
+      --error: #FF3547;
+      
+      --safe-top: env(safe-area-inset-top);
+      --safe-bottom: env(safe-area-inset-bottom);
+      --safe-left: env(safe-area-inset-left);
+      --safe-right: env(safe-area-inset-right);
+      
+      --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+      --ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
     }
-  }
-  
-  .progress-page {
-    bottom: max(54px, calc(env(safe-area-inset-bottom) + 30px));
-  }
-  
-  @media (max-width: 700px) {
-    .progress-page {
-      bottom: max(40px, calc(env(safe-area-inset-bottom) + 20px));
+
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
-  }
-}
 
-/* Prevent zoom on input focus */
-@media (max-width: 700px) {
-  input, select, textarea {
-    font-size: 16px !important;
-  }
-}
+    html {
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-/* Smooth animations */
-* {
-  -webkit-tap-highlight-color: transparent;
-}
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-900);
+      line-height: 1.5;
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      touch-action: pan-y;
+    }
 
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
+    /* App Container */
+    .app {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, #FFFFFF 0%, var(--gray-50) 100%);
+    }
+
+    /* Status Bar (iOS style) */
+    .status-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--safe-top);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 1000;
+    }
+
+    /* Navigation Bar */
+    .nav-bar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      padding-top: calc(12px + var(--safe-top));
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+      z-index: 100;
+    }
+
+    .nav-back {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--orange-pale);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-back::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--orange);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .nav-back:active::before {
+      opacity: 0.1;
+    }
+
+    .nav-back svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--orange);
+      stroke-width: 2.5;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-back.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.8);
+    }
+
+    .nav-title {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--gray-900);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-logo {
+      height: 32px;
+      width: auto;
+    }
+
+    /* Content Area */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding: 20px;
+      padding-bottom: calc(20px + var(--safe-bottom) + 100px);
+    }
+
+    /* Step Card */
+    .step-card {
+      background: white;
+      border-radius: 24px;
+      padding: 32px 24px;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+      animation: slideUp 0.5s var(--spring) both;
+      transform-origin: center bottom;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Step Counter Pills */
+    .step-pills {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 32px;
+    }
+
+    .step-pill {
+      width: 8px;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--gray-200);
+      transition: all 0.3s var(--ease-out);
+    }
+
+    .step-pill.active {
+      width: 24px;
+      background: var(--orange);
+    }
+
+    /* Typography */
+    .step-title {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      color: var(--gray-900);
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .step-subtitle {
+      font-size: 17px;
+      line-height: 1.4;
+      color: var(--gray-600);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    /* Illustration Container */
+    .illustration {
+      width: 100%;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 32px 0;
+      position: relative;
+      animation: fadeScale 0.6s var(--spring) 0.2s both;
+    }
+
+    @keyframes fadeScale {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .illustration img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .illustration.pulse {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* Action Buttons */
+    .button-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 40px;
+    }
+
+    .btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 16px;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.3), transparent);
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.4s;
+    }
+
+    .btn:active::before {
+      opacity: 1;
+      transform: scale(2);
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: white;
+      box-shadow: 0 4px 20px rgba(247, 148, 29, 0.25);
+    }
+
+    .btn-primary:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 10px rgba(247, 148, 29, 0.25);
+    }
+
+    .btn-secondary {
+      background: var(--gray-100);
+      color: var(--gray-800);
+    }
+
+    .btn-secondary:active {
+      background: var(--gray-200);
+      transform: translateY(1px);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+      box-shadow: 0 4px 20px rgba(0, 200, 81, 0.25);
+    }
+
+    /* Special States */
+    .intro-hero {
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .intro-hero .brand-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      background: var(--orange-pale);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: heroScale 0.6s var(--spring) both;
+    }
+
+    @keyframes heroScale {
+      from {
+        opacity: 0;
+        transform: scale(0.5) rotate(-10deg);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+      }
+    }
+
+    .brand-icon img {
+      width: 60%;
+      height: 60%;
+      object-fit: contain;
+    }
+
+    .intro-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Phone Link */
+    .phone-card {
+      background: var(--orange-pale);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 24px 0;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .phone-card:active {
+      transform: scale(0.98);
+    }
+
+    .phone-label {
+      font-size: 14px;
+      color: var(--gray-600);
+      margin-bottom: 4px;
+    }
+
+    .phone-number {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: -0.02em;
+    }
+
+    /* Success Animation */
+    .success-animation {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 32px;
+      position: relative;
+    }
+
+    .success-circle {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: var(--success);
+      opacity: 0.1;
+      animation: successPulse 1.5s ease-out;
+    }
+
+    .success-check {
+      position: absolute;
+      inset: 20px;
+      background: var(--success);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: successScale 0.6s var(--spring) 0.3s both;
+    }
+
+    .success-check svg {
+      width: 40px;
+      height: 40px;
+      stroke: white;
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 60;
+      stroke-dashoffset: 60;
+      animation: checkDraw 0.6s ease-out 0.6s forwards;
+    }
+
+    @keyframes successPulse {
+      from {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    @keyframes successScale {
+      from {
+        transform: scale(0);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes checkDraw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    /* Bottom Action Area */
+    .bottom-action {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      padding-bottom: calc(20px + var(--safe-bottom));
+      background: linear-gradient(to top, white 60%, transparent);
+      pointer-events: none;
+      z-index: 90;
+    }
+
+    .bottom-action > * {
+      pointer-events: auto;
+    }
+
+    /* Progress Indicator */
+    .progress-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .progress-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--orange);
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 4px;
+      background: var(--gray-200);
+      border-radius: 2px;
+      margin: 0 16px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--orange) 0%, var(--orange-light) 100%);
+      border-radius: 2px;
+      transition: width 0.6s var(--spring);
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
+      animation: shimmer 2s linear infinite;
+    }
+
+    @keyframes shimmer {
+      from { transform: translateX(-100px); }
+      to { transform: translateX(100px); }
+    }
+
+    /* Loading State */
+    .loading-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 20px;
+    }
+
+    .loading-dot {
+      width: 12px;
+      height: 12px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: loadingBounce 1.4s ease-in-out infinite;
+    }
+
+    .loading-dot:nth-child(1) { animation-delay: 0s; }
+    .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes loadingBounce {
+      0%, 80%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      40% {
+        transform: translateY(-20px) scale(1.1);
+        opacity: 0.8;
+      }
+    }
+
+    /* Responsive */
+    @media (max-height: 700px) {
+      .illustration { height: 140px; }
+      .step-card { padding: 24px 20px; }
+      .button-stack { margin-top: 24px; }
+    }
+
+    /* Haptic Feedback Class */
+    .haptic {
+      animation: haptic 0.1s linear;
+    }
+
+    @keyframes haptic {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(0.98); }
+    }
+
+    /* Swipe Hint */
+    .swipe-hint {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--gray-500);
+      animation: swipeHint 3s ease-in-out infinite;
+    }
+
+    @keyframes swipeHint {
+      0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+    }
+
+    /* Accessibility */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --gray-50: #1A1A1A;
+        --gray-100: #2D2D2D;
+        --gray-200: #4A4A4A;
+        --gray-900: #FFFFFF;
+        --gray-800: #F5F5F5;
+      }
+      
+      .app {
+        background: linear-gradient(180deg, #000000 0%, #1A1A1A 100%);
+      }
+      
+      .step-card {
+        background: #2D2D2D;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+      }
+      
+      .nav-bar, .status-bar {
+        background: rgba(0, 0, 0, 0.9);
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- Logo -->
-  <div class="top-logo">
-    <img src="https://i.imgur.com/fDv6d8s.png" alt="BFA Digital Logo" onerror="this.style.display='none'">
-  </div>
-  
-  <!-- Navigation buttons -->
-  <button class="attached-btn" id="attached-btn" style="display:none;" aria-label="Back">&larr;</button>
-  <button class="attached-next-btn" id="attached-next-btn" style="display:none;" aria-label="Next">&rarr;</button>
-  
-  <!-- Main card -->
-  <div class="container">
-    <div class="card-inner" id="card-inner">
-      <h1 class="heading">IADEA Troubleshoot</h1>
-      <div id="main-content"></div>
+  <div class="app">
+    <!-- Status Bar -->
+    <div class="status-bar"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav-bar">
+      <div class="nav-back hidden" id="backBtn" role="button" aria-label="Go back">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M15 18l-6-6 6-6" stroke="currentColor"/>
+        </svg>
+      </div>
+      <h1 class="nav-title">Support</h1>
+      <img src="https://i.imgur.com/fDv6d8s.png" alt="BFA Digital" class="nav-logo">
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="content" id="content">
+      <div class="step-card" id="stepCard">
+        <!-- Dynamic content -->
+      </div>
+    </main>
+    
+    <!-- Bottom Action Area -->
+    <div class="bottom-action" id="bottomAction">
+      <!-- Dynamic progress/actions -->
     </div>
-    <div class="buttons-area" id="buttons-area"></div>
   </div>
-  
-  <div id="progress-page" class="progress-page"></div>
-  <div class="progress-bar"><div class="progress-bar-inner" id="progress-bar-inner"></div></div>
-  
+
   <script>
+    // Haptic feedback utility
+    const haptic = {
+      light: () => navigator.vibrate && navigator.vibrate(10),
+      medium: () => navigator.vibrate && navigator.vibrate(20),
+      heavy: () => navigator.vibrate && navigator.vibrate(30),
+      success: () => navigator.vibrate && navigator.vibrate([10, 10, 10])
+    };
+
+    // Touch ripple effect
+    document.addEventListener('touchstart', (e) => {
+      if (e.target.classList.contains('btn')) {
+        const rect = e.target.getBoundingClientRect();
+        const x = ((e.touches[0].clientX - rect.left) / rect.width) * 100;
+        const y = ((e.touches[0].clientY - rect.top) / rect.height) * 100;
+        e.target.style.setProperty('--x', x + '%');
+        e.target.style.setProperty('--y', y + '%');
+      }
+    });
+
+    // Steps configuration
     const steps = [
-      { intro: true, 
-        text: `
-          <div class="image-placeholder" style="margin-bottom:0;">
-            <img src="https://i.imgur.com/PwnioKZ.gif" alt="IADEA Player">
-          </div>
-          <div class="intro-text">
-            Welcome to the IADEA Player Troubleshooting Guide.<br>
-            This step-by-step tool will help you quickly resolve the most common issues.
-          </div>
-        `,
-        buttons: [{ text: "Start Troubleshooting", next: 1 }]
+      {
+        id: 'welcome',
+        type: 'intro',
+        content: {
+          title: 'IADEA Support',
+          subtitle: 'Let\'s get your digital signage back up and running in just a few simple steps.',
+          image: 'https://i.imgur.com/PwnioKZ.gif',
+          buttons: [
+            { text: 'Begin Troubleshooting', action: 'next', style: 'primary' }
+          ]
+        }
       },
-      { 
-        topText: "Was the internet changed?",
-        image: 'https://media.lordicon.com/icons/wired/outline/745-wifi-connection.gif',
-        bottomText: "",
-        buttons: [{ text: 'Yes', next: 9 }, { text: 'No', next: 2 }] 
+      {
+        id: 'internet',
+        type: 'question',
+        content: {
+          title: 'Internet Connection',
+          subtitle: 'Has your internet connection or WiFi network been changed recently?',
+          image: 'https://media.lordicon.com/icons/wired/outline/745-wifi-connection.gif',
+          buttons: [
+            { text: 'Yes, it changed', goto: 'contact', style: 'secondary' },
+            { text: 'No changes', goto: 'tv-power', style: 'primary' }
+          ]
+        }
       },
-      { 
-        topText: "Is the TV turned on?",
-        image: 'https://media.lordicon.com/icons/wired/outline/1734-tv-turn-on.gif',
-        bottomText: "",
-        buttons: [{ text: 'Yes', next: 3 }, { text: 'No', next: 9 }] 
+      {
+        id: 'tv-power',
+        type: 'question',
+        content: {
+          title: 'Check Your TV',
+          subtitle: 'Is your TV or display turned on?',
+          image: 'https://media.lordicon.com/icons/wired/outline/1734-tv-turn-on.gif',
+          buttons: [
+            { text: 'Yes, it\'s on', goto: 'player-led', style: 'primary' },
+            { text: 'No, it\'s off', goto: 'contact', style: 'secondary' }
+          ]
+        }
       },
-      { 
-        topText: "Is the IADEA player powered and has a green LED?",
-        image: 'https://i.imgur.com/J13LMrc.gif',
-        bottomText: "",
-        buttons: [{ text: 'Yes', next: 4 }, { text: 'No', next: 9 }] 
+      {
+        id: 'player-led',
+        type: 'question',
+        content: {
+          title: 'IADEA Player Status',
+          subtitle: 'Look at your IADEA player. Is it powered on with a green LED light?',
+          image: 'https://i.imgur.com/J13LMrc.gif',
+          buttons: [
+            { text: 'Yes, green LED is on', goto: 'power-cycle', style: 'primary' },
+            { text: 'No LED or different color', goto: 'contact', style: 'secondary' }
+          ]
+        }
       },
-      { 
-        topText: "Unplug the IADEA player for 1 minute, then plug it back in.",
-        image: 'https://i.imgur.com/Vb0pqwS.gif', 
-        bottomText: "Did it fix the issue?",
-        buttons: [{ text: 'Yes', next: 10 }, { text: 'No', next: 5 }] 
+      {
+        id: 'power-cycle',
+        type: 'action',
+        content: {
+          title: 'Power Cycle',
+          subtitle: 'Let\'s restart your IADEA player:',
+          instruction: '1. Unplug the power cable\n2. Wait 60 seconds\n3. Plug it back in\n4. Wait for the green LED',
+          image: 'https://i.imgur.com/Vb0pqwS.gif',
+          buttons: [
+            { text: 'Done! It\'s working', goto: 'success', style: 'success' },
+            { text: 'Still not working', goto: 'hdmi-check', style: 'secondary' }
+          ]
+        }
       },
-      { 
-        topText: "Is the HDMI cable connected properly?", 
-        image: 'https://i.imgur.com/35gQgop.gif', 
-        bottomText: "",
-        buttons: [{ text: 'Yes', next: 6 }, { text: 'No', next: 9 }] 
+      {
+        id: 'hdmi-check',
+        type: 'question',
+        content: {
+          title: 'HDMI Connection',
+          subtitle: 'Is the HDMI cable properly connected to both the player and TV?',
+          image: 'https://i.imgur.com/35gQgop.gif',
+          buttons: [
+            { text: 'Yes, properly connected', goto: 'error-check', style: 'primary' },
+            { text: 'No or not sure', goto: 'contact', style: 'secondary' }
+          ]
+        }
       },
-      { 
-        topText: "Do you see any error message on screen?", 
-        image: 'https://media.lordicon.com/icons/wired/outline/2592-fail.gif', 
-        bottomText: "",
-        buttons: [{ text: 'Yes', next: 7 }, { text: 'No', next: 8 }] 
+      {
+        id: 'error-check',
+        type: 'question',
+        content: {
+          title: 'Error Messages',
+          subtitle: 'Do you see any error messages on your TV screen?',
+          image: 'https://media.lordicon.com/icons/wired/outline/2592-fail.gif',
+          buttons: [
+            { text: 'Yes, I see an error', goto: 'tv-restart', style: 'secondary' },
+            { text: 'No errors visible', goto: 'wait-content', style: 'primary' }
+          ]
+        }
       },
-      { 
-        topText: "Try restarting the TV.",
-        image: 'https://media.lordicon.com/icons/wired/outline/2505-reset-text.gif', 
-        bottomText: "Did that fix it?",
-        buttons: [{ text: 'Yes', next: 10 }, { text: 'No', next: 8 }] 
+      {
+        id: 'tv-restart',
+        type: 'action',
+        content: {
+          title: 'Restart Your TV',
+          subtitle: 'Let\'s try restarting your TV:',
+          instruction: '1. Turn off the TV using the remote or power button\n2. Wait 10 seconds\n3. Turn it back on\n4. Wait for the display to appear',
+          image: 'https://media.lordicon.com/icons/wired/outline/2505-reset-text.gif',
+          buttons: [
+            { text: 'Fixed! Thank you', goto: 'success', style: 'success' },
+            { text: 'Still having issues', goto: 'wait-content', style: 'secondary' }
+          ]
+        }
       },
-      { 
-        topText: "Please wait 5 minutes to see if content appears.", 
-        image: 'https://media.lordicon.com/icons/wired/outline/472-hourglass.gif', 
-        bottomText: "",
-        buttons: [{ text: 'It worked!', next: 10 }, { text: 'Still not working', next: 9 }] 
+      {
+        id: 'wait-content',
+        type: 'wait',
+        content: {
+          title: 'Content Loading',
+          subtitle: 'Your player might be downloading updates. Please wait up to 5 minutes for content to appear.',
+          image: 'https://media.lordicon.com/icons/wired/outline/472-hourglass.gif',
+          showLoading: true,
+          buttons: [
+            { text: 'It\'s working now!', goto: 'success', style: 'success' },
+            { text: 'Still nothing after 5 min', goto: 'contact', style: 'secondary' }
+          ]
+        }
       },
-      { 
-        topText: "Contact support at <b>(647) 209-0519</b>.",
-        image: 'https://media.lordicon.com/icons/wired/outline/682-male-customer-service.gif', 
-        bottomText: "",
-        buttons: [{ text: 'Restart', next: 0 }]
+      {
+        id: 'contact',
+        type: 'contact',
+        content: {
+          title: 'Let\'s Connect You',
+          subtitle: 'Our support team is ready to help resolve this issue quickly.',
+          phone: '(647) 209-0519',
+          note: 'Have your location details ready',
+          buttons: [
+            { text: 'Start Over', action: 'restart', style: 'primary' }
+          ]
+        }
       },
-      { 
-        topText: "Great! Your system is now working.",
-        image: 'https://media.lordicon.com/icons/wired/outline/1736-smart-tv-layout-interface.gif', 
-        bottomText: "",
-        buttons: [{ text: 'Restart', next: 0 }]
+      {
+        id: 'success',
+        type: 'success',
+        content: {
+          title: 'All Set! 🎉',
+          subtitle: 'Your IADEA player is working properly. Your content should be displaying as expected.',
+          buttons: [
+            { text: 'Troubleshoot Again', action: 'restart', style: 'primary' }
+          ]
+        }
       }
     ];
 
-    let current = 0, historyStack = [];
-    const mainContent = document.getElementById('main-content');
-    const buttonsArea = document.getElementById('buttons-area');
-    const pbi = document.getElementById('progress-bar-inner');
-    const backBtn = document.getElementById('attached-btn');
-    const nextBtn = document.getElementById('attached-next-btn');
-    const cardInner = document.getElementById('card-inner');
-    const progressPage = document.getElementById('progress-page');
-    const totalSteps = steps.length - 1;
-
-    function updateNavButtons() {
-      backBtn.style.display = (!steps[current].intro && current !== 0) ? "flex" : "none";
-      nextBtn.style.display = (!steps[current].intro && current < steps.length - 1) ? "flex" : "none";
-    }
-
-    function render(i) {
-      const step = steps[i];
-      updateNavButtons();
-
-      document.querySelector('.progress-bar').style.display = step.intro ? "none" : "block";
-
-      if (step.intro) {
-        mainContent.innerHTML = step.text;
-        buttonsArea.innerHTML = `
-          <div class="buttons">
-            ${step.buttons.map(b => `<button class="btn-primary" onclick="go(${b.next})">${b.text}</button>`).join('')}
-          </div>`;
-      } else {
-        mainContent.innerHTML = `
-          ${step.topText ? `<div class="step-top">${step.topText}</div>` : ""}
-          <div class="image-placeholder">${step.image ? `<img src="${step.image}" alt="">` : ''}</div>
-          ${step.bottomText ? `<div class="step-bottom">${step.bottomText}</div>` : ""}
+    // App State
+    const app = {
+      currentStep: 0,
+      history: [],
+      stepMap: new Map(steps.map((s, i) => [s.id, i])),
+      
+      init() {
+        this.bindEvents();
+        this.render();
+      },
+      
+      bindEvents() {
+        document.getElementById('backBtn').addEventListener('click', () => this.goBack());
+        
+        // Swipe gestures
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+          touchStartX = e.touches[0].clientX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+          const touchEndX = e.changedTouches[0].clientX;
+          const diff = touchEndX - touchStartX;
+          if (diff > 80 && this.history.length > 0) {
+            this.goBack();
+          }
+        });
+      },
+      
+      render() {
+        const step = steps[this.currentStep];
+        const stepCard = document.getElementById('stepCard');
+        const bottomAction = document.getElementById('bottomAction');
+        const backBtn = document.getElementById('backBtn');
+        
+        // Update back button
+        backBtn.classList.toggle('hidden', this.history.length === 0);
+        
+        // Clear and rebuild content
+        stepCard.innerHTML = '';
+        bottomAction.innerHTML = '';
+        
+        // Add animation
+        stepCard.style.animation = 'none';
+        requestAnimationFrame(() => {
+          stepCard.style.animation = '';
+        });
+        
+        // Render based on type
+        switch(step.type) {
+          case 'intro':
+            this.renderIntro(step, stepCard, bottomAction);
+            break;
+          case 'question':
+          case 'action':
+            this.renderQuestion(step, stepCard, bottomAction);
+            break;
+          case 'wait':
+            this.renderWait(step, stepCard, bottomAction);
+            break;
+          case 'contact':
+            this.renderContact(step, stepCard, bottomAction);
+            break;
+          case 'success':
+            this.renderSuccess(step, stepCard, bottomAction);
+            break;
+        }
+        
+        // Update progress
+        this.updateProgress();
+      },
+      
+      renderIntro(step, card, bottom) {
+        card.innerHTML = `
+          <div class="intro-hero">
+            <div class="brand-icon">
+              <img src="https://i.imgur.com/fDv6d8s.png" alt="BFA">
+            </div>
+            <h2 class="intro-title">${step.content.title}</h2>
+            <p class="step-subtitle">${step.content.subtitle}</p>
+          </div>
+          <div class="illustration">
+            <img src="${step.content.image}" alt="">
+          </div>
         `;
-        buttonsArea.innerHTML = `
-          <div class="buttons">
-            ${step.buttons.map(b => `<button class="btn-primary" onclick="go(${b.next})">${b.text}</button>`).join('')}
-          </div>`;
-      }
-
-      if (!step.intro) {
-        const page = i;
-        let progressStepNum = (page > 0 && page < steps.length) ? page : 1;
-        progressPage.innerHTML = 
-          `<span class="progress-page-number">Step ${progressStepNum} of ${totalSteps}</span>`;
-        const pct = ((i-1) / (totalSteps-1)) * 100;
-        pbi.style.width = pct + "%";
-      } else {
-        progressPage.innerHTML = "";
-      }
+        
+        this.renderButtons(step.content.buttons, bottom);
+      },
       
-      // Scroll to top of content area
-      cardInner.scrollTop = 0;
-      updateProgressVisibility();
-    }
-
-    function go(i) { 
-      if (i >= 0 && i < steps.length) { 
-        if(current !== i) historyStack.push(current); 
-        current = i; 
-        render(i); 
-      } 
-    }
-
-    function back() { 
-      if (historyStack.length) {
-        current = historyStack.pop();
-        render(current);
-      }
-    }
-
-    function nextStep() {
-      if (current < steps.length - 1) {
-        historyStack.push(current);
-        current += 1;
-        render(current);
-      }
-    }
-
-    // Touch event handling for better mobile experience
-    let touchStartY = 0;
-    let touchEndY = 0;
-
-    cardInner.addEventListener('touchstart', function(e) {
-      touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
-
-    cardInner.addEventListener('touchend', function(e) {
-      touchEndY = e.changedTouches[0].screenY;
-      handleSwipe();
-    }, { passive: true });
-
-    function handleSwipe() {
-      const swipeThreshold = 50;
-      const swipeDistance = touchStartY - touchEndY;
+      renderQuestion(step, card, bottom) {
+        const showPills = step.type === 'question';
+        
+        card.innerHTML = `
+          ${showPills ? this.renderStepPills() : ''}
+          <h2 class="step-title">${step.content.title}</h2>
+          <p class="step-subtitle">${step.content.subtitle}</p>
+          <div class="illustration${step.type === 'action' ? ' pulse' : ''}">
+            <img src="${step.content.image}" alt="">
+          </div>
+          ${step.content.instruction ? `
+            <div style="background: var(--gray-50); border-radius: 16px; padding: 20px; margin: 24px 0;">
+              <pre style="font-family: inherit; font-size: 16px; line-height: 1.6; white-space: pre-wrap; color: var(--gray-700);">${step.content.instruction}</pre>
+            </div>
+          ` : ''}
+        `;
+        
+        this.renderButtons(step.content.buttons, bottom);
+      },
       
-      // Only handle swipes if not scrolling content
-      if (Math.abs(swipeDistance) > swipeThreshold && cardInner.scrollHeight <= cardInner.clientHeight) {
-        if (swipeDistance > 0 && current < steps.length - 1) {
-          // Swipe up - next step
-          nextStep();
-        } else if (swipeDistance < 0 && historyStack.length > 0) {
-          // Swipe down - previous step
-          back();
+      renderWait(step, card, bottom) {
+        card.innerHTML = `
+          ${this.renderStepPills()}
+          <h2 class="step-title">${step.content.title}</h2>
+          <p class="step-subtitle">${step.content.subtitle}</p>
+          <div class="illustration pulse">
+            <img src="${step.content.image}" alt="">
+          </div>
+          ${step.content.showLoading ? `
+            <div class="loading-dots">
+              <div class="loading-dot"></div>
+              <div class="loading-dot"></div>
+              <div class="loading-dot"></div>
+            </div>
+          ` : ''}
+        `;
+        
+        this.renderButtons(step.content.buttons, bottom);
+      },
+      
+      renderContact(step, card, bottom) {
+        card.innerHTML = `
+          <h2 class="step-title">${step.content.title}</h2>
+          <p class="step-subtitle">${step.content.subtitle}</p>
+          
+          <a href="tel:+16472090519" class="phone-card" onclick="haptic.medium()">
+            <div class="phone-label">Call Support</div>
+            <div class="phone-number">📞 ${step.content.phone}</div>
+          </a>
+          
+          <p style="text-align: center; color: var(--gray-500); font-size: 15px; margin-top: 16px;">
+            ${step.content.note}
+          </p>
+        `;
+        
+        this.renderButtons(step.content.buttons, bottom);
+      },
+      
+      renderSuccess(step, card, bottom) {
+        card.innerHTML = `
+          <div class="success-animation">
+            <div class="success-circle"></div>
+            <div class="success-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor"/>
+              </svg>
+            </div>
+          </div>
+          
+          <h2 class="step-title">${step.content.title}</h2>
+          <p class="step-subtitle">${step.content.subtitle}</p>
+        `;
+        
+        this.renderButtons(step.content.buttons, bottom);
+        haptic.success();
+      },
+      
+      renderStepPills() {
+        const totalSteps = 8; // Question steps only
+        const currentStepNum = Math.min(Math.max(this.currentStep - 1, 0), totalSteps - 1);
+        
+        let pills = '<div class="step-pills">';
+        for (let i = 0; i < totalSteps; i++) {
+          pills += `<div class="step-pill ${i === currentStepNum ? 'active' : ''}"></div>`;
         }
-      }
-    }
-
-    backBtn.onclick = () => back();
-    nextBtn.onclick = () => nextStep();
-    
-    // Expose functions globally
-    window.go = go; 
-    window.back = back; 
-    window.nextStep = nextStep;
-    
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      updateNavButtons();
-      updateProgressVisibility();
-    });
-
-    // Show/hide step number when scrolling
-    function updateProgressVisibility() {
-      if (!steps[current].intro && cardInner.scrollHeight > cardInner.clientHeight) {
-        if (cardInner.scrollTop > 36) {
-          progressPage.classList.add('hide-progress');
+        pills += '</div>';
+        return pills;
+      },
+      
+      renderButtons(buttons, container) {
+        const buttonsHtml = buttons.map(btn => `
+          <button class="btn btn-${btn.style || 'primary'}" 
+                  onclick="app.handleAction('${btn.action || 'goto'}', '${btn.goto || ''}')"
+                  ontouchstart="haptic.light()">
+            ${btn.text}
+          </button>
+        `).join('');
+        
+        container.innerHTML = `
+          ${this.shouldShowProgress() ? this.renderProgress() : ''}
+          <div class="button-stack">
+            ${buttonsHtml}
+          </div>
+        `;
+      },
+      
+      renderProgress() {
+        const total = 8;
+        const current = Math.min(Math.max(this.currentStep - 1, 0), total);
+        const percent = (current / total) * 100;
+        
+        return `
+          <div class="progress-indicator">
+            <span class="progress-text">Step ${current + 1} of ${total}</span>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${percent}%"></div>
+            </div>
+          </div>
+        `;
+      },
+      
+      shouldShowProgress() {
+        const step = steps[this.currentStep];
+        return step.type === 'question' || step.type === 'action' || step.type === 'wait';
+      },
+      
+      updateProgress() {
+        // Update nav title based on step
+        const step = steps[this.currentStep];
+        const navTitle = document.querySelector('.nav-title');
+        if (step.type === 'intro') {
+          navTitle.textContent = 'Support';
+        } else if (step.type === 'success') {
+          navTitle.textContent = 'Complete';
         } else {
-          progressPage.classList.remove('hide-progress');
+          navTitle.textContent = 'Troubleshooting';
         }
-      } else {
-        progressPage.classList.remove('hide-progress');
+      },
+      
+      handleAction(action, target) {
+        if (action === 'next') {
+          this.goToStep(this.currentStep + 1);
+        } else if (action === 'goto' && target) {
+          const stepIndex = this.stepMap.get(target);
+          if (stepIndex !== undefined) {
+            this.goToStep(stepIndex);
+          }
+        } else if (action === 'restart') {
+          this.history = [];
+          this.goToStep(0);
+        }
+      },
+      
+      goToStep(index) {
+        if (index >= 0 && index < steps.length) {
+          if (this.currentStep !== index) {
+            this.history.push(this.currentStep);
+          }
+          this.currentStep = index;
+          this.render();
+          
+          // Scroll to top smoothly
+          document.getElementById('content').scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }
+      },
+      
+      goBack() {
+        if (this.history.length > 0) {
+          haptic.light();
+          this.currentStep = this.history.pop();
+          this.render();
+          
+          // Add haptic animation to back button
+          const backBtn = document.getElementById('backBtn');
+          backBtn.classList.add('haptic');
+          setTimeout(() => backBtn.classList.remove('haptic'), 100);
+        }
       }
-    }
+    };
     
-    cardInner.addEventListener('scroll', updateProgressVisibility, { passive: true });
-
     // Initialize
-    render(0);
+    app.init();
+    
+    // Prevent pull-to-refresh
+    let lastY = 0;
+    document.addEventListener('touchstart', (e) => {
+      lastY = e.touches[0].clientY;
+    });
+    
+    document.addEventListener('touchmove', (e) => {
+      const y = e.touches[0].clientY;
+      const scrollTop = document.getElementById('content').scrollTop;
+      
+      if (scrollTop === 0 && y > lastY) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+    
+    // Add to homescreen prompt
+    if ('standalone' in navigator && !navigator.standalone) {
+      setTimeout(() => {
+        // Could show "Add to Home Screen" prompt here
+      }, 2000);
+    }
   </script>
 </body>
 </html>
