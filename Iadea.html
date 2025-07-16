@@ -34,31 +34,34 @@ body {
   position: relative;
   flex-direction: column;
 }
-/* LOGO: responsive, just image, no box */
+
+/* LOGO: bigger, more space on mobile */
 .top-logo {
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  margin-top: 38px;
-  margin-bottom: -60px;
+  margin-top: 54px;
+  margin-bottom: -48px;
   z-index: 40;
   pointer-events: none;
 }
 .top-logo img {
-  width: 200px;
-  max-width: 45vw;
-  min-width: 100px;
+  width: 220px;
+  max-width: 50vw;
+  min-width: 110px;
   display: block;
   border-radius: 17px;
   box-shadow: none;
   background: none;
   pointer-events: auto;
+  transition: width .3s, max-width .3s;
 }
 @media (max-width: 700px) {
-  .top-logo { margin-top: 14px; margin-bottom: -22px;}
-  .top-logo img { width: 33vw; min-width: 60px; }
+  .top-logo { margin-top: 11vw; margin-bottom: -30px;}
+  .top-logo img { width: 60vw; max-width: 280px; min-width: 90px;}
 }
+
 /* Main card */
 .container {
   background: #fff;
@@ -66,52 +69,56 @@ body {
   box-shadow: var(--shadow);
   max-width: var(--container-width);
   width: 100%;
-  margin: 70px auto 0 auto;
+  margin: 90px auto 0 auto;
   padding: 0;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  min-height: 540px;
-  max-height: 92vh;
+  min-height: 570px;
+  max-height: 94vh;
   position: relative;
   z-index: 2;
   overflow: visible;
+  transition: margin .3s, max-width .3s;
 }
 @media (max-width: 700px) {
   .container {
-    max-width: 97vw;
-    margin: 18vw auto 0 auto;
-    min-height: 75vh;
+    max-width: 99vw;
+    margin: 24vw auto 0 auto;
+    min-height: 80vh;
     box-shadow: 0 2px 14px #f7941d15;
   }
 }
-/* Card content */
+
+/* Card content (now scrollable if needed) */
 .card-inner {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   flex: 1 1 auto;
-  padding: 40px 20px 0 20px;
+  padding: 60px 32px 0 32px;
   box-sizing: border-box;
   position: relative;
-  min-height: 340px;
+  min-height: 380px;
+  max-height: 63vh;
+  overflow-y: auto;
+  transition: padding .3s;
+  scroll-behavior: smooth;
 }
 @media (max-width: 700px) {
   .card-inner {
-    padding: 8vw 2vw 0 2vw;
-    min-height: 300px;
+    padding: 13vw 5vw 0 5vw;
+    min-height: 320px;
+    max-height: 48vh;
   }
 }
 .heading {
   font-size: var(--font-lg);
   font-weight: 700;
-  margin: 0 0 30px 0;
+  margin: 0 0 44px 0;
   text-align: left; color: #20232a;
   letter-spacing: 0.01em;
   line-height: 1.08;
-  min-width: 0;
-  word-break: break-word;
-  overflow-wrap: break-word;
 }
 #main-content {
   flex: 1 1 auto;
@@ -127,23 +134,23 @@ body {
   color: #3c3c3c;
   text-align: center;
   line-height: 1.54;
-  margin: 0 0 32px 0;
-  padding: 14px 0 0 0;
+  margin: 0 0 34px 0;
+  padding: 22px 0 0 0;
 }
 .image-placeholder {
   width: 100%;
-  max-width: 330px;
-  margin: 16px auto 20px auto;
+  max-width: 500px;
+  margin: 36px auto 38px auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 120px;
+  min-height: 140px;
 }
 .image-placeholder img {
   width: 100%;
-  max-width: 240px;
+  max-width: 380px;
   min-width: 0;
-  max-height: 160px;
+  max-height: 240px;
   height: auto;
   border-radius: 0;
   object-fit: contain;
@@ -152,30 +159,38 @@ body {
   border: none;
   margin: 0 auto;
   box-shadow: none;
+  transition: max-width .3s, max-height .3s;
 }
 @media (max-width: 700px) {
-  .image-placeholder { max-width: 77vw; min-height: 70px; }
-  .image-placeholder img { max-width: 54vw; max-height: 90px; }
+  .image-placeholder {
+    max-width: 92vw;
+    margin: 8vw auto 12vw auto;
+    min-height: 140px;
+  }
+  .image-placeholder img {
+    max-width: 90vw;
+    max-height: 220px;
+  }
 }
 .step-top {
   text-align: center;
-  font-size: 1.06em;
-  margin: 0 0 13px 0;
+  font-size: 1.19em;
+  margin: 0 0 32px 0;
   color: #222;
   font-weight: 500;
   line-height: 1.36;
 }
 .step-bottom {
   text-align: center;
-  font-size: 1.02em;
+  font-size: 1.12em;
   color: #333;
   font-weight: 500;
   line-height: 1.36;
-  margin: 18px 0 10px 0;
+  margin: 24px 0 32px 0;
 }
 .buttons-area {
   width: 100%;
-  padding: 0 8px 20px 8px;
+  padding: 0 18px 70px 18px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -184,21 +199,21 @@ body {
   flex-shrink: 0;
 }
 @media (max-width: 700px) {
-  .buttons-area { padding: 0 2vw 5vw 2vw; }
+  .buttons-area { padding: 0 3vw 23vw 3vw; }
 }
 .buttons {
-  display: flex; flex-direction: column; gap: 12px;
+  display: flex; flex-direction: column; gap: 22px;
   justify-content: center; align-items: stretch;
   width: 100%;
-  max-width: 380px;
+  max-width: 460px;
   margin: 0 auto;
 }
 .buttons button {
   width: 100%;
   min-width: 0;
   height: var(--btn-height);
-  padding: 0 8px;
-  border: none; border-radius: 14px;
+  padding: 0 10px;
+  border: none; border-radius: 15px;
   font-size: var(--font-md);
   font-weight: 600;
   cursor: pointer;
@@ -218,23 +233,24 @@ body {
   width: 100vw;
   position: fixed;
   left: 0;
-  bottom: 46px;
+  bottom: 54px;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10;
   pointer-events: none;
+  transition: opacity 0.28s, visibility 0.28s;
 }
 .progress-page-number {
-  font-size: 1.02em;
+  font-size: 1.11em;
   font-weight: 600;
   color: #f7941d;
   background: #fffdfaee;
   border-radius: 999px;
   box-shadow: 0 1px 6px #0001;
-  padding: 5px 17px;
+  padding: 8px 22px;
   letter-spacing: 0.02em;
-  margin: 0 0 7px 0;
+  margin: 0 0 10px 0;
   pointer-events: none;
   user-select: none;
 }
@@ -256,6 +272,12 @@ body {
   width: 0;
   transition: width 0.36s cubic-bezier(.4,1.6,.6,1);
 }
+/* Hide progress-page when scrolling */
+.progress-page.hide-progress {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none;
+}
 /* Back/Next Buttons OUTSIDE, hugging the card (mobile & desktop) */
 .attached-btn, .attached-next-btn {
   position: fixed;
@@ -267,8 +289,8 @@ body {
   border-radius: 50%;
   border: none;
   box-shadow: 0 2px 8px #f7941d18;
-  width: 44px; height: 44px;
-  font-size: 1.4em;
+  width: 50px; height: 50px;
+  font-size: 1.55em;
   cursor: pointer;
   outline: none;
   display: flex;
@@ -279,22 +301,22 @@ body {
 }
 .attached-btn { 
   left: 50%; 
-  margin-left: calc(-1 * (var(--container-width)/2) - 26px); 
+  margin-left: calc(-1 * (var(--container-width)/2) - 30px); 
 }
 .attached-next-btn { 
   right: 50%; 
-  margin-right: calc(-1 * (var(--container-width)/2) - 26px); 
+  margin-right: calc(-1 * (var(--container-width)/2) - 30px); 
 }
 @media (max-width: 700px) {
   .attached-btn {
     left: 1vw;
     margin-left: 0;
-    width: 34px; height: 34px; font-size: 1.0em;
+    width: 44px; height: 44px; font-size: 1.17em;
   }
   .attached-next-btn {
     right: 1vw;
     margin-right: 0;
-    width: 34px; height: 34px; font-size: 1.0em;
+    width: 44px; height: 44px; font-size: 1.17em;
   }
 }
   </style>
@@ -399,6 +421,8 @@ body {
     const pbi = document.getElementById('progress-bar-inner');
     const backBtn = document.getElementById('attached-btn');
     const nextBtn = document.getElementById('attached-next-btn');
+    const cardInner = document.getElementById('card-inner');
+    const progressPage = document.getElementById('progress-page');
     const totalSteps = steps.length - 1;
 
     function updateNavButtons() {
@@ -433,13 +457,15 @@ body {
       if (!step.intro) {
         const page = i;
         let progressStepNum = (page > 0 && page < steps.length) ? page : 1;
-        document.getElementById('progress-page').innerHTML = 
+        progressPage.innerHTML = 
           `<span class="progress-page-number">Step ${progressStepNum} of ${totalSteps}</span>`;
         const pct = ((i-1) / (totalSteps-1)) * 100;
         pbi.style.width = pct + "%";
       } else {
-        document.getElementById('progress-page').innerHTML = "";
+        progressPage.innerHTML = "";
       }
+      // Always check progress visibility on render!
+      updateProgressVisibility();
     }
     function go(i) { 
       if (i >= 0 && i < steps.length) { 
@@ -465,6 +491,22 @@ body {
     nextBtn.onclick = () => nextStep();
     window.go = go; window.back = back; window.nextStep = nextStep;
     window.addEventListener('resize', updateNavButtons);
+
+    // --- Show/hide step number when card scrolls ---
+    function updateProgressVisibility() {
+      // Only hide progress when not intro and scrolled down
+      if (!steps[current].intro && cardInner.scrollHeight > cardInner.clientHeight) {
+        if (cardInner.scrollTop > 36) {
+          progressPage.classList.add('hide-progress');
+        } else {
+          progressPage.classList.remove('hide-progress');
+        }
+      } else {
+        progressPage.classList.remove('hide-progress');
+      }
+    }
+    cardInner.addEventListener('scroll', updateProgressVisibility);
+
     render(0);
   </script>
 </body>
