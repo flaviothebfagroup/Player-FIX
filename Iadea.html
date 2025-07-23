@@ -724,11 +724,11 @@
         type: 'question',
         content: {
           title: 'Internet Connection',
-          subtitle: 'Has your internet connection or WiFi network been changed recently?',
+          subtitle: 'Has your internet connection or WiFi network been worked on recently?',
           image: 'https://media.lordicon.com/icons/wired/outline/745-wifi-connection.gif',
           buttons: [
-            { text: 'Yes, it changed', goto: 'contact', style: 'secondary' },
-            { text: 'No changes', goto: 'tv-power', style: 'primary' }
+            { text: 'Yes', goto: 'contact', style: 'secondary' },
+            { text: 'No', goto: 'tv-power', style: 'primary' }
           ]
         }
       },
@@ -737,11 +737,11 @@
         type: 'question',
         content: {
           title: 'Check Your TV',
-          subtitle: 'Is your TV or display turned on?',
+          subtitle: 'Is your TV powered on?',
           image: 'https://media.lordicon.com/icons/wired/outline/1734-tv-turn-on.gif',
           buttons: [
             { text: 'Yes, it\'s on', goto: 'player-led', style: 'primary' },
-            { text: 'No, it\'s off', goto: 'contact', style: 'secondary' }
+            { text: 'No, it\'s off', goto: 'tv-restart', style: 'secondary' }
           ]
         }
       },
@@ -750,7 +750,7 @@
         type: 'question',
         content: {
           title: 'IADEA Player Status',
-          subtitle: 'Look at your IADEA player. Is it powered on with a green LED light?',
+          subtitle: 'Locate your IADEA player behind the TV. Is it powered on with a green LED light?',
           image: 'https://i.imgur.com/J13LMrc.gif',
           buttons: [
             { text: 'Yes, green LED is on', goto: 'power-cycle', style: 'primary' },
@@ -762,12 +762,12 @@
         id: 'power-cycle',
         type: 'action',
         content: {
-          title: 'Power Cycle',
-          subtitle: 'Let\'s restart your IADEA player:',
-          instruction: '1. Unplug the power cable\n2. Wait 60 seconds\n3. Plug it back in\n4. Wait for the green LED',
+          title: 'Let\'s restart your IADEA player:',
+          subtitle: '',
+          instruction: '1. Unplug the power cable at the media player or at the wall outlet (two-sided power cable)\n2. Wait 60 seconds\n3. Plug it back in\n4. Wait for the green LED\n5. Wait two minutes for the screen to boot up',
           image: 'https://i.imgur.com/Vb0pqwS.gif',
           buttons: [
-            { text: 'Done! It\'s working', goto: 'success', style: 'success' },
+            { text: 'Done!  If content is playing on the screen', goto: 'success', style: 'success' },
             { text: 'Still not working', goto: 'hdmi-check', style: 'secondary' }
           ]
         }
@@ -776,12 +776,13 @@
         id: 'hdmi-check',
         type: 'question',
         content: {
-          title: 'HDMI Connection',
+          title: 'Check HDMI Connection',
           subtitle: 'Is the HDMI cable properly connected to both the player and TV?',
           image: 'https://i.imgur.com/35gQgop.gif',
+          instruction:' Make sure conections are secure',
           buttons: [
             { text: 'Yes, properly connected', goto: 'error-check', style: 'primary' },
-            { text: 'No or not sure', goto: 'contact', style: 'secondary' }
+            { text: 'No', goto: 'contact', style: 'secondary' }
           ]
         }
       },
@@ -789,11 +790,11 @@
         id: 'error-check',
         type: 'question',
         content: {
-          title: 'Error Messages',
-          subtitle: 'Do you see any error messages on your TV screen?',
+          title: 'Is there content now playing on you TV?',
+          subtitle: '',
           image: 'https://media.lordicon.com/icons/wired/outline/2592-fail.gif',
           buttons: [
-            { text: 'Yes, I see an error', goto: 'tv-restart', style: 'secondary' },
+            { text: 'Yes, working', goto: 'success', style: 'secondary' },
             { text: 'No errors visible', goto: 'wait-content', style: 'primary' }
           ]
         }
@@ -833,6 +834,7 @@
           title: 'Let\'s Connect You',
           subtitle: 'Our support team is ready to help resolve this issue quickly.',
           phone: '(647) 209-0519',
+          subtitle:'Ask for Digital support team',
           note: 'Have your location details ready',
           buttons: [
             { text: 'Start Over', action: 'restart', style: 'primary' }
