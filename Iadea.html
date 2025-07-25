@@ -746,6 +746,20 @@
         }
       },
       {
+        id: 'turn-on',
+        type: 'static-action',
+        content: {
+          title: 'Turn ON Your TV',
+          subtitle: 'Let\'s try Puging your TV:',
+          instruction: '1. Turn off the TV using the remote or power button\n2. Wait 10 seconds\n3. Wait for the display to appear',
+          image: 'https://media.lordicon.com/icons/wired/outline/1745-remote-control.gif',
+          buttons: [
+            { text: 'Fixed! Thank you', goto: 'success', style: 'success' },
+            { text: 'Still having issues', goto: 'wait-content', style: 'secondary' }
+          ]
+        }
+      },
+      {
         id: 'player-led',
         type: 'question',
         content: {
@@ -815,7 +829,7 @@
       },
       {
         id: 'wait-content',
-        type: 'wait',
+        type: 'static-action',
         content: {
           title: 'Content Loading',
           subtitle: 'Your player might be downloading updates. Please wait up to 5 minutes for content to appear.',
@@ -852,20 +866,7 @@
           ]
         }
       },
-   {
-        id: 'turn-on',
-        type: 'action',
-        content: {
-          title: 'Turn ON Your TV',
-          subtitle: 'Let\'s try Puging your TV:',
-          instruction: '1. Turn off the TV using the remote or power button\n2. Wait 10 seconds\n3. Wait for the display to appear',
-          image: 'https://media.lordicon.com/icons/wired/outline/1745-remote-control.gif',
-          buttons: [
-            { text: 'Fixed! Thank you', goto: 'success', style: 'success' },
-            { text: 'Still having issues', goto: 'wait-content', style: 'secondary' }
-          ]
-        }
-      }
+   
     ];
 
     // App State
@@ -919,10 +920,11 @@
         // Render based on type
         switch(step.type) {
           case 'intro':
-            this.renderIntro(step, stepCard, bottomAction);
+            this.renderIntro(step, stepCard, bottomAction,);
             break;
           case 'question':
           case 'action':
+          case 'static-action':
             this.renderQuestion(step, stepCard, bottomAction);
             break;
           case 'wait':
