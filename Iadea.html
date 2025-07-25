@@ -741,7 +741,7 @@
           image: 'https://media.lordicon.com/icons/wired/outline/1734-tv-turn-on.gif',
           buttons: [
             { text: 'Yes, it\'s on', goto: 'player-led', style: 'primary' },
-            { text: 'No, it\'s off', goto: 'tv-restart', style: 'secondary' }
+            { text: 'No, it\'s off', goto: 'turn-on', style: 'secondary' }
           ]
         }
       },
@@ -849,6 +849,20 @@
           subtitle: 'Your IADEA player is working properly. Your content should be displaying as expected.',
           buttons: [
             { text: 'Troubleshoot Again', action: 'restart', style: 'primary' }
+          ]
+        }
+      },
+   {
+        id: 'turn-on',
+        type: 'action',
+        content: {
+          title: 'Turn ON Your TV',
+          subtitle: 'Let\'s try Puging your TV:',
+          instruction: '1. Turn off the TV using the remote or power button\n2. Wait 10 seconds\n3. Wait for the display to appear',
+          image: 'https://media.lordicon.com/icons/wired/outline/1745-remote-control.gif',
+          buttons: [
+            { text: 'Fixed! Thank you', goto: 'success', style: 'success' },
+            { text: 'Still having issues', goto: 'wait-content', style: 'secondary' }
           ]
         }
       }
