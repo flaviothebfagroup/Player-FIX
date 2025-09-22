@@ -1,191 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="theme-color" content="#F7941D">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#F7941D" />
   <title>BrightSign Support</title>
-  <style>
-    /* =========================================================
-       Tokens — BFA Orange as the accent (no purple)
-    ========================================================= */
-    :root{
-      /* Accent */
-      --orange:#F7941D;
-      --orange-dark:#E6831A;
-      --orange-light:#FFA94D;
-      --orange-pale:#FFF3E6;
-      --orange-ultra-pale:#FFFAF5;
 
-      /* Use accent everywhere */
-      --accent: var(--orange);
+  <!-- Phosphor Icons (REGULAR/outline, lighter look) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css"/>
+
+  <style>
+    :root{
+      /* Brand orange */
+      --accent:#F7941D;
+      --accent-200:#FFD6A6;
+      --accent-50:#FFF7ED;
 
       /* Greys */
       --gray-900:#0F0F0F; --gray-800:#1A1A1A; --gray-700:#2D2D2D;
       --gray-600:#4A4A4A; --gray-500:#6B6B6B; --gray-400:#8E8E8E;
       --gray-300:#B8B8B8; --gray-200:#E1E1E1; --gray-100:#F5F5F5; --gray-50:#FAFAFA;
 
-      /* Status (map success to orange per your request) */
-      --success: var(--orange);
-      --warning:#FF8800;
-      --error:#FF3547;
+      /* Make success orange too (as requested) */
+      --success: var(--accent);
 
-      /* Safe areas & easing */
       --safe-top: env(safe-area-inset-top);
       --safe-bottom: env(safe-area-inset-bottom);
-      --safe-left: env(safe-area-inset-left);
-      --safe-right: env(safe-area-inset-right);
-      --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
-      --ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+      --spring: cubic-bezier(0.175,0.885,0.32,1.275);
+      --ease-out: cubic-bezier(0.215,0.61,0.355,1);
     }
 
-    /* =========================================================
-       Reset & Base
-    ========================================================= */
-    *{ margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; -webkit-touch-callout:none; user-select:none; }
-    html{ font-size:16px; -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+    html{font-size:16px;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
     body{
       font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-      background:var(--gray-50); color:var(--gray-900); line-height:1.5;
-      overflow:hidden; position:fixed; width:100%; height:100%; touch-action:pan-y;
+      background:var(--gray-50);color:var(--gray-900);line-height:1.5;
+      overflow:hidden;position:fixed;width:100%;height:100%;touch-action:pan-y;
     }
 
-    /* =========================================================
-       App Shell
-    ========================================================= */
-    .app{ position:relative; width:100%; height:100%; display:flex; flex-direction:column; background:linear-gradient(180deg,#FFFFFF 0%, var(--gray-50) 100%); }
-    .status-bar{ position:fixed; top:0; left:0; right:0; height:var(--safe-top); background:rgba(255,255,255,.9); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); z-index:1000; }
+    /* App */
+    .app{position:relative;width:100%;height:100%;display:flex;flex-direction:column;background:linear-gradient(180deg,#fff 0%,var(--gray-50) 100%)}
+    .status-bar{position:fixed;top:0;left:0;right:0;height:var(--safe-top);background:rgba(255,255,255,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:1000}
+    .nav-bar{position:relative;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;padding-top:calc(12px + var(--safe-top));background:rgba(255,255,255,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:.5px solid rgba(0,0,0,.1);z-index:100}
+    .nav-back{width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:var(--accent-50);border-radius:20px;cursor:pointer;transition:all .2s var(--ease-out);position:relative;overflow:hidden}
+    .nav-back::before{content:"";position:absolute;inset:0;background:var(--accent);opacity:0;transition:opacity .2s}
+    .nav-back:active::before{opacity:.12}
+    .nav-back svg{width:24px;height:24px;stroke:var(--accent);stroke-width:2.5;position:relative;z-index:1}
+    .nav-back.hidden{opacity:.1;pointer-events:none;transform:scale(.8)}
+    .nav-title{font-size:17px;font-weight:600;letter-spacing:-.02em;color:var(--gray-900);position:fixed;left:0%;transform:translateX(50%)}
+    .nav-logo{height:40px;width:auto}
 
-    .nav-bar{
-      position:relative; display:flex; align-items:center; justify-content:space-between;
-      padding:12px 20px; padding-top:calc(12px + var(--safe-top));
-      background:rgba(255,255,255,.9); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-      border-bottom:.5px solid rgba(0,0,0,.1); z-index:100;
-    }
-    .nav-back{
-      width:40px; height:40px; display:flex; align-items:center; justify-content:center;
-      background:var(--orange-pale); border-radius:20px; cursor:pointer; transition:all .2s var(--ease-out);
-      position:relative; overflow:hidden;
-    }
-    .nav-back::before{ content:''; position:absolute; inset:0; background:var(--accent); opacity:0; transition:opacity .2s; }
-    .nav-back:active::before{ opacity:.1; }
-    .nav-back svg{ width:24px; height:24px; stroke:var(--accent); stroke-width:2.5; position:relative; z-index:1; }
-    .nav-back.hidden{ opacity:.1; pointer-events:none; transform:scale(.8); }
+    /* Content */
+    .content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:20px;padding-bottom:calc(20px + var(--safe-bottom) + 100px)}
+    .step-card{background:#fff;border-radius:24px;padding:32px 24px;box-shadow:0 2px 20px rgba(0,0,0,.06);animation:slideUp .5s var(--spring) both;transform-origin:center bottom;max-width:500px;margin:0 auto}
+    @keyframes slideUp{from{opacity:0;transform:translateY(40px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
 
-    .nav-title{ font-size:17px; font-weight:600; letter-spacing:-.02em; color:var(--gray-900); position:fixed; left:0%; transform:translateX(50%); }
-    .nav-logo{ height:40px; width:auto; }
+    /* Progress pills */
+    .step-pills{display:flex;justify-content:center;gap:6px;margin-bottom:32px}
+    .step-pill{width:8px;height:8px;border-radius:4px;background:var(--gray-200);transition:all .3s var(--ease-out)}
+    .step-pill.active{width:24px;background:var(--accent)}
 
-    .content{ flex:1; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; padding:20px; padding-bottom:calc(20px + var(--safe-bottom) + 100px); }
-    .step-card{ background:white; border-radius:24px; padding:32px 24px; box-shadow:0 2px 20px rgba(0,0,0,.06); animation:slideUp .5s var(--spring) both; transform-origin:center bottom; max-width:500px; margin:0 auto; }
-    @keyframes slideUp{ from{opacity:0; transform:translateY(40px) scale(.95);} to{opacity:1; transform:translateY(0) scale(1);} }
+    /* Type */
+    .step-title{font-size:24px;font-weight:700;line-height:1.2;letter-spacing:-.03em;color:var(--gray-900);text-align:center;margin-bottom:20px}
+    .step-subtitle{font-size:17px;line-height:1.4;color:var(--gray-600);text-align:center;margin-bottom:20px}
 
-    /* =========================================================
-       Step Indicators & Typography
-    ========================================================= */
-    .step-pills{ display:flex; justify-content:center; gap:6px; margin-bottom:32px; }
-    .step-pill{ width:8px; height:8px; border-radius:4px; background:var(--gray-200); transition:all .3s var(--ease-out); }
-    .step-pill.active{ width:24px; background:var(--accent); }
+    /* Visuals */
+    .illustration{width:100%;height:200px;display:flex;align-items:center;justify-content:center;margin:20px 0;position:relative}
+    .illustration img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px}
+    .illustration.icon i{font-size:120px;line-height:1;color:var(--accent)} /* lighter outline icons */
+    .illustration.pulse{animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 
-    .step-title{ font-size:24px; font-weight:700; line-height:1.2; letter-spacing:-.03em; color:var(--gray-900); text-align:center; margin-bottom:24px; }
-    .step-subtitle{ font-size:17px; line-height:1.4; color:var(--gray-600); text-align:center; margin-bottom:32px; }
+    /* Buttons */
+    .button-stack{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+    .btn{position:relative;display:flex;align-items:center;justify-content:center;min-height:56px;padding:16px 24px;border:none;border-radius:16px;font-size:17px;font-weight:600;letter-spacing:-.02em;cursor:pointer;transition:all .2s var(--ease-out);overflow:hidden}
+    .btn::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(255,255,255,.35), transparent);opacity:0;transform:scale(0);transition:all .4s}
+    .btn:active::before{opacity:1;transform:scale(2)}
+    .btn-primary{background:var(--accent);color:white;box-shadow:0 4px 20px rgba(247,148,29,.25)}
+    .btn-primary:active{transform:translateY(1px);box-shadow:0 2px 10px rgba(247,148,29,.25)}
+    .btn-secondary{background:var(--gray-100);color:var(--gray-800)}
+    .btn-secondary:active{background:var(--gray-200);transform:translateY(1px)}
+    .btn-success{background:var(--success);color:white;box-shadow:0 4px 20px rgba(247,148,29,.25)}
 
-    /* =========================================================
-       Illustration
-    ========================================================= */
-    .illustration{ width:100%; height:200px; display:flex; align-items:center; justify-content:center; margin:32px 0; position:relative; animation:fadeScale .6s var(--spring) .2s both; }
-    @keyframes fadeScale{ from{opacity:0; transform:scale(.8);} to{opacity:1; transform:scale(1);} }
-    .illustration img{ max-width:100%; max-height:100%; object-fit:contain; }
-    .illustration.pulse{ animation:pulse 2s ease-in-out infinite; }
-    @keyframes pulse{ 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+    /* Phone card */
+    .phone-card{background:var(--accent-50);border-radius:16px;padding:20px;margin:16px 0;text-align:center;cursor:pointer;transition:all .2s var(--ease-out)}
+    .phone-card:active{transform:scale(.98)}
+    .phone-label{font-size:14px;color:var(--gray-600);margin-bottom:4px}
+    .phone-number{font-size:24px;font-weight:700;color:var(--accent);letter-spacing:-.02em}
 
-    /* =========================================================
-       Buttons
-    ========================================================= */
-    .button-stack{ display:flex; flex-direction:column; gap:12px; margin-top:40px; }
-    .btn{
-      position:relative; display:flex; align-items:center; justify-content:center;
-      min-height:56px; padding:16px 24px; border:none; border-radius:16px;
-      font-size:17px; font-weight:600; letter-spacing:-.02em; cursor:pointer;
-      transition:all .2s var(--ease-out); overflow:hidden;
-    }
-    .btn::before{ content:''; position:absolute; inset:0; background:radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(255,255,255,.3), transparent); opacity:0; transform:scale(0); transition:all .4s; }
-    .btn:active::before{ opacity:1; transform:scale(2); }
+    /* Success animation */
+    .success-animation{width:120px;height:120px;margin:0 auto 24px;position:relative}
+    .success-circle{position:absolute;inset:0;border-radius:50%;background:var(--success);opacity:.1;animation:successPulse 1.5s ease-out}
+    .success-check{position:absolute;inset:20px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:successScale .6s var(--spring) .3s both}
+    .success-check svg{width:40px;height:40px;stroke:#fff;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:checkDraw .6s ease-out .6s forwards}
+    @keyframes successPulse{from{transform:scale(.8);opacity:.5}to{transform:scale(2);opacity:0}}
+    @keyframes successScale{from{transform:scale(0)}to{transform:scale(1)}}
+    @keyframes checkDraw{to{stroke-dashoffset:0}}
 
-    .btn-primary{ background:var(--accent); color:white; box-shadow:0 4px 20px rgba(247,148,29,.25); }
-    .btn-primary:active{ transform:translateY(1px); box-shadow:0 2px 10px rgba(247,148,29,.25); }
+    /* Bottom actions & progress */
+    .bottom-action{position:fixed;bottom:0;left:0;right:0;padding:20px;padding-bottom:calc(20px + var(--safe-bottom));background:linear-gradient(to top,#fff 60%,transparent);pointer-events:none;z-index:90}
+    .bottom-action>*{pointer-events:auto}
+    .progress-indicator{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;max-width:500px;margin-left:auto;margin-right:auto}
+    .progress-text{font-size:14px;font-weight:600;color:var(--accent)}
+    .progress-bar{flex:1;height:4px;background:var(--gray-200);border-radius:2px;margin:0 16px;overflow:hidden}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent) 0%, #FFB454 100%);border-radius:2px;transition:width .6s var(--spring);position:relative}
+    .progress-fill::after{content:"";position:absolute;top:0;right:0;bottom:0;width:100px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45));animation:shimmer 2s linear infinite}
+    @keyframes shimmer{from{transform:translateX(-100px)}to{transform:translateX(100px)}}
 
-    .btn-secondary{ background:var(--gray-100); color:var(--gray-800); }
-    .btn-secondary:active{ background:var(--gray-200); transform:translateY(1px); }
-
-    /* “Success” now uses orange per your request */
-    .btn-success{ background:var(--success); color:white; box-shadow:0 4px 20px rgba(247,148,29,.25); }
-
-    /* =========================================================
-       Intro & Brand
-    ========================================================= */
-    .intro-hero{ text-align:center; padding:10px 0; }
-    .intro-hero .brand-icon{ width:120px; height:90px; margin:0 auto 20px; background:none; border-radius:24px; display:flex; align-items:center; justify-content:center; animation:heroScale .6s var(--spring) both; }
-    @keyframes heroScale{ from{opacity:0; transform:scale(.5) rotate(-10deg);} to{opacity:1; transform:scale(1) rotate(0);} }
-    .brand-icon img{ width:100%; height:100%; object-fit:contain; }
-    .intro-title{
-      font-size:32px; font-weight:800; letter-spacing:-.04em; margin-bottom:12px;
-      background:linear-gradient(135deg, var(--accent) 0%, var(--orange-light) 100%);
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    }
-
-    /* =========================================================
-       Phone Card
-    ========================================================= */
-    .phone-card{ background:var(--orange-pale); border-radius:16px; padding:20px; margin:24px 0; text-align:center; cursor:pointer; transition:all .2s var(--ease-out); }
-    .phone-card:active{ transform:scale(.98); }
-    .phone-label{ font-size:14px; color:var(--gray-600); margin-bottom:4px; }
-    .phone-number{ font-size:24px; font-weight:700; color:var(--accent); letter-spacing:-.02em; }
-
-    /* =========================================================
-       Success Animation — now orange
-    ========================================================= */
-    .success-animation{ width:120px; height:120px; margin:0 auto 32px; position:relative; }
-    .success-circle{ position:absolute; inset:0; border-radius:50%; background:var(--success); opacity:.1; animation:successPulse 1.5s ease-out; }
-    .success-check{ position:absolute; inset:20px; background:var(--success); border-radius:50%; display:flex; align-items:center; justify-content:center; animation:successScale .6s var(--spring) .3s both; }
-    .success-check svg{ width:40px; height:40px; stroke:white; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:60; stroke-dashoffset:60; animation:checkDraw .6s ease-out .6s forwards; }
-    @keyframes successPulse{ from{ transform:scale(.8); opacity:.5;} to{ transform:scale(2); opacity:0;} }
-    @keyframes successScale{ from{ transform:scale(0);} to{ transform:scale(1);} }
-    @keyframes checkDraw{ to{ stroke-dashoffset:0;} }
-
-    /* =========================================================
-       Bottom Actions & Progress — orange
-    ========================================================= */
-    .bottom-action{ position:fixed; bottom:0; left:0; right:0; padding:20px; padding-bottom:calc(20px + var(--safe-bottom)); background:linear-gradient(to top, white 60%, transparent); pointer-events:none; z-index:90; }
-    .bottom-action > *{ pointer-events:auto; }
-    .progress-indicator{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; max-width:500px; margin-left:auto; margin-right:auto; }
-    .progress-text{ font-size:14px; font-weight:600; color:var(--accent); }
-    .progress-bar{ flex:1; height:4px; background:var(--gray-200); border-radius:2px; margin:0 16px; overflow:hidden; }
-    .progress-fill{ height:100%; background:linear-gradient(90deg, var(--accent) 0%, var(--orange-light) 100%); border-radius:2px; transition:width .6s var(--spring); position:relative; }
-    .progress-fill::after{ content:''; position:absolute; top:0; right:0; bottom:0; width:100px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.4)); animation:shimmer 2s linear infinite; }
-    @keyframes shimmer{ from{ transform:translateX(-100px);} to{ transform:translateX(100px);} }
-
-    /* Loading Dots — orange */
-    .loading-dots{ display:flex; justify-content:center; gap:8px; padding:20px; }
-    .loading-dot{ width:12px; height:12px; background:var(--accent); border-radius:50%; animation:loadingBounce 1.4s ease-in-out infinite; }
-    .loading-dot:nth-child(1){ animation-delay:0s;} .loading-dot:nth-child(2){ animation-delay:.2s;} .loading-dot:nth-child(3){ animation-delay:.4s;}
-    @keyframes loadingBounce{ 0%,80%,100%{ transform:translateY(0) scale(1); opacity:1;} 40%{ transform:translateY(-20px) scale(1.1); opacity:.8;} }
-
-    /* Responsive & A11y */
-    @media (max-height:700px){ .illustration{height:140px;} .step-card{padding:24px 20px;} .button-stack{margin-top:24px;} }
-    .haptic{ animation:haptic .1s linear; } @keyframes haptic{ 0%,100%{transform:scale(1);} 50%{transform:scale(.98);} }
-    .swipe-hint{ position:absolute; bottom:80px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:8px; font-size:14px; color:var(--gray-500); animation:swipeHint 3s ease-in-out infinite; }
-    @keyframes swipeHint{ 0%,100%{ opacity:.5; transform: translateX(-50%) translateY(0);} 50%{ opacity:1; transform: translateX(-50%) translateY(-4px);} }
-    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .loading-dots{display:flex;justify-content:center;gap:8px;padding:20px}
+    .loading-dot{width:12px;height:12px;background:var(--accent);border-radius:50%;animation:loadingBounce 1.4s ease-in-out infinite}
+    .loading-dot:nth-child(2){animation-delay:.2s}
+    .loading-dot:nth-child(3){animation-delay:.4s}
+    @keyframes loadingBounce{0%,80%,100%{transform:translateY(0) scale(1);opacity:1}40%{transform:translateY(-20px) scale(1.1);opacity:.8}}
 
     /* Dark mode */
     @media (prefers-color-scheme: dark){
-      :root{ --gray-50:#1A1A1A; --gray-100:#2D2D2D; --gray-200:#4A4A4A; --gray-900:#FFFFFF; --gray-800:#F5F5F5; }
-      .app{ background:linear-gradient(180deg, #000 0%, #1A1A1A 100%); }
-      .step-card{ background:#2D2D2D; box-shadow:0 2px 20px rgba(0,0,0,.5); }
-      .nav-bar, .status-bar{ background:rgba(0,0,0,.9); }
+      :root{--gray-50:#1A1A1A;--gray-100:#2D2D2D;--gray-200:#4A4A4A;--gray-900:#FFFFFF}
+      .app{background:linear-gradient(180deg,#000 0%,#1A1A1A 100%)}
+      .step-card{background:#2D2D2D;box-shadow:0 2px 20px rgba(0,0,0,.5)}
+      .nav-bar,.status-bar{background:rgba(0,0,0,.9)}
+      .phone-card{background:rgba(247,148,29,.12)}
     }
   </style>
 </head>
@@ -198,7 +134,7 @@
         <svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor"/></svg>
       </div>
       <h1 class="nav-title">Support</h1>
-      <img src="https://i.imgur.com/fDv6d8s.png" alt="BFA Digital" class="nav-logo">
+      <img src="https://i.imgur.com/fDv6d8s.png" alt="BFA Digital" class="nav-logo" />
     </nav>
 
     <main class="content" id="content">
@@ -209,15 +145,14 @@
   </div>
 
   <script>
-    /* Haptics */
+    // Haptics
     const haptic = {
-      light:  () => navigator.vibrate && navigator.vibrate(10),
+      light: () => navigator.vibrate && navigator.vibrate(10),
       medium: () => navigator.vibrate && navigator.vibrate(20),
-      heavy:  () => navigator.vibrate && navigator.vibrate(30),
-      success:() => navigator.vibrate && navigator.vibrate([10,10,10]),
+      success: () => navigator.vibrate && navigator.vibrate([10,10,10])
     };
 
-    /* Touch ripple */
+    // Ripple origin
     document.addEventListener('touchstart', (e) => {
       if (e.target.classList.contains('btn')) {
         const rect = e.target.getBoundingClientRect();
@@ -228,15 +163,15 @@
       }
     });
 
-    /* Steps (BrightSign, customer-friendly) */
+    // Steps (Photos kept where relevant; icons are lighter "regular" outline)
     const steps = [
       {
         id: 'welcome',
         type: 'intro',
         content: {
           title: 'BrightSign Support',
-          subtitle: "We’ll get your screen playing again in just a few simple steps.",
-          image: 'https://www.fullcompass.com/common/products/lgr/382409.jpg?mmr=230', // BrightSign LS front
+          subtitle: 'We’ll get your screen playing again in a few simple steps.',
+          image: 'https://www.fullcompass.com/common/products/lgr/382409.jpg?mmr=230', // BrightSign LS (front)
           buttons: [{ text: 'Begin Troubleshooting', action: 'next', style: 'primary' }]
         }
       },
@@ -245,8 +180,8 @@
         type: 'question',
         content: {
           title: 'Wi-Fi / Internet changed recently?',
-          subtitle: 'If someone updated the Wi-Fi name/password or network box, the player may need to reconnect.',
-          image: 'https://media.lordicon.com/icons/wired/outline/745-wifi-connection.gif',
+          subtitle: 'If the Wi-Fi name/password or router changed, the player may just need reconnection.',
+          icon: 'ph-wifi-high',
           buttons: [
             { text: 'Yes, something changed', goto: 'contact', style: 'secondary' },
             { text: 'No changes', goto: 'tv-power', style: 'primary' }
@@ -259,9 +194,9 @@
         content: {
           title: 'Is the TV ON?',
           subtitle: 'If it’s off, please turn it on first.',
-          image: 'https://media.lordicon.com/icons/wired/outline/1734-tv-turn-on.gif',
+          icon: 'ph-television',
           buttons: [
-            { text: "Yes, it’s on", goto: 'player-led', style: 'primary' },
+            { text: "Yes, it's on", goto: 'player-led', style: 'primary' },
             { text: 'It was off — now on', goto: 'player-led', style: 'secondary' }
           ]
         }
@@ -270,9 +205,9 @@
         id: 'player-led',
         type: 'question',
         content: {
-          title: 'Find the BrightSign box',
-          subtitle: 'Look for the small purple BrightSign player behind/near the TV. Do you see a light on it (light on = powered)?',
-          image: 'https://www.fullcompass.com/common/products/lgr/382406.jpg?mmr=230', // BrightSign LS angle
+          title: 'Find the BrightSign player',
+          subtitle: 'Look for the small BrightSign box near the TV. Do you see a light on it (on = powered)?',
+          image: 'https://www.fullcompass.com/common/products/lgr/382406.jpg?mmr=230', // LS angle view
           buttons: [
             { text: 'Yes, a light is on', goto: 'power-cycle', style: 'primary' },
             { text: 'No light / cannot find it', goto: 'contact', style: 'secondary' }
@@ -284,8 +219,13 @@
         type: 'action',
         content: {
           title: 'Quick restart of the player',
-          instruction: '1) Unplug the player’s power (or unplug network if it powers the box via PoE)\n2) Wait 20 seconds\n3) Plug it back in\n4) The light should come on\n5) Give the TV up to 2 minutes to show content',
-          image: 'https://i.imgur.com/Vb0pqwS.gif',
+          instruction:
+            '1) Unplug the player’s power (or network if it powers the box via PoE)\n' +
+            '2) Wait 20 seconds\n' +
+            '3) Plug it back in\n' +
+            '4) Watch for the player light to come on\n' +
+            '5) Give the TV up to 2 minutes to show content',
+          icon: 'ph-arrows-clockwise',
           buttons: [
             { text: 'Content is playing 👍', goto: 'success', style: 'success' },
             { text: 'Still not playing', goto: 'hdmi-check', style: 'secondary' }
@@ -298,8 +238,8 @@
         content: {
           title: 'Check the HDMI cable',
           subtitle: 'Make sure the HDMI is firmly plugged into the BrightSign and the TV.',
-          image: 'https://www.fullcompass.com/common/products/lgr/382408.jpg?mmr=230', // rear ports (HDMI/Ethernet)
           instruction: 'Unplug and re-insert the HDMI on both ends, firmly.',
+          image: 'https://www.fullcompass.com/common/products/lgr/382408.jpg?mmr=230', // rear ports (HDMI/Ethernet)
           buttons: [
             { text: 'HDMI looks good', goto: 'error-check', style: 'primary' },
             { text: 'Cable looks damaged / loose', goto: 'contact', style: 'secondary' }
@@ -311,8 +251,8 @@
         type: 'question',
         content: {
           title: 'Do you see your content now?',
-          subtitle: 'If you see a BrightSign setup screen, the player is on and may still be loading.',
-          image: 'https://media.lordicon.com/icons/wired/outline/729-interface-slider-music.gif',
+          subtitle: 'If you see a BrightSign setup/info screen, the player is on but content may still be loading.',
+          icon: 'ph-play-circle',
           buttons: [
             { text: 'Yes, it’s working', goto: 'success', style: 'secondary' },
             { text: 'No, still not working', goto: 'wait-content', style: 'primary' }
@@ -324,8 +264,8 @@
         type: 'static-action',
         content: {
           title: 'Give it a moment',
-          subtitle: 'The player may be downloading content. Please wait up to 5 minutes.',
-          image: 'https://media.lordicon.com/icons/wired/outline/472-hourglass.gif',
+          subtitle: 'The player may be downloading updates. Wait up to 5 minutes.',
+          icon: 'ph-hourglass',
           showLoading: true,
           buttons: [
             { text: 'It’s working now!', goto: 'success', style: 'success' },
@@ -340,7 +280,7 @@
           title: 'Restart the TV',
           subtitle: 'This often fixes input issues.',
           instruction: '1) Turn the TV off\n2) Wait 10 seconds\n3) Turn it back on\n4) Wait for the picture',
-          image: 'https://media.lordicon.com/icons/wired/outline/2505-reset-text.gif',
+          icon: 'ph-power',
           buttons: [
             { text: 'Fixed! Thank you', goto: 'success', style: 'success' },
             { text: 'Still having issues', goto: 'switch-source', style: 'secondary' }
@@ -352,9 +292,9 @@
         type: 'static-action',
         content: {
           title: 'Check the TV input (HDMI-1)',
-          subtitle: 'Use the TV remote’s Input/Source button to select the HDMI the BrightSign is plugged into (usually HDMI-1).',
-          instruction: '1) Press Input/Source on the remote\n2) Choose the HDMI port used\n3) Wait a few seconds for the picture',
-          image: 'https://media.lordicon.com/icons/wired/outline/1736-smart-tv-layout-interface.gif',
+          subtitle: 'Use the remote’s Input/Source to select the HDMI the BrightSign uses (usually HDMI-1).',
+          instruction: '1) Press Input/Source on the remote\n2) Choose HDMI-1 (or the port used)\n3) Wait a few seconds',
+          icon: 'ph-squares-four',
           buttons: [
             { text: 'On the correct HDMI now', goto: 'wait-content', style: 'primary' },
             { text: 'Need help selecting input', goto: 'contact', style: 'secondary' }
@@ -369,6 +309,7 @@
           subtitle: 'Our support team can finish this quickly with you.',
           phone: '(647) 209-0519',
           note: 'Ask for the Digital support team',
+          icon: 'ph-phone',
           buttons: [{ text: 'Start Over', action: 'restart', style: 'primary' }]
         }
       },
@@ -383,21 +324,20 @@
       }
     ];
 
-    /* App */
+    // ----- App -----
     const app = {
       currentStep: 0,
       history: [],
       stepMap: new Map(steps.map((s,i)=>[s.id,i])),
 
       init(){ this.bind(); this.render(); },
-
       bind(){
         document.getElementById('backBtn').addEventListener('click', ()=> this.goBack());
-        let startX = 0;
-        document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
-        document.addEventListener('touchend', e => {
+        let startX=0;
+        document.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; });
+        document.addEventListener('touchend', e=>{
           const diff = e.changedTouches[0].clientX - startX;
-          if (diff > 80 && this.history.length) this.goBack();
+          if (diff > 80 && this.history.length > 0) this.goBack();
         });
       },
 
@@ -405,79 +345,76 @@
         const step = steps[this.currentStep];
         const card = document.getElementById('stepCard');
         const bottom = document.getElementById('bottomAction');
-        const back = document.getElementById('backBtn');
+        const backBtn = document.getElementById('backBtn');
 
-        back.classList.toggle('hidden', this.history.length === 0);
-        card.innerHTML = ''; bottom.innerHTML = '';
-        card.style.animation = 'none'; requestAnimationFrame(()=> card.style.animation = '');
+        backBtn.classList.toggle('hidden', this.history.length === 0);
+        card.innerHTML = ''; bottom.innerHTML='';
+
+        // replay card animation
+        card.style.animation='none'; requestAnimationFrame(()=>{ card.style.animation=''; });
 
         switch(step.type){
           case 'intro': this.renderIntro(step, card, bottom); break;
           case 'question':
           case 'action':
-          case 'static-action': this.renderStep(step, card, bottom); break;
-          case 'wait': this.renderWait(step, card, bottom); break;
+          case 'static-action': this.renderQuestion(step, card, bottom); break;
           case 'contact': this.renderContact(step, card, bottom); break;
           case 'success': this.renderSuccess(step, card, bottom); break;
         }
         this.updateNavTitle();
       },
 
+      mediaNode(c){
+        if (c.image) return `<div class="illustration"><img src="${c.image}" alt="BrightSign player"></div>`;
+        if (c.icon)  return `<div class="illustration icon" aria-hidden="true"><i class="ph ${c.icon}"></i></div>`;
+        return '';
+      },
+
       renderIntro(step, card, bottom){
         card.innerHTML = `
-          <div class="intro-hero">
-            <div class="brand-icon"><img src="https://i.imgur.com/fDv6d8s.png" alt="BFA"></div>
-            <div class="illustration"><img src="${step.content.image}" alt=""></div>
-            <h2 class="intro-title">${step.content.title}</h2>
-            <p class="step-subtitle">${step.content.subtitle}</p>
-          </div>
-        `;
-        this.renderButtons(step.content.buttons, bottom);
-      },
-
-      renderStep(step, card, bottom){
-        const pills = step.type === 'question' ? this.renderPills() : '';
-        const inst = step.content.instruction ? `
-          <div style="background:var(--gray-50); border-radius:16px; padding:20px; margin:24px 0;">
-            <pre style="font-family:inherit; font-size:16px; line-height:1.6; white-space:pre-wrap; color:var(--gray-700);">${step.content.instruction}</pre>
-          </div>` : '';
-        card.innerHTML = `
-          ${pills}
-          <h2 class="step-title">${step.content.title}</h2>
-          <p class="step-subtitle">${step.content.subtitle ?? ''}</p>
-          <div class="illustration${step.type === 'action' ? ' pulse' : ''}">
-            <img src="${step.content.image}" alt="">
-          </div>
-          ${inst}
-        `;
-        this.renderButtons(step.content.buttons, bottom);
-      },
-
-      renderWait(step, card, bottom){
-        card.innerHTML = `
-          ${this.renderPills()}
-          <h2 class="step-title">${step.content.title}</h2>
+          <div class="illustration"><img src="${step.content.image}" alt="BrightSign player"></div>
+          <h2 class="step-title" style="background:linear-gradient(135deg,var(--accent) 0%, #FFB454 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">${step.content.title}</h2>
           <p class="step-subtitle">${step.content.subtitle}</p>
-          <div class="illustration pulse"><img src="${step.content.image}" alt=""></div>
-          <div class="loading-dots"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>
         `;
         this.renderButtons(step.content.buttons, bottom);
+      },
+
+      renderQuestion(step, card, bottom){
+        const c = step.content;
+        card.innerHTML = `
+          ${step.type === 'question' ? this.renderStepPills() : ''}
+          <h2 class="step-title">${c.title}</h2>
+          <p class="step-subtitle">${c.subtitle || ''}</p>
+          ${this.mediaNode(c)}
+          ${c.instruction ? `
+            <div style="background:var(--gray-50);border-radius:16px;padding:16px;margin:16px 0">
+              <pre style="font-family:inherit;font-size:16px;line-height:1.6;white-space:pre-wrap;color:var(--gray-700)">${c.instruction}</pre>
+            </div>` : ''
+          }
+          ${c.showLoading ? `
+            <div class="loading-dots"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>` : ''
+          }
+        `;
+        this.renderButtons(c.buttons, bottom);
       },
 
       renderContact(step, card, bottom){
+        const c = step.content;
         card.innerHTML = `
-          <h2 class="step-title">${step.content.title}</h2>
-          <p class="step-subtitle">${step.content.subtitle}</p>
+          <h2 class="step-title">${c.title}</h2>
+          <p class="step-subtitle">${c.subtitle}</p>
+          ${this.mediaNode(c)}
           <a href="tel:+16472090519" class="phone-card" onclick="haptic.medium()">
             <div class="phone-label">Call Support</div>
-            <div class="phone-number">📞 ${step.content.phone}</div>
+            <div class="phone-number">📞 ${c.phone}</div>
           </a>
-          <p style="text-align:center; color:var(--gray-500); font-size:15px; margin-top:16px;">${step.content.note}</p>
+          <p style="text-align:center;color:var(--gray-500);font-size:15px;margin-top:8px">${c.note}</p>
         `;
-        this.renderButtons(step.content.buttons, bottom);
+        this.renderButtons(c.buttons, bottom);
       },
 
       renderSuccess(step, card, bottom){
+        const c = step.content;
         card.innerHTML = `
           <div class="success-animation">
             <div class="success-circle"></div>
@@ -485,85 +422,90 @@
               <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor"/></svg>
             </div>
           </div>
-          <h2 class="step-title">${step.content.title}</h2>
-          <p class="step-subtitle">${step.content.subtitle}</p>
+          <h2 class="step-title">${c.title}</h2>
+          <p class="step-subtitle">${c.subtitle}</p>
         `;
-        this.renderButtons(step.content.buttons, bottom);
+        this.renderButtons(c.buttons, bottom);
         haptic.success();
       },
 
       renderButtons(buttons, container){
-        const html = buttons.map(b=>`
-          <button class="btn btn-${b.style || 'primary'}" onclick="app.handleAction('${b.action || 'goto'}','${b.goto || ''}')" ontouchstart="haptic.light()">${b.text}</button>
+        const html = buttons.map(btn => `
+          <button class="btn btn-${btn.style || 'primary'}"
+                  onclick="app.handleAction('${btn.action || 'goto'}','${btn.goto || ''}')"
+                  ontouchstart="haptic.light()">
+            ${btn.text}
+          </button>
         `).join('');
-        container.innerHTML = `${this.showProgress() ? this.renderProgress() : ''}<div class="button-stack">${html}</div>`;
+        container.innerHTML = `
+          ${this.shouldShowProgress() ? this.renderProgress() : ''}
+          <div class="button-stack">${html}</div>
+        `;
       },
 
-      renderPills(){
-        const qs = steps.filter(s => s.type === 'question');
-        const total = qs.length;
-        const current = qs.indexOf(steps[this.currentStep]);
-        let out = '<div class="step-pills">';
-        for(let i=0;i<total;i++){ out += `<div class="step-pill ${i === Math.max(current,0) ? 'active' : ''}"></div>`; }
-        out += '</div>';
-        return out;
+      renderStepPills(){
+        const total=8; // # of interactive steps
+        const current=Math.min(Math.max(this.currentStep-1,0), total-1);
+        let pills='<div class="step-pills">';
+        for(let i=0;i<total;i++){ pills += `<div class="step-pill ${i===current?'active':''}"></div>`; }
+        pills+='</div>'; return pills;
       },
-
-      showProgress(){ return ['question','action','wait','static-action'].includes(steps[this.currentStep].type); },
 
       renderProgress(){
-        const flow = steps.filter(s => ['question','action','static-action','wait'].includes(s.type));
-        const total = flow.length;
-        const current = Math.max(flow.indexOf(steps[this.currentStep]), 0) + 1;
-        const pct = (current / total) * 100;
+        const total=8;
+        const current=Math.min(Math.max(this.currentStep-1,0), total);
+        const percent=(current/total)*100;
         return `
           <div class="progress-indicator">
-            <span class="progress-text">Step ${current} of ${total}</span>
-            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <span class="progress-text">Step ${current+1} of ${total}</span>
+            <div class="progress-bar"><div class="progress-fill" style="width:${percent}%"></div></div>
           </div>`;
       },
-
+      shouldShowProgress(){
+        const t=steps[this.currentStep].type;
+        return t==='question'||t==='action'||t==='static-action';
+      },
       updateNavTitle(){
-        const t = steps[this.currentStep].type;
-        document.querySelector('.nav-title').textContent = (t === 'intro') ? 'Support' : (t === 'success' ? 'Complete' : 'Troubleshooting');
+        const t=steps[this.currentStep].type;
+        document.querySelector('.nav-title').textContent =
+          t==='intro' ? 'Support' : (t==='success' ? 'Complete' : 'Troubleshooting');
       },
 
-      /* Nav */
-      handleAction(action, target){
-        if(action === 'next') this.goToStep(this.currentStep + 1);
-        else if(action === 'goto' && target){ const i = this.stepMap.get(target); if(i !== undefined) this.goToStep(i); }
-        else if(action === 'restart'){ this.history = []; this.goToStep(0); }
+      handleAction(action,target){
+        if(action==='next'){ this.goTo(this.currentStep+1); }
+        else if(action==='goto' && target){ const idx=this.stepMap.get(target); if(idx!==undefined) this.goTo(idx); }
+        else if(action==='restart'){ this.history=[]; this.goTo(0); }
       },
-      goToStep(i){
-        if(i>=0 && i<steps.length){
-          if(this.currentStep !== i) this.history.push(this.currentStep);
-          this.currentStep = i; this.render();
-          document.getElementById('content').scrollTo({ top:0, behavior:'smooth' });
+      goTo(index){
+        if(index>=0 && index<steps.length){
+          if(this.currentStep!==index) this.history.push(this.currentStep);
+          this.currentStep=index; this.render();
+          document.getElementById('content').scrollTo({top:0,behavior:'smooth'});
         }
       },
       goBack(){
-        if(this.history.length){
-          haptic.light();
-          this.currentStep = this.history.pop(); this.render();
-          const backBtn = document.getElementById('backBtn'); backBtn.classList.add('haptic'); setTimeout(()=> backBtn.classList.remove('haptic'), 100);
+        if(this.history.length>0){
+          this.currentStep = this.history.pop();
+          this.render();
+          const backBtn=document.getElementById('backBtn');
+          backBtn.classList.add('haptic'); setTimeout(()=>backBtn.classList.remove('haptic'),100);
         }
       }
     };
 
-    /* Init */
-    app.init();
+    // Init
+    const init = ()=> app.init();
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
 
-    /* Prevent pull-to-refresh */
-    let lastY = 0;
-    document.addEventListener('touchstart', e => { lastY = e.touches[0].clientY; });
-    document.addEventListener('touchmove', e => {
+    // Prevent iOS pull-to-refresh
+    let lastY=0;
+    document.addEventListener('touchstart', e=>{ lastY = e.touches[0].clientY; });
+    document.addEventListener('touchmove', e=>{
       const y = e.touches[0].clientY;
       const scrollTop = document.getElementById('content').scrollTop;
-      if (scrollTop === 0 && y > lastY) e.preventDefault();
+      if (scrollTop===0 && y>lastY) e.preventDefault();
     }, { passive:false });
-
-    /* A2HS placeholder */
-    if('standalone' in navigator && !navigator.standalone){ setTimeout(()=>{}, 2000); }
   </script>
 </body>
 </html>
