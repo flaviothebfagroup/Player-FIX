@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="theme-color" content="#F7941D">
-  <title>IADEA Support</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#F7941D" />
+  <title>Samsung Tizen Signage Support</title>
+
+  <!-- Phosphor Icons (regular weight / less bold) -->
+  <script src="https://unpkg.com/phosphor-icons@1.4.2"></script>
+
   <style>
-    /* Custom Properties */
+    /* Custom Properties - BFA Orange */
     :root {
       --orange: #F7941D;
       --orange-dark: #E6831A;
       --orange-light: #FFA94D;
       --orange-pale: #FFF3E6;
       --orange-ultra-pale: #FFFAF5;
-      
+
       --gray-900: #0F0F0F;
       --gray-800: #1A1A1A;
       --gray-700: #2D2D2D;
@@ -26,675 +30,158 @@
       --gray-200: #E1E1E1;
       --gray-100: #F5F5F5;
       --gray-50: #FAFAFA;
-      
+
       --success: #00C851;
       --warning: #FF8800;
       --error: #FF3547;
-      
+
       --safe-top: env(safe-area-inset-top);
       --safe-bottom: env(safe-area-inset-bottom);
       --safe-left: env(safe-area-inset-left);
       --safe-right: env(safe-area-inset-right);
-      
+
       --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
       --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
       --ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
     }
 
     /* Reset & Base */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
-    }
-
-    html {
-      font-size: 16px;
-      -webkit-text-size-adjust: 100%;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--gray-50);
-      color: var(--gray-900);
-      line-height: 1.5;
-      overflow: hidden;
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      touch-action: pan-y;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--gray-50); color: var(--gray-900); line-height: 1.5; overflow: hidden; position: fixed; width: 100%; height: 100%; touch-action: pan-y; }
 
     /* App Container */
-    .app {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      background: linear-gradient(180deg, #FFFFFF 0%, var(--gray-50) 100%);
-    }
+    .app { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; background: linear-gradient(180deg, #FFFFFF 0%, var(--gray-50) 100%); }
 
-    /* Status Bar (iOS style) */
-    .status-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: var(--safe-top);
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      z-index: 1000;
-    }
+    /* Status & Nav */
+    .status-bar { position: fixed; top: 0; left: 0; right: 0; height: var(--safe-top); background: rgba(255,255,255,0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 1000; }
+    .nav-bar { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; padding-top: calc(12px + var(--safe-top)); background: rgba(255,255,255,0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 0.5px solid rgba(0,0,0,0.1); z-index: 100; }
+    .nav-back { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--orange-pale); border-radius: 20px; cursor: pointer; transition: all 0.2s var(--ease-out); position: relative; overflow: hidden; }
+    .nav-back::before { content:''; position:absolute; inset:0; background: var(--orange); opacity:0; transition:opacity .2s; }
+    .nav-back:active::before { opacity:.1; }
+    .nav-back svg { width:24px; height:24px; stroke: var(--orange); stroke-width: 2.5; position: relative; z-index:1; }
+    .nav-back.hidden { opacity:0.1; pointer-events:none; transform: scale(0.8); }
+    .nav-title { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: var(--gray-900); position: fixed; left: 0%; transform: translateX(50%); }
+    .nav-logo { height: 40px; width: auto; }
 
-    /* Navigation Bar */
-    .nav-bar {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 20px;
-      padding-top: calc(12px + var(--safe-top));
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
-      z-index: 100;
-    }
+    /* Content */
+    .content { flex:1; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; padding:20px; padding-bottom: calc(20px + var(--safe-bottom) + 100px); }
+    .step-card { background:white; border-radius:24px; padding:32px 24px; box-shadow:0 2px 20px rgba(0,0,0,0.06); animation:slideUp .5s var(--spring) both; transform-origin:center bottom; max-width:500px; margin:0 auto; }
+    @keyframes slideUp { from{opacity:0; transform: translateY(40px) scale(.95);} to{opacity:1; transform: translateY(0) scale(1);} }
 
-    .nav-back {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--orange-pale);
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.2s var(--ease-out);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .nav-back::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--orange);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .nav-back:active::before {
-      opacity: 0.1;
-    }
-
-    .nav-back svg {
-      width: 24px;
-      height: 24px;
-      stroke: var(--orange);
-      stroke-width: 2.5;
-      position: relative;
-      z-index: 1;
-    }
-
-    .nav-back.hidden {
-      opacity: 0.1;
-      pointer-events: none;
-      transform: scale(0.8);
-    }
-
-    .nav-title {
-      font-size: 17px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--gray-900);
-      position: fixed;
-      left: 0%;
-      transform: translateX(50%);
-    }
-
-    .nav-logo {
-      height: 40px;
-      width: auto;
-    }
-
-    /* Content Area */
-    .content {
-      flex: 1;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      padding: 20px;
-      padding-bottom: calc(20px + var(--safe-bottom) + 100px);
-    }
-
-    /* Step Card */
-    .step-card {
-      background: white;
-      border-radius: 24px;
-      padding: 32px 24px;
-      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
-      animation: slideUp 0.5s var(--spring) both;
-      transform-origin: center bottom;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px) scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    /* Step Counter Pills */
-    .step-pills {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-bottom: 32px;
-    }
-
-    .step-pill {
-      width: 8px;
-      height: 8px;
-      border-radius: 4px;
-      background: var(--gray-200);
-      transition: all 0.3s var(--ease-out);
-    }
-
-    .step-pill.active {
-      width: 24px;
-      background: var(--orange);
-    }
+    /* Step pills */
+    .step-pills { display:flex; justify-content:center; gap:6px; margin-bottom:32px; }
+    .step-pill { width:8px; height:8px; border-radius:4px; background: var(--gray-200); transition: all .3s var(--ease-out); }
+    .step-pill.active { width:24px; background: var(--orange); }
 
     /* Typography */
-    .step-title {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.03em;
-      color: var(--gray-900);
-      text-align: center;
-      margin-bottom: 24px;
-    }
+    .step-title { font-size:24px; font-weight:700; line-height:1.2; letter-spacing:-0.03em; color:var(--gray-900); text-align:center; margin-bottom:24px; }
+    .step-subtitle { font-size:17px; line-height:1.4; color:var(--gray-600); text-align:center; margin-bottom:32px; }
 
-    .step-subtitle {
-      font-size: 17px;
-      line-height: 1.4;
-      color: var(--gray-600);
-      text-align: center;
-      margin-bottom: 32px;
-    }
+    /* Illustration (supports image or icon) */
+    .illustration { width:100%; height:200px; display:flex; align-items:center; justify-content:center; margin:32px 0; position:relative; animation: fadeScale .6s var(--spring) .2s both; }
+    @keyframes fadeScale { from{opacity:0; transform: scale(.8);} to{opacity:1; transform: scale(1);} }
+    .illustration img { max-width:100%; max-height:100%; object-fit:contain; }
+    .illustration .ph { font-size:120px; color: var(--orange); filter: drop-shadow(0 6px 16px rgba(247,148,29,0.20)); }
+    .illustration.pulse { animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
 
-    /* Illustration Container */
-    .illustration {
-      width: 100%;
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 32px 0;
-      position: relative;
-      animation: fadeScale 0.6s var(--spring) 0.2s both;
-    }
+    /* Buttons */
+    .button-stack{ display:flex; flex-direction:column; gap:12px; margin-top:40px; }
+    .btn{ position:relative; display:flex; align-items:center; justify-content:center; min-height:56px; padding:16px 24px; border:none; border-radius:16px; font-size:17px; font-weight:600; letter-spacing:-0.02em; cursor:pointer; transition: all .2s var(--ease-out); overflow:hidden; }
+    .btn::before{ content:''; position:absolute; inset:0; background: radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(255,255,255,.3), transparent); opacity:0; transform: scale(0); transition: all .4s; }
+    .btn:active::before{ opacity:1; transform: scale(2); }
+    .btn-primary{ background: var(--orange); color:white; box-shadow:0 4px 20px rgba(247,148,29,.25); }
+    .btn-primary:active{ transform: translateY(1px); box-shadow:0 2px 10px rgba(247,148,29,.25); }
+    .btn-secondary{ background: var(--gray-100); color: var(--gray-800); }
+    .btn-secondary:active{ background:var(--gray-200); transform: translateY(1px); }
+    .btn-success{ background: var(--success); color:white; box-shadow: 0 4px 20px rgba(0,200,81,.25); }
 
-    @keyframes fadeScale {
-      from {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
+    /* Intro */
+    .intro-hero { text-align:center; padding:10px 0; }
+    .intro-hero .brand-icon{ width: 120px; height: 90px; margin: 0 auto 20px; background:none; border-radius: 24px; display:flex; align-items:center; justify-content:center; animation: heroScale .6s var(--spring) both; }
+    @keyframes heroScale { from{opacity:0; transform: scale(.5) rotate(-10deg);} to{opacity:1; transform: scale(1) rotate(0);} }
+    .brand-icon img{ width:100%; height:100%; object-fit:contain; }
+    .intro-title { font-size:32px; font-weight:800; letter-spacing:-0.04em; margin-bottom:12px; background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
-    .illustration img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
+    /* Phone card */
+    .phone-card{ background: var(--orange-pale); border-radius:16px; padding:20px; margin:24px 0; text-align:center; cursor:pointer; transition: all .2s var(--ease-out); }
+    .phone-card:active{ transform: scale(.98); }
+    .phone-label{ font-size:14px; color: var(--gray-600); margin-bottom:4px; }
+    .phone-number{ font-size:24px; font-weight:700; color: var(--orange); letter-spacing:-0.02em; }
 
-    .illustration.pulse {
-      animation: pulse 2s ease-in-out infinite;
-    }
+    /* Success */
+    .success-animation{ width:120px; height:120px; margin:0 auto 32px; position:relative; }
+    .success-circle{ position:absolute; inset:0; border-radius:50%; background: var(--success); opacity:.1; animation: successPulse 1.5s ease-out; }
+    .success-check{ position:absolute; inset:20px; background: var(--success); border-radius:50%; display:flex; align-items:center; justify-content:center; animation: successScale .6s var(--spring) .3s both; }
+    .success-check svg{ width:40px; height:40px; stroke:white; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:60; stroke-dashoffset:60; animation: checkDraw .6s ease-out .6s forwards; }
+    @keyframes successPulse{ from{ transform: scale(.8); opacity:.5;} to{ transform: scale(2); opacity:0;} }
+    @keyframes successScale{ from{ transform: scale(0);} to{ transform: scale(1);} }
+    @keyframes checkDraw{ to{ stroke-dashoffset:0;} }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
+    /* Bottom actions & progress */
+    .bottom-action{ position: fixed; bottom:0; left:0; right:0; padding:20px; padding-bottom: calc(20px + var(--safe-bottom)); background: linear-gradient(to top, white 60%, transparent); pointer-events:none; z-index:90; }
+    .bottom-action > *{ pointer-events:auto; }
+    .progress-indicator{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; max-width:500px; margin-left:auto; margin-right:auto; }
+    .progress-text{ font-size:14px; font-weight:600; color: var(--orange); }
+    .progress-bar{ flex:1; height:4px; background: var(--gray-200); border-radius:2px; margin:0 16px; overflow:hidden; }
+    .progress-fill{ height:100%; background: linear-gradient(90deg, var(--orange) 0%, var(--orange-light) 100%); border-radius:2px; transition: width .6s var(--spring); position:relative; }
+    .progress-fill::after{ content:''; position:absolute; top:0; right:0; bottom:0; width:100px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.4)); animation: shimmer 2s linear infinite; }
+    @keyframes shimmer{ from{ transform: translateX(-100px);} to{ transform: translateX(100px);} }
 
-    /* Action Buttons */
-    .button-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 40px;
-    }
+    /* Loading dots */
+    .loading-dots{ display:flex; justify-content:center; gap:8px; padding:20px; }
+    .loading-dot{ width:12px; height:12px; background: var(--orange); border-radius:50%; animation: loadingBounce 1.4s ease-in-out infinite; }
+    .loading-dot:nth-child(1){ animation-delay:0s;} .loading-dot:nth-child(2){ animation-delay:.2s;} .loading-dot:nth-child(3){ animation-delay:.4s;}
+    @keyframes loadingBounce{ 0%,80%,100%{ transform: translateY(0) scale(1); opacity:1;} 40%{ transform: translateY(-20px) scale(1.1); opacity:.8;} }
 
-    .btn {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 56px;
-      padding: 16px 24px;
-      border: none;
-      border-radius: 16px;
-      font-size: 17px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      cursor: pointer;
-      transition: all 0.2s var(--ease-out);
-      overflow: hidden;
-    }
+    /* Responsive & accessibility */
+    @media (max-height:700px){ .illustration{height:140px;} .step-card{padding:24px 20px;} .button-stack{margin-top:24px;} }
+    .haptic{ animation: haptic .1s linear; }
+    @keyframes haptic{ 0%,100%{ transform: scale(1);} 50%{ transform: scale(.98);} }
+    .swipe-hint{ position:absolute; bottom:80px; left:50%; transform: translateX(-50%); display:flex; align-items:center; gap:8px; font-size:14px; color:var(--gray-500); animation: swipeHint 3s ease-in-out infinite; }
+    @keyframes swipeHint{ 0%,100%{ opacity:.5; transform: translateX(-50%) translateY(0);} 50%{ opacity:1; transform: translateX(-50%) translateY(-4px);} }
+    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
-    .btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.3), transparent);
-      opacity: 0;
-      transform: scale(0);
-      transition: all 0.4s;
-    }
-
-    .btn:active::before {
-      opacity: 1;
-      transform: scale(2);
-    }
-
-    .btn-primary {
-      background: var(--orange);
-      color: white;
-      box-shadow: 0 4px 20px rgba(247, 148, 29, 0.25);
-    }
-
-    .btn-primary:active {
-      transform: translateY(1px);
-      box-shadow: 0 2px 10px rgba(247, 148, 29, 0.25);
-    }
-
-    .btn-secondary {
-      background: var(--gray-100);
-      color: var(--gray-800);
-    }
-
-    .btn-secondary:active {
-      background: var(--gray-200);
-      transform: translateY(1px);
-    }
-
-    .btn-success {
-      background: var(--success);
-      color: white;
-      box-shadow: 0 4px 20px rgba(0, 200, 81, 0.25);
-    }
-
-    /* Special States */
-    .intro-hero {
-      text-align: center;
-      padding: 10px 0;
-    }
-
-    .intro-hero .brand-icon {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 20px;
-      background: none;
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: heroScale 0.6s var(--spring) both;
-    }
-
-    @keyframes heroScale {
-      from {
-        opacity: 0;
-        transform: scale(0.5) rotate(-10deg);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1) rotate(0);
-      }
-    }
-
-    .brand-icon img {
-      width: 1000%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .intro-title {
-      font-size: 32px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-bottom: 12px;
-      background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Phone Link */
-    .phone-card {
-      background: var(--orange-pale);
-      border-radius: 16px;
-      padding: 20px;
-      margin: 24px 0;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s var(--ease-out);
-    }
-
-    .phone-card:active {
-      transform: scale(0.98);
-    }
-
-    .phone-label {
-      font-size: 14px;
-      color: var(--gray-600);
-      margin-bottom: 4px;
-    }
-
-    .phone-number {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--orange);
-      letter-spacing: -0.02em;
-    }
-
-    /* Success Animation */
-    .success-animation {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 32px;
-      position: relative;
-    }
-
-    .success-circle {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: var(--success);
-      opacity: 0.1;
-      animation: successPulse 1.5s ease-out;
-    }
-
-    .success-check {
-      position: absolute;
-      inset: 20px;
-      background: var(--success);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: successScale 0.6s var(--spring) 0.3s both;
-    }
-
-    .success-check svg {
-      width: 40px;
-      height: 40px;
-      stroke: white;
-      stroke-width: 4;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-dasharray: 60;
-      stroke-dashoffset: 60;
-      animation: checkDraw 0.6s ease-out 0.6s forwards;
-    }
-
-    @keyframes successPulse {
-      from {
-        transform: scale(0.8);
-        opacity: 0.5;
-      }
-      to {
-        transform: scale(2);
-        opacity: 0;
-      }
-    }
-
-    @keyframes successScale {
-      from {
-        transform: scale(0);
-      }
-      to {
-        transform: scale(1);
-      }
-    }
-
-    @keyframes checkDraw {
-      to {
-        stroke-dashoffset: 0;
-      }
-    }
-
-    /* Bottom Action Area */
-    .bottom-action {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 20px;
-      padding-bottom: calc(20px + var(--safe-bottom));
-      background: linear-gradient(to top, white 60%, transparent);
-      pointer-events: none;
-      z-index: 90;
-    }
-
-    .bottom-action > * {
-      pointer-events: auto;
-    }
-
-    /* Progress Indicator */
-    .progress-indicator {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .progress-text {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--orange);
-    }
-
-    .progress-bar {
-      flex: 1;
-      height: 4px;
-      background: var(--gray-200);
-      border-radius: 2px;
-      margin: 0 16px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--orange) 0%, var(--orange-light) 100%);
-      border-radius: 2px;
-      transition: width 0.6s var(--spring);
-      position: relative;
-    }
-
-    .progress-fill::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 100px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
-      animation: shimmer 2s linear infinite;
-    }
-
-    @keyframes shimmer {
-      from { transform: translateX(-100px); }
-      to { transform: translateX(100px); }
-    }
-
-    /* Loading State */
-    .loading-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      padding: 20px;
-    }
-
-    .loading-dot {
-      width: 12px;
-      height: 12px;
-      background: var(--orange);
-      border-radius: 50%;
-      animation: loadingBounce 1.4s ease-in-out infinite;
-    }
-
-    .loading-dot:nth-child(1) { animation-delay: 0s; }
-    .loading-dot:nth-child(2) { animation-delay: 0.2s; }
-    .loading-dot:nth-child(3) { animation-delay: 0.4s; }
-
-    @keyframes loadingBounce {
-      0%, 80%, 100% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      40% {
-        transform: translateY(-20px) scale(1.1);
-        opacity: 0.8;
-      }
-    }
-
-    /* Responsive */
-    @media (max-height: 700px) {
-      .illustration { height: 140px; }
-      .step-card { padding: 24px 20px; }
-      .button-stack { margin-top: 24px; }
-    }
-
-    /* Haptic Feedback Class */
-    .haptic {
-      animation: haptic 0.1s linear;
-    }
-
-    @keyframes haptic {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(0.98); }
-    }
-
-    /* Swipe Hint */
-    .swipe-hint {
-      position: absolute;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      color: var(--gray-500);
-      animation: swipeHint 3s ease-in-out infinite;
-    }
-
-    @keyframes swipeHint {
-      0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
-      50% { opacity: 1; transform: translateX(-50%) translateY(-4px); }
-    }
-
-    /* Accessibility */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    /* Dark mode support */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --gray-50: #1A1A1A;
-        --gray-100: #2D2D2D;
-        --gray-200: #4A4A4A;
-        --gray-900: #FFFFFF;
-        --gray-800: #F5F5F5;
-      }
-      
-      .app {
-        background: linear-gradient(180deg, #000000 0%, #1A1A1A 100%);
-      }
-      
-      .step-card {
-        background: #2D2D2D;
-        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-      }
-      
-      .nav-bar, .status-bar {
-        background: rgba(0, 0, 0, 0.9);
-      }
+    /* Dark mode */
+    @media (prefers-color-scheme: dark){
+      :root{ --gray-50:#1A1A1A; --gray-100:#2D2D2D; --gray-200:#4A4A4A; --gray-900:#FFFFFF; --gray-800:#F5F5F5; }
+      .app{ background: linear-gradient(180deg,#000 0%,#1A1A1A 100%); }
+      .step-card{ background:#2D2D2D; box-shadow:0 2px 20px rgba(0,0,0,.5); }
+      .nav-bar, .status-bar{ background: rgba(0,0,0,.9); }
+      .illustration .ph { filter:none; }
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <!-- Status Bar -->
     <div class="status-bar"></div>
-    
-    <!-- Navigation -->
+
     <nav class="nav-bar">
       <div class="nav-back hidden" id="backBtn" role="button" aria-label="Go back">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M15 18l-6-6 6-6" stroke="currentColor"/>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor"/></svg>
       </div>
       <h1 class="nav-title">Support</h1>
-      <img src="https://i.imgur.com/fDv6d8s.png" alt="BFA Digital" class="nav-logo">
+      <img src="https://i.imgur.com/fDv6d8s.png" alt="BFA Digital" class="nav-logo" />
     </nav>
-    
-    <!-- Main Content -->
+
     <main class="content" id="content">
-      <div class="step-card" id="stepCard">
-        <!-- Dynamic content -->
-      </div>
+      <div class="step-card" id="stepCard"></div>
     </main>
-    
-    <!-- Bottom Action Area -->
-    <div class="bottom-action" id="bottomAction">
-      <!-- Dynamic progress/actions -->
-    </div>
+
+    <div class="bottom-action" id="bottomAction"></div>
   </div>
 
   <script>
-    // Haptic feedback utility
+    // Haptic feedback
     const haptic = {
       light: () => navigator.vibrate && navigator.vibrate(10),
       medium: () => navigator.vibrate && navigator.vibrate(20),
       heavy: () => navigator.vibrate && navigator.vibrate(30),
-      success: () => navigator.vibrate && navigator.vibrate([10, 10, 10])
+      success: () => navigator.vibrate && navigator.vibrate([10,10,10]),
     };
 
-    // Touch ripple effect
+    // Touch ripple
     document.addEventListener('touchstart', (e) => {
       if (e.target.classList.contains('btn')) {
         const rect = e.target.getBoundingClientRect();
@@ -705,30 +192,29 @@
       }
     });
 
-    // Steps configuration
+    // Steps (Samsung Tizen Signage — non-IT friendly)
     const steps = [
       {
         id: 'welcome',
         type: 'intro',
         content: {
-          title: 'Sumsung Tyzen Support',
-          subtitle: 'Let\'s get your digital signage back up and running in just a few simple steps.',
-          image: 'https://www.yodeck.com/wp-content/uploads/2024/01/Tizen-1.png',
-          buttons: [
-            { text: 'Begin Troubleshooting', action: 'next', style: 'primary' }
-          ]
+          title: 'Samsung Tizen Signage',
+          subtitle: "We’ll get your screen playing again in a few simple steps.",
+          // Samsung commercial signage product image (B&H CDN)
+          image: 'https://www.bhphotovideo.com/cdn-cgi/image/fit%3Dscale-down%2Cwidth%3D800%2Cquality%3D95/https%3A//www.bhphotovideo.com/images/images500x500/samsung_qm55c_qmc_series_55_class_1698404406_1791826.jpg',
+          buttons: [{ text: 'Begin Troubleshooting', action: 'next', style: 'primary' }]
         }
       },
       {
         id: 'internet',
         type: 'question',
         content: {
-          title: 'Internet Connection',
-          subtitle: 'Has your internet connection or WiFi network been worked on recently?',
-          image: 'https://media.lordicon.com/icons/wired/outline/745-wifi-connection.gif',
+          title: 'Wi-Fi / Internet changed recently?',
+          subtitle: 'If someone updated the Wi-Fi name/password or network equipment, the screen may need reconnection.',
+          icon: 'ph-wifi-high',
           buttons: [
-            { text: 'Yes', goto: 'contact', style: 'secondary' },
-            { text: 'No', goto: 'tv-power', style: 'primary' }
+            { text: 'Yes, something changed', goto: 'contact', style: 'secondary' },
+            { text: 'No changes', goto: 'tv-power', style: 'primary' }
           ]
         }
       },
@@ -736,81 +222,53 @@
         id: 'tv-power',
         type: 'question',
         content: {
-          title: 'Check Your TV',
-          subtitle: 'Is your TV powered on?',
-          image: 'https://media.lordicon.com/icons/wired/outline/1734-tv-turn-on.gif',
+          title: 'Is the Samsung display ON?',
+          subtitle: 'If it’s off, please turn it on with the remote (or the small power button under the screen).',
+          icon: 'ph-television',
           buttons: [
-            { text: 'Yes, it\'s on', goto: 'player-led', style: 'primary' },
-            { text: 'No, it\'s off', goto: 'turn-on', style: 'secondary' }
+            { text: "Yes, it’s on", goto: 'content-check', style: 'primary' },
+            { text: 'It was off — now on', goto: 'content-check', style: 'secondary' }
           ]
         }
       },
-      
       {
-        id: 'player-led',
+        id: 'content-check',
         type: 'question',
         content: {
-          title: 'IADEA Player Status',
-          subtitle: 'Locate your IADEA player behind the TV. Is it powered on with a green LED light?',
-          image: 'https://i.imgur.com/J13LMrc.gif',
+          title: 'Do you see your signage content?',
+          subtitle: 'If you see a Samsung Home screen or a blue background, content hasn’t launched yet.',
+          icon: 'ph-image-square',
           buttons: [
-            { text: 'Yes, green LED is on', goto: 'power-cycle', style: 'primary' },
-            { text: 'No LED or different color', goto: 'contact', style: 'secondary' }
+            { text: 'Yes, it’s working', goto: 'success', style: 'secondary' },
+            { text: 'No, still not playing', goto: 'cold-restart', style: 'primary' }
           ]
         }
       },
       {
-        id: 'power-cycle',
+        id: 'cold-restart',
         type: 'action',
         content: {
-          title: 'Let\'s restart your IADEA player:',
-          subtitle: '',
-          instruction: '1. Unplug the power cable at the media player or at the wall outlet (two-sided power cable)\n2. Wait 60 seconds\n3. Plug it back in\n4. Wait for the green LED\n5. Wait two minutes for the screen to boot up',
-          image: 'https://i.imgur.com/Vb0pqwS.gif',
+          title: 'Quick restart (recommended)',
+          subtitle: 'This refreshes the built-in player.',
+          instruction: '1) Press and HOLD the TV remote’s Power button until the Samsung logo appears (about 5 seconds)\n   — or —\n   Unplug the display, wait 30 seconds, and plug it back in\n2) Wait up to 2 minutes for the screen to start\n3) Continue below',
+          icon: 'ph-arrow-clockwise',
           buttons: [
-            { text: 'Done!  If content is playing on the screen', goto: 'success', style: 'success' },
-            { text: 'Still not working', goto: 'hdmi-check', style: 'secondary' }
+            { text: 'Done — continue', goto: 'launch-app', style: 'primary' },
+            { text: 'Need help', goto: 'contact', style: 'secondary' }
           ]
         }
       },
       {
-        id: 'hdmi-check',
-        type: 'question',
-        content: {
-          title: 'Check HDMI Connection',
-          subtitle: 'Is the HDMI cable properly connected to both the player and TV?',
-          image: 'https://i.imgur.com/35gQgop.gif',
-          instruction:' Make sure conections are secure',
-          buttons: [
-            { text: 'Yes, properly connected', goto: 'error-check', style: 'primary' },
-            { text: 'No', goto: 'contact', style: 'secondary' }
-          ]
-        }
-      },
-      {
-        id: 'error-check',
-        type: 'question',
-        content: {
-          title: 'Is there content now playing on your TV?',
-          subtitle: '',
-          image: 'https://media.lordicon.com/icons/wired/outline/729-interface-slider-music.gif',
-          buttons: [
-            { text: 'Yes, working', goto: 'success', style: 'secondary' },
-            { text: 'No errors visible', goto: 'wait-content', style: 'primary' }
-          ]
-        }
-      },
-      {
-        id: 'tv-restart',
+        id: 'launch-app',
         type: 'action',
         content: {
-          title: 'Restart Your TV',
-          subtitle: 'Let\'s try restarting your TV:',
-          instruction: '1. Turn off the TV using the remote or power button\n2. Wait 10 seconds\n3. Turn it back on\n4. Wait for the display to appear',
-          image: 'https://media.lordicon.com/icons/wired/outline/2505-reset-text.gif',
+          title: 'Open the signage app',
+          subtitle: 'Use the remote:',
+          instruction: '1) Press the Home button\n2) Select **URL Launcher**, **MagicINFO Player**, or your signage app name\n3) If you see the app, select it to launch\n4) Wait up to 2 minutes for content to appear',
+          icon: 'ph-globe',
           buttons: [
-            { text: 'Fixed! Thank you', goto: 'success', style: 'success' },
-            { text: 'Still having issues', goto: 'wait-content', style: 'secondary' }
+            { text: 'Content is playing 👍', goto: 'success', style: 'success' },
+            { text: 'Still not playing', goto: 'wait-content', style: 'secondary' }
           ]
         }
       },
@@ -818,13 +276,27 @@
         id: 'wait-content',
         type: 'static-action',
         content: {
-          title: 'Content Loading',
-          subtitle: 'Your player might be downloading updates. Please wait up to 5 minutes for content to appear.',
-          image: 'https://media.lordicon.com/icons/wired/outline/472-hourglass.gif',
+          title: 'Give it a moment',
+          subtitle: 'The screen may be downloading updates. Wait up to 5 minutes.',
+          icon: 'ph-hourglass',
           showLoading: true,
           buttons: [
-            { text: 'It\'s working now!', goto: 'success', style: 'success' },
-            { text: 'Still nothing after 5 min', goto: 'contact', style: 'secondary' }
+            { text: 'It’s working now!', goto: 'success', style: 'success' },
+            { text: 'Still nothing after 5 min', goto: 'source-check', style: 'primary' }
+          ]
+        }
+      },
+      {
+        id: 'source-check',
+        type: 'static-action',
+        content: {
+          title: 'Check TV input (avoid HDMI if unused)',
+          subtitle: 'If your screen accidentally switched to HDMI, change back to the Home screen to launch the app.',
+          instruction: '1) Press the Home or Source button\n2) If you see HDMI selected, go back to Home (Smart Hub)\n3) Re-open the signage app (URL Launcher / MagicINFO)',
+          icon: 'ph-monitor',
+          buttons: [
+            { text: 'Tried that — still no content', goto: 'contact', style: 'secondary' },
+            { text: 'Back to app steps', goto: 'launch-app', style: 'primary' }
           ]
         }
       },
@@ -832,14 +304,12 @@
         id: 'contact',
         type: 'contact',
         content: {
-          title: 'Let\'s Connect You',
-          subtitle: 'Our support team is ready to help resolve this issue quickly.',
+          title: 'We’ll take it from here',
+          subtitle: 'Our support team can finish this quickly with you.',
           phone: '(647) 209-0519',
-          subtitle:'Ask for Digital support team',
-          note: 'Have your location details ready',
-          buttons: [
-            { text: 'Start Over', action: 'restart', style: 'primary' }
-          ]
+          note: 'Ask for the Digital support team',
+          icon: 'ph-phone-call',
+          buttons: [ { text: 'Start Over', action: 'restart', style: 'primary' } ]
         }
       },
       {
@@ -847,38 +317,8 @@
         type: 'success',
         content: {
           title: 'All Set! 🎉',
-          subtitle: 'Your IADEA player is working properly. Your content should be displaying as expected.',
-          buttons: [
-            { text: 'Troubleshoot Again', action: 'restart', style: 'primary' }
-          ]
-        }
-      },
-   {
-        id: 'turn-on',
-        type: 'static-action',
-        content: {
-          title: 'Turn ON Your TV',
-          subtitle: 'Let\'s try puging cable properly connected to both the wall outlet and your TV:',
-          instruction: '1. Turn on the TV using the remote or power button\n2. Wait 10 seconds\n3. Wait for the display to appear',
-          image: 'https://media.lordicon.com/icons/wired/outline/1745-remote-control.gif',
-          buttons: [
-            { text: 'TV is ON', goto: 'player-led', style: 'primary' },
-            { text: 'Still having issues', goto: 'switch-source', style: 'secondary' }
-          ]
-        }
-      },
-      {
-        id: 'switch-source',
-        type: 'static-action',
-        content: {
-          title: 'Switch Sorce on your screen (HDMI-1)',
-          subtitle: 'Let\'s try finding the connected port on the TV making sure it is on HDMI-1:',
-          instruction: '1. Using the remote press the source (Input) to change to HDMI-1\n2. Wait a few seconds\n3. Wait for the display to appear',
-          image: '	https://media.lordicon.com/icons/wired/outline/1736-smart-tv-layout-interface.gif',
-          buttons: [
-            { text: 'TV is ON', goto: 'player-led', style: 'primary' },
-            { text: 'Still having issues', goto: 'wait-content', style: 'secondary' }
-          ]
+          subtitle: 'Your Samsung Tizen display is working and content should be playing.',
+          buttons: [ { text: 'Troubleshoot Again', action: 'restart', style: 'primary' } ]
         }
       }
     ];
@@ -887,121 +327,80 @@
     const app = {
       currentStep: 0,
       history: [],
-      stepMap: new Map(steps.map((s, i) => [s.id, i])),
-      
-      init() {
-        this.bindEvents();
-        this.render();
-      },
-      
-      bindEvents() {
-        document.getElementById('backBtn').addEventListener('click', () => this.goBack());
-        
-        // Swipe gestures
+      stepMap: new Map(steps.map((s,i)=>[s.id,i])),
+
+      init(){ this.bindEvents(); this.render(); },
+      bindEvents(){
+        document.getElementById('backBtn').addEventListener('click', ()=> this.goBack());
         let touchStartX = 0;
-        document.addEventListener('touchstart', (e) => {
-          touchStartX = e.touches[0].clientX;
-        });
-        
-        document.addEventListener('touchend', (e) => {
-          const touchEndX = e.changedTouches[0].clientX;
-          const diff = touchEndX - touchStartX;
-          if (diff > 80 && this.history.length > 0) {
-            this.goBack();
-          }
+        document.addEventListener('touchstart',(e)=>{ touchStartX = e.touches[0].clientX; });
+        document.addEventListener('touchend',(e)=>{
+          const diff = e.changedTouches[0].clientX - touchStartX;
+          if (diff > 80 && this.history.length > 0) this.goBack();
         });
       },
-      
-      render() {
+
+      render(){
         const step = steps[this.currentStep];
         const stepCard = document.getElementById('stepCard');
         const bottomAction = document.getElementById('bottomAction');
         const backBtn = document.getElementById('backBtn');
-        
-        // Update back button
+
         backBtn.classList.toggle('hidden', this.history.length === 0);
-        
-        // Clear and rebuild content
+
         stepCard.innerHTML = '';
         bottomAction.innerHTML = '';
-        
-        // Add animation
+
         stepCard.style.animation = 'none';
-        requestAnimationFrame(() => {
-          stepCard.style.animation = '';
-        });
-        
-        // Render based on type
-        switch(step.type) {
-          case 'intro':
-            this.renderIntro(step, stepCard, bottomAction,);
-            break;
+        requestAnimationFrame(() => { stepCard.style.animation = ''; });
+
+        switch(step.type){
+          case 'intro': this.renderIntro(step, stepCard, bottomAction); break;
           case 'question':
           case 'action':
-          case 'static-action':
-            this.renderQuestion(step, stepCard, bottomAction);
-            break;
-          case 'wait':
-            this.renderWait(step, stepCard, bottomAction);
-            break;
-          case 'contact':
-            this.renderContact(step, stepCard, bottomAction);
-            break;
-          case 'success':
-            this.renderSuccess(step, stepCard, bottomAction);
-            break;
+          case 'static-action': this.renderQuestion(step, stepCard, bottomAction); break;
+          case 'contact': this.renderContact(step, stepCard, bottomAction); break;
+          case 'success': this.renderSuccess(step, stepCard, bottomAction); break;
         }
-        
-        // Update progress
+
         this.updateProgress();
       },
-      
-      renderIntro(step, card, bottom) {
+
+      renderIntro(step, card, bottom){
         card.innerHTML = `
           <div class="intro-hero">
             <div class="brand-icon">
               <img src="https://i.imgur.com/fDv6d8s.png" alt="BFA">
             </div>
             <div class="illustration">
-            <img src="${step.content.image}" alt="">
-          </div>
+              <img src="${step.content.image}" alt="Samsung signage">
+            </div>
             <h2 class="intro-title">${step.content.title}</h2>
             <p class="step-subtitle">${step.content.subtitle}</p>
           </div>
-          
         `;
-        
         this.renderButtons(step.content.buttons, bottom);
       },
-      
-      renderQuestion(step, card, bottom) {
-        const showPills = step.type === 'question';
-        
+
+      renderQuestion(step, card, bottom){
+        const medias = step.content.image
+          ? `<img src="${step.content.image}" alt="">`
+          : step.content.icon
+            ? `<i class="ph ${step.content.icon}"></i>`
+            : '';
+
         card.innerHTML = `
-          ${showPills ? this.renderStepPills() : ''}
+          ${this.renderStepPills()}
           <h2 class="step-title">${step.content.title}</h2>
-          <p class="step-subtitle">${step.content.subtitle}</p>
+          <p class="step-subtitle">${step.content.subtitle || ''}</p>
           <div class="illustration${step.type === 'action' ? ' pulse' : ''}">
-            <img src="${step.content.image}" alt="">
+            ${medias}
           </div>
           ${step.content.instruction ? `
             <div style="background: var(--gray-50); border-radius: 16px; padding: 20px; margin: 24px 0;">
               <pre style="font-family: inherit; font-size: 16px; line-height: 1.6; white-space: pre-wrap; color: var(--gray-700);">${step.content.instruction}</pre>
             </div>
           ` : ''}
-        `;
-        
-        this.renderButtons(step.content.buttons, bottom);
-      },
-      
-      renderWait(step, card, bottom) {
-        card.innerHTML = `
-          ${this.renderStepPills()}
-          <h2 class="step-title">${step.content.title}</h2>
-          <p class="step-subtitle">${step.content.subtitle}</p>
-          <div class="illustration pulse">
-            <img src="${step.content.image}" alt="">
-          </div>
           ${step.content.showLoading ? `
             <div class="loading-dots">
               <div class="loading-dot"></div>
@@ -1010,176 +409,133 @@
             </div>
           ` : ''}
         `;
-        
         this.renderButtons(step.content.buttons, bottom);
       },
-      
-      renderContact(step, card, bottom) {
+
+      renderContact(step, card, bottom){
         card.innerHTML = `
           <h2 class="step-title">${step.content.title}</h2>
           <p class="step-subtitle">${step.content.subtitle}</p>
-          
+          <div class="illustration"><i class="ph ${step.content.icon || 'ph-phone-call'}"></i></div>
           <a href="tel:+16472090519" class="phone-card" onclick="haptic.medium()">
             <div class="phone-label">Call Support</div>
             <div class="phone-number">📞 ${step.content.phone}</div>
           </a>
-          
-          <p style="text-align: center; color: var(--gray-500); font-size: 15px; margin-top: 16px;">
-            ${step.content.note}
-          </p>
+          <p style="text-align: center; color: var(--gray-500); font-size: 15px; margin-top: 16px;">${step.content.note}</p>
         `;
-        
         this.renderButtons(step.content.buttons, bottom);
       },
-      
-      renderSuccess(step, card, bottom) {
+
+      renderSuccess(step, card, bottom){
         card.innerHTML = `
           <div class="success-animation">
             <div class="success-circle"></div>
             <div class="success-check">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M5 13l4 4L19 7" stroke="currentColor"/>
-              </svg>
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor"/></svg>
             </div>
           </div>
-          
           <h2 class="step-title">${step.content.title}</h2>
           <p class="step-subtitle">${step.content.subtitle}</p>
         `;
-        
         this.renderButtons(step.content.buttons, bottom);
         haptic.success();
       },
-      
-      renderStepPills() {
-        const totalSteps = 8; // Question steps only
-        const currentStepNum = Math.min(Math.max(this.currentStep - 1, 0), totalSteps - 1);
-        
+
+      // Dynamic step pills / progress across interactive steps
+      interactiveTypes: new Set(['question','action','static-action','wait']),
+      renderStepPills(){
+        const order = steps.filter(s => this.interactiveTypes.has(s.type));
+        const idx = Math.max(0, order.indexOf(steps[this.currentStep]));
         let pills = '<div class="step-pills">';
-        for (let i = 0; i < totalSteps; i++) {
-          pills += `<div class="step-pill ${i === currentStepNum ? 'active' : ''}"></div>`;
+        for (let i = 0; i < order.length; i++) {
+          pills += `<div class="step-pill ${i === idx ? 'active' : ''}"></div>`;
         }
         pills += '</div>';
         return pills;
       },
-      
-      renderButtons(buttons, container) {
+      renderButtons(buttons, container){
         const buttonsHtml = buttons.map(btn => `
-          <button class="btn btn-${btn.style || 'primary'}" 
+          <button class="btn btn-${btn.style || 'primary'}"
                   onclick="app.handleAction('${btn.action || 'goto'}', '${btn.goto || ''}')"
                   ontouchstart="haptic.light()">
             ${btn.text}
           </button>
         `).join('');
-        
         container.innerHTML = `
           ${this.shouldShowProgress() ? this.renderProgress() : ''}
-          <div class="button-stack">
-            ${buttonsHtml}
-          </div>
+          <div class="button-stack">${buttonsHtml}</div>
         `;
       },
-      
-      renderProgress() {
-        const total = 8;
-        const current = Math.min(Math.max(this.currentStep - 1, 0), total);
-        const percent = (current / total) * 100;
-        
+      renderProgress(){
+        const order = steps.filter(s => this.interactiveTypes.has(s.type));
+        const idx = Math.max(0, order.indexOf(steps[this.currentStep]));
+        const total = order.length;
+        const percent = (idx / Math.max(1,total-1)) * 100;
         return `
           <div class="progress-indicator">
-            <span class="progress-text">Step ${current + 1} of ${total}</span>
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: ${percent}%"></div>
-            </div>
+            <span class="progress-text">Step ${Math.min(idx+1, total)} of ${total}</span>
+            <div class="progress-bar"><div class="progress-fill" style="width: ${percent}%"></div></div>
           </div>
         `;
       },
-      
-      shouldShowProgress() {
+      shouldShowProgress(){
         const step = steps[this.currentStep];
-        return step.type === 'question' || step.type === 'action' || step.type === 'wait';
+        return this.interactiveTypes.has(step.type);
       },
-      
-      updateProgress() {
-        // Update nav title based on step
+      updateProgress(){
         const step = steps[this.currentStep];
         const navTitle = document.querySelector('.nav-title');
-        if (step.type === 'intro') {
-          navTitle.textContent = 'Support';
-        } else if (step.type === 'success') {
-          navTitle.textContent = 'Complete';
-        } else {
-          navTitle.textContent = 'Troubleshooting';
-        }
+        if (step.type === 'intro') navTitle.textContent = 'Support';
+        else if (step.type === 'success') navTitle.textContent = 'Complete';
+        else navTitle.textContent = 'Troubleshooting';
       },
-      
-      handleAction(action, target) {
-        if (action === 'next') {
-          this.goToStep(this.currentStep + 1);
-        } else if (action === 'goto' && target) {
+
+      handleAction(action, target){
+        if (action === 'next') this.goToStep(this.currentStep + 1);
+        else if (action === 'goto' && target) {
           const stepIndex = this.stepMap.get(target);
-          if (stepIndex !== undefined) {
-            this.goToStep(stepIndex);
-          }
+          if (stepIndex !== undefined) this.goToStep(stepIndex);
         } else if (action === 'restart') {
           this.history = [];
           this.goToStep(0);
         }
       },
-      
-      goToStep(index) {
+
+      goToStep(index){
         if (index >= 0 && index < steps.length) {
-          if (this.currentStep !== index) {
-            this.history.push(this.currentStep);
-          }
+          if (this.currentStep !== index) this.history.push(this.currentStep);
           this.currentStep = index;
           this.render();
-          
-          // Scroll to top smoothly
-          document.getElementById('content').scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
+          document.getElementById('content').scrollTo({ top: 0, behavior: 'smooth' });
         }
       },
-      
-      goBack() {
+      goBack(){
         if (this.history.length > 0) {
           haptic.light();
           this.currentStep = this.history.pop();
           this.render();
-          
-          // Add haptic animation to back button
           const backBtn = document.getElementById('backBtn');
           backBtn.classList.add('haptic');
           setTimeout(() => backBtn.classList.remove('haptic'), 100);
         }
       }
     };
-    
+
     // Initialize
     app.init();
-    
+
     // Prevent pull-to-refresh
     let lastY = 0;
-    document.addEventListener('touchstart', (e) => {
-      lastY = e.touches[0].clientY;
-    });
-    
+    document.addEventListener('touchstart', (e) => { lastY = e.touches[0].clientY; });
     document.addEventListener('touchmove', (e) => {
       const y = e.touches[0].clientY;
       const scrollTop = document.getElementById('content').scrollTop;
-      
-      if (scrollTop === 0 && y > lastY) {
-        e.preventDefault();
-      }
+      if (scrollTop === 0 && y > lastY) e.preventDefault();
     }, { passive: false });
-    
-    // Add to homescreen prompt
+
+    // (Optional) Add-to-homescreen prompt hook
     if ('standalone' in navigator && !navigator.standalone) {
-      setTimeout(() => {
-        // Could show "Add to Home Screen" prompt here
-      }, 2000);
+      setTimeout(() => { /* Show your A2HS hint if you want */ }, 2000);
     }
   </script>
 </body>
