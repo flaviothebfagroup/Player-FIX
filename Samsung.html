@@ -6,16 +6,16 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="theme-color" content="#F7941D" />
-  <title>Samsung Tizen Signage Support</title>
+  <title>Samsung TV Signage Support</title>
 
   <!-- Phosphor Icons -->
   <script src="https://unpkg.com/phosphor-icons@1.4.2"></script>
 
   <style>
     :root{
-      --orange:#F7941D; --orange-light:#FFA94D; --orange-pale:#FFF3E6;
+      --orange:#F7941D; --orange-600:#e6831a; --orange-100:#FFF3E6;
       --gray-900:#0F0F0F; --gray-700:#2D2D2D; --gray-600:#4A4A4A; --gray-500:#6B6B6B;
-      --gray-200:#E1E1E1; --gray-100:#F5F5F5; --gray-50:#FAFAFA;
+      --gray-300:#B8B8B8; --gray-200:#E1E1E1; --gray-100:#F5F5F5;
       --success:#00C851;
       --safe-top:env(safe-area-inset-top); --safe-bottom:env(safe-area-inset-bottom);
       --spring:cubic-bezier(0.175,0.885,0.32,1.275); --ease-out:cubic-bezier(0.215,0.61,0.355,1);
@@ -28,7 +28,7 @@
     .app{position:relative;width:100%;height:100%;display:flex;flex-direction:column;background:#fff}
     .status-bar{position:fixed;top:0;left:0;right:0;height:var(--safe-top);background:rgba(255,255,255,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:1000}
     .nav-bar{position:relative;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;padding-top:calc(12px + var(--safe-top));background:rgba(255,255,255,.9);border-bottom:.5px solid rgba(0,0,0,.1);z-index:100;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
-    .nav-back{width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:var(--orange-pale);border-radius:20px;cursor:pointer;transition:all .2s var(--ease-out);position:relative;overflow:hidden}
+    .nav-back{width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:var(--orange-100);border-radius:20px;cursor:pointer;transition:all .2s var(--ease-out);position:relative;overflow:hidden}
     .nav-back::before{content:'';position:absolute;inset:0;background:var(--orange);opacity:0;transition:opacity .2s}
     .nav-back:active::before{opacity:.1}
     .nav-back svg{width:24px;height:24px;stroke:var(--orange);stroke-width:2.5;position:relative;z-index:1}
@@ -49,9 +49,10 @@
 
     .illustration{width:100%;min-height:180px;display:flex;align-items:center;justify-content:center;margin:20px 0;position:relative}
     .illustration img{max-width:100%;max-height:280px;object-fit:contain;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
-    .illustration .ph{font-size:110px;color:var(--orange);filter:drop-shadow(0 6px 16px rgba(247,148,29,.2))}
-    .illustration.pulse{animation:pulse 2s ease-in-out infinite}
-    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+    .placeholder-frame{width:100%;max-width:520px;min-height:180px;border:2px dashed var(--gray-200);border-radius:16px;display:flex;align-items:center;justify-content:center;gap:12px;background:#fff}
+    .placeholder-frame .ph{font-size:38px;color:var(--orange)}
+    .placeholder-caption{font-size:15px;color:var(--gray-600)}
+    .placeholder-badge{font-size:12px;font-weight:700;color:#fff;background:var(--orange);padding:4px 8px;border-radius:999px}
 
     .hint{background:var(--gray-100);border-radius:16px;padding:16px 16px;margin:14px 0;color:var(--gray-700);font-size:15px}
     .kbd{display:inline-block;padding:2px 8px;border-radius:8px;background:#fff;border:1px solid var(--gray-200);font-weight:700}
@@ -69,7 +70,7 @@
     .progress-indicator{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;max-width:520px;margin-left:auto;margin-right:auto}
     .progress-text{font-size:14px;font-weight:700;color:var(--orange)}
     .progress-bar{flex:1;height:4px;background:var(--gray-200);border-radius:2px;margin:0 16px;overflow:hidden}
-    .progress-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--orange-light));border-radius:2px;transition:width .6s var(--spring);position:relative}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--orange),#FFA94D);border-radius:2px;transition:width .6s var(--spring);position:relative}
 
     @media (prefers-color-scheme: dark){
       body,.app,.content{background:#fff;color:#111}
@@ -97,24 +98,24 @@
   </div>
 
   <script>
-    /* ================================
-       0) Replace these with real images
-       ================================ */
+    /* ==================================
+       ASSETS — add your images later
+       ================================== */
     const ASSETS = {
       // 2) Real Samsung TV / Remote showing the Home button
-      remoteOrTvPhoto: "", // e.g. "https://.../samsung-remote-home-button.jpg"
+      remoteOrTvPhoto: "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDR2azhyZDNpOTh4ZXJoamM0Z2U2Z3Nhbzd0eTlqOWtrcGozdGZxMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5HB2hB9U4OnOo/giphy.gif",
 
-      // 3) Real Samsung Home screen (Smart Hub) screenshot/photo
-      realHomeScreen: "", // e.g. "https://.../samsung-smart-hub.jpg"
+      // 3) Real Samsung Home screen (Smart Hub)
+      realHomeScreen: "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDR2azhyZDNpOTh4ZXJoamM0Z2U2Z3Nhbzd0eTlqOWtrcGozdGZxMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5HB2hB9U4OnOo/giphy.gif",
 
-      // 5) URL Launcher icon / tile picture
-      urlLauncherImage: "", // e.g. "https://.../url-launcher-tile.jpg"
+      // 5) URL Launcher tile picture
+      urlLauncherImage: "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2VhZTVpbmQ1cXlpZHppc21kdWx0ODJnczdvYTV0Z2V3N2cwcGNybCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NCriq44MItnwtGtRVe/giphy.gif",
 
-      // 5) Signagelive app logo / tile picture
-      signageliveImage: "", // e.g. "https://.../signagelive-tile.jpg"
+      // 5) Signagelive tile/logo
+      signageliveImage: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExM20wdHUwd2Y3c3BtejRsaDhteXBuYWozbjYxcW9oemt0aXVjMmJ1ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/wXxgFvCOfUUWS1Za8b/giphy.gif",
 
-      // (Optional) A real “content playing” photo for the success step
-      successRealPhoto: "" // e.g. "https://.../screen-playing.jpg"
+      // Optional success photo (content playing)
+      successRealPhoto: "https://cdn.dribbble.com/users/954572/screenshots/20225943/media/4a8c0bf9dc44f38066221e6710701a78.gif"
     };
 
     /* Haptics */
@@ -134,30 +135,30 @@
       }
     });
 
-    /* ==========================================
-       Steps — reworded to match your boss’ ask
-       ========================================== */
+    /* ==============
+       Steps / Copy
+       ============== */
     const steps = [
       {
         id: 'welcome',
         type: 'intro',
         content: {
-          title: 'Samsung Tizen Signage',
+          title: 'Samsung TV Signage',
           subtitle: 'Quick check to make sure your screen is live and playing.',
-          // You can change this hero later if you want
-          image: ASSETS.successRealPhoto || 'https://www.yodeck.com/wp-content/uploads/2024/01/Tizen-1.png',
+          image: ASSETS.successRealPhoto, // optional
+          placeholderLabel: 'Add a real “screen playing” photo (optional)',
           buttons: [{ text: 'Start', action: 'next', style: 'primary' }]
         }
       },
       {
         id: 'live-check',
-        type: 'question',
+        type: 'action',
         content: {
           title: 'Is the screen LIVE and playing your content?',
-          subtitle: 'Take a quick look. If your playlist is running as expected, you’re good.',
+          image: ASSETS.urlLauncherImage,
+          instruction:
+           'Make sure you are connected to the internet', 
           icon: 'ph-broadcast',
-          // You could add a live photo here too if you want:
-          image: '',
           buttons: [
             { text: 'Yes — it’s live', goto: 'success', style: 'secondary' },
             { text: 'No — not playing', goto: 'tv-power', style: 'primary' }
@@ -170,17 +171,16 @@
         content: {
           title: 'Samsung TV — use the Home button',
           subtitle: 'Open the TV Home (Smart Hub) to access the signage app.',
-          // (2) Real remote or TV photo with Home button highlighted
-          image: ASSETS.remoteOrTvPhoto,
-          // Fallback icon if no photo yet:
-          icon: ASSETS.remoteOrTvPhoto ? '' : 'ph-television',
+          image: ASSETS.signageliveImage,
+          placeholderLabel: 'Real photo of Samsung remote/TV showing the Home button',
           instruction:
-`1) Find and press the <Home> button on the Samsung remote
+`1) Press the <Home> button on the Samsung remote
 2) If the TV was off, turn it on first
 3) You should now see the Samsung Home (Smart Hub)`,
+          icon: 'ph-television',
           buttons: [
-            { text: 'I see the Home screen', goto: 'home-screen', style: 'primary' },
-            { text: 'I don’t see Home', goto: 'cold-restart', style: 'secondary' }
+            { text: 'Yes — it’s live', goto: 'success', style: 'primary' },
+            { text: 'No - not playing', goto: 'cold-restart', style: 'secondary' }
           ]
         }
       },
@@ -189,10 +189,10 @@
         type: 'question',
         content: {
           title: 'This is the Home screen (Smart Hub)',
-          subtitle: 'Looks like this, with app tiles.',
-          // (3) Real Home screen image
+          subtitle: 'It shows app tiles like URL Launcher / Signagelive.',
           image: ASSETS.realHomeScreen,
-          icon: ASSETS.realHomeScreen ? '' : 'ph-house',
+          placeholderLabel: 'Real photo/screenshot of the Samsung Home (Smart Hub)',
+          icon: 'ph-house',
           buttons: [
             { text: 'Yes — I’m on Home', goto: 'launch-app', style: 'primary' },
             { text: 'No — not here', goto: 'cold-restart', style: 'secondary' }
@@ -205,17 +205,16 @@
         content: {
           title: 'Quick restart',
           subtitle: 'This refreshes the built-in player.',
-          // (4) Wording changed to “Unplug from the wall”
           instruction:
-`Option A — Unplug:
+`Option A — Unplug from the wall:
 1) Unplug the TV from the wall
-2) Wait 30 seconds
-3) Plug it back in and wait up to 2 minutes
+2) Wait 60 seconds
+3) Plug it back in and wait up to 5 minutes
 
 Option B — Remote:
 1) Press and HOLD the Power button on the remote
 2) Keep holding until the Samsung logo appears (~5 seconds)
-3) Wait up to 2 minutes`,
+3) Wait up to 5 minutes`,
           icon: 'ph-plug',
           buttons: [
             { text: 'Done — continue', goto: 'tv-power', style: 'primary' },
@@ -229,12 +228,11 @@ Option B — Remote:
         content: {
           title: 'Open the signage app',
           subtitle: 'From the Home screen:',
-          // (5) Pictures of URL Launcher / Signagelive logos/tiles
           imageSet: [
-            { src: ASSETS.urlLauncherImage, alt: 'URL Launcher tile' },
-            { src: ASSETS.signageliveImage, alt: 'Signagelive tile' }
+            { src: ASSETS.urlLauncherImage, alt: 'URL Launcher tile', placeholder: 'Add a picture of the URL Launcher tile' },
+            { src: ASSETS.signageliveImage, alt: 'Signagelive tile', placeholder: 'Add a picture of the Signagelive tile/logo' }
           ],
-          icon: (!ASSETS.urlLauncherImage && !ASSETS.signageliveImage) ? 'ph-globe' : '',
+          icon: 'ph-globe',
           instruction:
 `1) With the remote, look for <URL Launcher> or <Signagelive>
 2) Select it to launch
@@ -278,13 +276,32 @@ Option B — Remote:
           title: 'All set! 🎉',
           subtitle: 'Your screen is live and content should be playing.',
           image: ASSETS.successRealPhoto,
-          icon: ASSETS.successRealPhoto ? '' : 'ph-check-circle',
+          placeholderLabel: 'Optional photo of the screen playing your content',
+          icon: 'ph-check-circle',
           buttons: [ { text: 'Troubleshoot Again', action: 'restart', style: 'primary' } ]
         }
       }
     ];
 
-    /* ====== Renderer ====== */
+    /* ========= Helpers ========= */
+    function placeholder(label, icon = 'ph-image-square'){
+      return `
+        <div class="placeholder-frame">
+          <i class="ph ${icon}"></i>
+          <div>
+            <div class="placeholder-badge">Add Image Later</div>
+            <div class="placeholder-caption" style="margin-top:6px">${label}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function imageOrPlaceholder(src, alt, label, icon){
+      if (src) return `<img src="${src}" alt="${alt || ''}" />`;
+      return placeholder(label, icon);
+    }
+
+    /* ============ App ============ */
     const app = {
       currentStep: 0,
       history: [],
@@ -320,34 +337,40 @@ Option B — Remote:
           case 'contact': this.renderContact(step, card, bottom); break;
           case 'success': this.renderSuccess(step, card, bottom); break;
         }
-        this.updateProgressTitle(step);
+        this.updateTitle(step);
       },
 
       renderIntro(step, card, bottom){
-        const hero = step.content.image
+        const media = step.content.image
           ? `<div class="illustration"><img src="${step.content.image}" alt="Samsung signage"></div>`
-          : `<div class="illustration"><i class="ph ph-image-square"></i></div>`;
+          : `<div class="illustration">${placeholder(step.content.placeholderLabel || 'Hero image (optional)','ph-image-square')}</div>`;
         card.innerHTML = `
           <h2 class="step-title">${step.content.title}</h2>
           <p class="step-subtitle">${step.content.subtitle}</p>
-          ${hero}
+          ${media}
         `;
         this.renderButtons(step.content.buttons, bottom);
       },
 
       renderQuestion(step, card, bottom){
-        const hasImageSet = Array.isArray(step.content.imageSet) && step.content.imageSet.some(i => i.src);
         let media = '';
-        if (hasImageSet){
+        if (Array.isArray(step.content.imageSet) && step.content.imageSet.length){
           media = `<div class="illustration">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:520px;">
-              ${step.content.imageSet.map(i => i.src ? `<img src="${i.src}" alt="${i.alt||''}">` : '').join('')}
+              ${step.content.imageSet.map(item => {
+                if (item.src) return `<img src="${item.src}" alt="${item.alt || ''}" />`;
+                return placeholder(item.placeholder || 'Add app tile/logo photo', 'ph-app-window');
+              }).join('')}
             </div>
           </div>`;
-        } else if (step.content.image){
-          media = `<div class="illustration"><img src="${step.content.image}" alt=""></div>`;
+        } else if (step.content.image || step.content.placeholderLabel){
+          media = `<div class="illustration">${
+            step.content.image
+              ? `<img src="${step.content.image}" alt="">`
+              : placeholder(step.content.placeholderLabel || 'Add a photo', step.content.icon || 'ph-image-square')
+          }</div>`;
         } else {
-          media = `<div class="illustration"><i class="ph ${step.content.icon || 'ph-image-square'}"></i></div>`;
+          media = `<div class="illustration"><i class="ph ${step.content.icon || 'ph-image-square'}" style="font-size:110px;color:var(--orange)"></i></div>`;
         }
 
         card.innerHTML = `
@@ -365,7 +388,7 @@ Option B — Remote:
         card.innerHTML = `
           <h2 class="step-title">${step.content.title}</h2>
           <p class="step-subtitle">${step.content.subtitle}</p>
-          <div class="illustration"><i class="ph ${step.content.icon || 'ph-phone-call'}"></i></div>
+          <div class="illustration"><i class="ph ${step.content.icon || 'ph-phone-call'}" style="font-size:110px;color:var(--orange)"></i></div>
           <a href="tel:+16472090519" class="btn btn-secondary" style="width:100%;text-decoration:none;text-align:center" onclick="haptic.medium()">📞 ${step.content.phone}</a>
           <p style="text-align:center;color:var(--gray-500);font-size:15px;margin-top:12px;">${step.content.note}</p>
         `;
@@ -375,7 +398,7 @@ Option B — Remote:
       renderSuccess(step, card, bottom){
         const media = step.content.image
           ? `<div class="illustration"><img src="${step.content.image}" alt="Screen playing"></div>`
-          : `<div class="illustration"><i class="ph ${step.content.icon || 'ph-check-circle'}"></i></div>`;
+          : `<div class="illustration">${placeholder(step.content.placeholderLabel || 'Optional success photo','ph-check-circle')}</div>`;
         card.innerHTML = `
           ${media}
           <h2 class="step-title">${step.content.title}</h2>
@@ -425,9 +448,7 @@ Option B — Remote:
             <div class="loading-dot" style="width:12px;height:12px;background:var(--orange);border-radius:50%;animation:ld 1.2s ease-in-out .15s infinite"></div>
             <div class="loading-dot" style="width:12px;height:12px;background:var(--orange);border-radius:50%;animation:ld 1.2s ease-in-out .3s infinite"></div>
           </div>
-          <style>
-            @keyframes ld{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}}
-          </style>
+          <style>@keyframes ld{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}}</style>
         `;
       },
 
@@ -436,7 +457,7 @@ Option B — Remote:
         return this.interactiveTypes.has(step.type);
       },
 
-      updateProgressTitle(step){
+      updateTitle(step){
         const navTitle = document.querySelector('.nav-title');
         if (step.type === 'intro') navTitle.textContent = 'Support';
         else if (step.type === 'success') navTitle.textContent = 'Complete';
