@@ -151,6 +151,21 @@
         }
       },
       {
+        id: 'Wifi',
+        type: 'action',
+        content: {
+          title: 'Network Connection',
+          image: ASSETS.urlLauncherImage,
+          instruction:
+           'Make sure you are connected to the internet', 
+          icon: 'ph-broadcast',
+          buttons: [
+            { text: 'Yes — it’s live', goto: 'success', style: 'secondary' },
+            { text: 'No — not playing', goto: 'tv-power', style: 'primary' }
+          ]
+        }
+      },
+      {
         id: 'live-check',
         type: 'action',
         content: {
@@ -174,9 +189,10 @@
           image: ASSETS.signageliveImage,
           placeholderLabel: 'Real photo of Samsung remote/TV showing the Home button',
           instruction:
-`1) Press the <Home> button on the Samsung remote
+`1) Press the Home button on the Samsung remote
 2) If the TV was off, turn it on first
-3) You should now see the Samsung Home (Smart Hub)`,
+3) You should now see the Samsung Home (Smart Hub)
+4) Now click on the SL logo`,
           icon: 'ph-television',
           buttons: [
             { text: 'Yes — it’s live', goto: 'success', style: 'primary' },
@@ -217,7 +233,7 @@ Option B — Remote:
 3) Wait up to 5 minutes`,
           icon: 'ph-plug',
           buttons: [
-            { text: 'Done — continue', goto: 'tv-power', style: 'primary' },
+            { text: 'Done — continue', goto: 'Wifi', style: 'primary' },
             { text: 'Need help', goto: 'contact', style: 'secondary' }
           ]
         }
@@ -234,7 +250,7 @@ Option B — Remote:
           ],
           icon: 'ph-globe',
           instruction:
-`1) With the remote, look for <URL Launcher> or <Signagelive>
+`1) With the remote, look for URL Launcher or Signagelive
 2) Select it to launch
 3) Wait up to 2 minutes for content to start`,
           buttons: [
