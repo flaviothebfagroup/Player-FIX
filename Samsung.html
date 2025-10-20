@@ -110,10 +110,18 @@
 
       // 5) URL Launcher tile picture
       urlLauncherImage: "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2VhZTVpbmQ1cXlpZHppc21kdWx0ODJnczdvYTV0Z2V3N2cwcGNybCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NCriq44MItnwtGtRVe/giphy.gif",
+      
+      // 5) network check
+      networkcheckImage: "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXlsa2FxM2prNHc0a3hkcWMycmUxMmJ2cjNxd2t0dXUydzdnZ3BwYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/14deI71kZ4SuJhuKCL/giphy.gif",
 
       // 5) Signagelive tile/logo
       signageliveImage: "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExM20wdHUwd2Y3c3BtejRsaDhteXBuYWozbjYxcW9oemt0aXVjMmJ1ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/wXxgFvCOfUUWS1Za8b/giphy.gif",
 
+     
+      // Optional success photo (content playing)
+     wifi: "https://media.lordicon.com/icons/wired/outline/745-wifi-connection.gif",
+      
+      
       // Optional success photo (content playing)
       successRealPhoto: "https://cdn.dribbble.com/users/954572/screenshots/20225943/media/4a8c0bf9dc44f38066221e6710701a78.gif"
     };
@@ -147,37 +155,7 @@
           subtitle: 'Quick check to make sure your screen is live and playing.',
           image: ASSETS.successRealPhoto, // optional
           placeholderLabel: 'Add a real “screen playing” photo (optional)',
-          buttons: [{ text: 'Start', action: 'next', style: 'primary' }]
-        }
-      },
-      {
-        id: 'Wifi',
-        type: 'action',
-        content: {
-          title: 'Network Connection',
-          image: ASSETS.urlLauncherImage,
-          instruction:
-           'Make sure you are connected to the internet', 
-          icon: 'ph-broadcast',
-          buttons: [
-            { text: 'Yes — it’s live', goto: 'success', style: 'secondary' },
-            { text: 'No — not playing', goto: 'tv-power', style: 'primary' }
-          ]
-        }
-      },
-      {
-        id: 'live-check',
-        type: 'action',
-        content: {
-          title: 'Is the screen LIVE and playing your content?',
-          image: ASSETS.urlLauncherImage,
-          instruction:
-           'Make sure you are connected to the internet', 
-          icon: 'ph-broadcast',
-          buttons: [
-            { text: 'Yes — it’s live', goto: 'success', style: 'secondary' },
-            { text: 'No — not playing', goto: 'tv-power', style: 'primary' }
-          ]
+          buttons: [{ text: 'Start', goto: 'Wifi', style: 'primary' }]
         }
       },
       {
@@ -201,6 +179,57 @@
         }
       },
       {
+        id: 'internet-change',
+        type: 'action',
+        content: {
+          title: 'Check internet connection?',
+          subtitle: '— Using the remote — Open the TV Home (Smart Hub) check connectivity.',
+          image: ASSETS.networkcheckImage,
+          placeholderLabel: 'Real photo of Samsung remote/TV showing the Home button',
+          instruction:
+`1) Press the Home button on the Samsung remote
+2) If the TV was off, turn it on first
+3) You should now see the Samsung Home (Smart Hub)
+4) Now look for connected as shown above`,
+          icon: 'ph-television',
+          buttons: [
+            { text: 'Yes - Connected', goto: 'tv-power', style: 'primary' },
+            { text: 'No - Not connected', goto: 'tv-power', style: 'secondary' }
+          ]
+        }
+      },
+      {
+        id: 'Wifi',
+        type: 'action',
+        content: {
+          title: 'Was your internet changed?',
+          image: ASSETS.wifi,
+          instruction:
+           'Make sure you are connected to the internet', 
+          icon: 'ph-broadcast',
+          buttons: [
+            { text: 'Yes — Changed', goto: 'contact', style: 'secondary' },
+            { text: 'No — No changes', goto: 'internet-change', style: 'primary' }
+          ]
+        }
+      },
+      {
+        id: 'live-check',
+        type: 'action',
+        content: {
+          title: 'Is the screen LIVE and playing your content?',
+          image: ASSETS.urlLauncherImage,
+          instruction:
+           'Make sure you are connected to the internet', 
+          icon: 'ph-broadcast',
+          buttons: [
+            { text: 'Yes — it’s connected', goto: 'launch-app', style: 'secondary' },
+            { text: 'No — not playing', goto: 'tv-power', style: 'primary' }
+          ]
+        }
+      },
+      
+      {
         id: 'home-screen',
         type: 'question',
         content: {
@@ -222,18 +251,14 @@
           title: 'Quick restart',
           subtitle: 'This refreshes the built-in player.',
           instruction:
-`Option A — Unplug from the wall:
+`— Unplug from the wall:
 1) Unplug the TV from the wall
 2) Wait 60 seconds
 3) Plug it back in and wait up to 5 minutes
-
-Option B — Remote:
-1) Press and HOLD the Power button on the remote
-2) Keep holding until the Samsung logo appears (~5 seconds)
-3) Wait up to 5 minutes`,
+`,
           icon: 'ph-plug',
           buttons: [
-            { text: 'Done — continue', goto: 'Wifi', style: 'primary' },
+            { text: 'Done — continue', goto: 'tv-power', style: 'primary' },
             { text: 'Need help', goto: 'contact', style: 'secondary' }
           ]
         }
