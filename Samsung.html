@@ -194,7 +194,7 @@
           icon: 'ph-television',
           buttons: [
             { text: 'Yes - Connected', goto: 'tv-power', style: 'primary' },
-            { text: 'No - Not connected', goto: 'tv-power', style: 'secondary' }
+            { text: 'No - Not connected', goto: 'live-check', style: 'secondary' }
           ]
         }
       },
@@ -217,14 +217,14 @@
         id: 'live-check',
         type: 'action',
         content: {
-          title: 'Is the screen LIVE and playing your content?',
+          title: 'Connect to the internet',
           image: ASSETS.urlLauncherImage,
           instruction:
            'Make sure you are connected to the internet', 
           icon: 'ph-broadcast',
           buttons: [
-            { text: 'Yes — it’s connected', goto: 'launch-app', style: 'secondary' },
-            { text: 'No — not playing', goto: 'tv-power', style: 'primary' }
+            { text: 'Yes — it’s connected', goto: 'tv-power', style: 'secondary' },
+            { text: 'No — not playing', goto: 'cold-restart', style: 'primary' }
           ]
         }
       },
