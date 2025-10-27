@@ -122,6 +122,9 @@
      wifi: "https://media.lordicon.com/icons/wired/outline/745-wifi-connection.gif",
       
       
+      remote: "https://m.media-amazon.com/images/I/61xREoJJWmL.jpg",
+      
+      
       // Optional success photo (content playing)
       successRealPhoto: "https://cdn.dribbble.com/users/954572/screenshots/20225943/media/4a8c0bf9dc44f38066221e6710701a78.gif"
     };
@@ -159,22 +162,34 @@
         }
       },
       {
-        id: 'tv-power',
+        id: 'Wifi',
         type: 'action',
         content: {
-          title: 'Samsung TV — use the Home button',
-          subtitle: 'Open the TV Home (Smart Hub) to access the signage app.',
-          image: ASSETS.signageliveImage,
+          title: 'Was your internet changed?',
+          image: ASSETS.wifi,
+          instruction:
+           '', 
+          icon: 'ph-broadcast',
+          buttons: [
+            { text: 'Yes — Changed', goto: 'contact', style: 'secondary' },
+            { text: 'No — No changes', goto: 'find-remote', style: 'primary' }
+          ]
+        }
+      },
+      {
+        id: 'find-remote',
+        type: 'action',
+        content: {
+          title: 'Find TV remote',
+          subtitle: 'Press source buttom',
+          image: ASSETS.remote,
           placeholderLabel: 'Real photo of Samsung remote/TV showing the Home button',
           instruction:
-`1) Press the Home button on the Samsung remote
-2) If the TV was off, turn it on first
-3) You should now see the Samsung Home (Smart Hub)
-4) Now click on the SL logo`,
+`Do you see anything?`,
           icon: 'ph-television',
           buttons: [
-            { text: 'Yes — it’s live', goto: 'success', style: 'primary' },
-            { text: 'No - not playing', goto: 'cold-restart', style: 'secondary' }
+            { text: 'Yes ', goto: 'internet-change', style: 'primary' },
+            { text: 'No ', goto: 'cold-restart', style: 'secondary' }
           ]
         }
       },
@@ -188,9 +203,8 @@
           placeholderLabel: 'Real photo of Samsung remote/TV showing the Home button',
           instruction:
 `1) Press the Home button on the Samsung remote
-2) If the TV was off, turn it on first
-3) You should now see the Samsung Home (Smart Hub)
-4) Now look for connected as shown above`,
+2) You should now see the Samsung Home (Smart Hub)
+3) Now look for connected as shown above`,
           icon: 'ph-television',
           buttons: [
             { text: 'Yes - Connected', goto: 'tv-power', style: 'primary' },
@@ -199,20 +213,27 @@
         }
       },
       {
-        id: 'Wifi',
+        id: 'tv-power',
         type: 'action',
         content: {
-          title: 'Was your internet changed?',
-          image: ASSETS.wifi,
+          title: 'Samsung TV — use the Home button',
+          subtitle: 'Open the TV Home (Smart Hub) to access the signage app.',
+          image: ASSETS.signageliveImage,
+          placeholderLabel: 'Real photo of Samsung remote/TV showing the Home button',
           instruction:
-           'Make sure you are connected to the internet', 
-          icon: 'ph-broadcast',
+`1) Press the Home button on the Samsung remote
+2) If the TV was off, turn it on first
+3) You should now see the Samsung Home (Smart Hub)
+4) Now click on the SL(Signagelive) logo`,
+          icon: 'ph-television',
           buttons: [
-            { text: 'Yes — Changed', goto: 'contact', style: 'secondary' },
-            { text: 'No — No changes', goto: 'internet-change', style: 'primary' }
+            { text: 'Yes — it’s live', goto: 'success', style: 'primary' },
+            { text: 'No - not playing', goto: 'cold-restart', style: 'secondary' }
           ]
         }
       },
+      
+      
       {
         id: 'live-check',
         type: 'action',
@@ -220,7 +241,11 @@
           title: 'Connect to the internet',
           image: ASSETS.urlLauncherImage,
           instruction:
-           'Make sure you are connected to the internet', 
+`1) Press the MENU button on the Samsung remote
+2) Network
+3) Open Network Settings
+4) Choose Wirreless (if you are using wifi)
+5) Find your Wifi and password`,
           icon: 'ph-broadcast',
           buttons: [
             { text: 'Yes — it’s connected', goto: 'tv-power', style: 'secondary' },
@@ -251,8 +276,8 @@
           title: 'Quick restart',
           subtitle: 'This refreshes the built-in player.',
           instruction:
-`— Unplug from the wall:
-1) Unplug the TV from the wall
+`— Unplug from the wall or back of the TV:
+1) Unplug the TV 
 2) Wait 60 seconds
 3) Plug it back in and wait up to 5 minutes
 `,
