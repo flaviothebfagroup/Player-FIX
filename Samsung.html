@@ -152,11 +152,13 @@
     const steps = [
       {
         id: 'welcome',
-        type: 'intro',
+        type: 'question',
         content: {
           title: 'Samsung TV Signage',
           subtitle: 'Quick check to make sure your screen is live and playing.',
           image: ASSETS.successRealPhoto, // optional
+          instruction:
+           'Applicable models DE/DM/QB/QM', 
           placeholderLabel: 'Add a real “screen playing” photo (optional)',
           buttons: [{ text: 'Start', goto: 'Wifi', style: 'primary' }]
         }
@@ -165,7 +167,7 @@
         id: 'Wifi',
         type: 'action',
         content: {
-          title: 'Was your internet changed?',
+          title: 'Has your internet changed recently?',
           image: ASSETS.wifi,
           instruction:
            '', 
@@ -181,11 +183,11 @@
         type: 'action',
         content: {
           title: 'Find TV remote',
-          subtitle: 'Press source buttom',
+          subtitle: 'Press "Source" button',
           image: ASSETS.remote,
           placeholderLabel: 'Real photo of Samsung remote/TV showing the Home button',
           instruction:
-`Do you see anything?`,
+`Did a menu appear at the bottom of the screen?`,
           icon: 'ph-television',
           buttons: [
             { text: 'Yes ', goto: 'internet-change', style: 'primary' },
@@ -242,10 +244,10 @@
           image: ASSETS.urlLauncherImage,
           instruction:
 `1) Press the MENU button on the Samsung remote
-2) Network
+2) Select "Network"
 3) Open Network Settings
-4) Choose Wirreless (if you are using wifi)
-5) Find your Wifi and password`,
+4) Choose Wireless (if you are using wifi)
+5) Locate your Wifi in the dropdown and enter your password if required`,
           icon: 'ph-broadcast',
           buttons: [
             { text: 'Yes — it’s connected', goto: 'tv-power', style: 'secondary' },
@@ -276,9 +278,12 @@
           title: 'Quick restart',
           subtitle: 'This refreshes the built-in player.',
           instruction:
-`— Unplug from the wall or back of the TV:
-1) Unplug the TV 
+`
+1) Unplug from the wall or back of the TV 
+   (Two sided power cord)
+   
 2) Wait 60 seconds
+
 3) Plug it back in and wait up to 5 minutes
 `,
           icon: 'ph-plug',
@@ -329,7 +334,7 @@
         content: {
           title: 'We’ll take it from here',
           subtitle: 'Our support team can finish this quickly with you.',
-          phone: '(647) 209-0519',
+          phone: '1800 268 3676',
           note: 'Ask for the Digital support team',
           icon: 'ph-phone-call',
           buttons: [ { text: 'Start Over', action: 'restart', style: 'primary' } ]
