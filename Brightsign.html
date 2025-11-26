@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,12 +37,15 @@
     html{font-size:16px;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
     body{
       font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-      background:var(--gray-50);color:var(--gray-900);line-height:1.5;
+      background:#ffffff;color:var(--gray-900);line-height:1.5;
       overflow:hidden;position:fixed;width:100%;height:100%;touch-action:pan-y;
     }
 
     /* App */
-    .app{position:relative;width:100%;height:100%;display:flex;flex-direction:column;background:linear-gradient(180deg,#fff 0%,var(--gray-50) 100%)}
+    .app{
+      position:relative;width:100%;height:100%;display:flex;flex-direction:column;
+      background:#ffffff;
+    }
     .status-bar{position:fixed;top:0;left:0;right:0;height:var(--safe-top);background:rgba(255,255,255,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:1000}
     .nav-bar{position:relative;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;padding-top:calc(12px + var(--safe-top));background:rgba(255,255,255,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:.5px solid rgba(0,0,0,.1);z-index:100}
     .nav-back{width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:var(--accent-50);border-radius:20px;cursor:pointer;transition:all .2s var(--ease-out);position:relative;overflow:hidden}
@@ -115,14 +119,7 @@
     .loading-dot:nth-child(3){animation-delay:.4s}
     @keyframes loadingBounce{0%,80%,100%{transform:translateY(0) scale(1);opacity:1}40%{transform:translateY(-20px) scale(1.1);opacity:.8}}
 
-    /* Dark mode */
-    @media (prefers-color-scheme: dark){
-      :root{--gray-50:#1A1A1A;--gray-100:#2D2D2D;--gray-200:#4A4A4A;--gray-900:#FFFFFF}
-      .app{background:linear-gradient(180deg,#000 0%,#1A1A1A 100%)}
-      .step-card{background:#2D2D2D;box-shadow:0 2px 20px rgba(0,0,0,.5)}
-      .nav-bar,.status-bar{background:rgba(0,0,0,.9)}
-      .phone-card{background:rgba(247,148,29,.12)}
-    }
+    
   </style>
 </head>
 <body>
@@ -171,7 +168,7 @@
         content: {
           title: 'BrightSign Support',
           subtitle: 'We’ll get your screen playing again in a few simple steps.',
-          image: 'https://www.fullcompass.com/common/products/lgr/382409.jpg?mmr=230', // BrightSign LS (front)
+          image: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzB2dTcxZG0zaXA5bmp1dGp0YXIyMm95eGp6dzlodDlmNHZ2NzBsNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Tpdya4elCK3t2QrCSA/giphy.gif', // BrightSign LS (front)
           buttons: [{ text: 'Begin Troubleshooting', action: 'next', style: 'primary' }]
         }
       },
@@ -193,7 +190,7 @@
         type: 'question',
         content: {
           title: 'Is the TV ON?',
-          subtitle: 'If it’s off, please turn it on first.',
+          subtitle: 'If it’s off, please find the aplicable remote and turn it on first.',
           icon: 'ph-television',
           buttons: [
             { text: "Yes, it's on", goto: 'player-led', style: 'primary' },
@@ -206,7 +203,7 @@
         type: 'question',
         content: {
           title: 'Find the BrightSign player',
-          subtitle: 'Look for the small BrightSign box near the TV. Do you see a light on it (on = powered)?',
+          subtitle: 'Look for the small BrightSign box near/behind the TV. Do you see a light on it (on = powered)?',
           image: 'https://www.fullcompass.com/common/products/lgr/382406.jpg?mmr=230', // LS angle view
           buttons: [
             { text: 'Yes, a light is on', goto: 'power-cycle', style: 'primary' },
@@ -307,7 +304,7 @@
         content: {
           title: 'We’ll take it from here',
           subtitle: 'Our support team can finish this quickly with you.',
-          phone: '(647) 209-0519',
+          phone: '1800 268 3676',
           note: 'Ask for the Digital support team',
           icon: 'ph-phone',
           buttons: [{ text: 'Start Over', action: 'restart', style: 'primary' }]
@@ -509,3 +506,4 @@
   </script>
 </body>
 </html>
+
