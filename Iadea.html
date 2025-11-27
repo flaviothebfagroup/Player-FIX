@@ -631,29 +631,7 @@
       border: 0;
     }
 
-    /* Dark mode support */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --gray-50: #1A1A1A;
-        --gray-100: #2D2D2D;
-        --gray-200: #4A4A4A;
-        --gray-900: #FFFFFF;
-        --gray-800: #F5F5F5;
-      }
-      
-      .app {
-        background: linear-gradient(180deg, #000000 0%, #1A1A1A 100%);
-      }
-      
-      .step-card {
-        background: #2D2D2D;
-        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-      }
-      
-      .nav-bar, .status-bar {
-        background: rgba(0, 0, 0, 0.9);
-      }
-    }
+   
   </style>
 </head>
 <body>
@@ -734,11 +712,12 @@
       },
       {
         id: 'tv-power',
-        type: 'question',
+        type: 'static-action',
         content: {
           title: 'Check Your TV',
-          subtitle: 'Is your TV powered on?',
-          image: 'https://media.lordicon.com/icons/wired/outline/1734-tv-turn-on.gif',
+          subtitle: 'Find the aplicable remote and make sure the TV is on',
+          image: 'https://media.lordicon.com/icons/wired/outline/1734-tv-turn-on.gif', 
+          instruction: '1. Turn on the TV using the remote or power button\n2. Wait 10 seconds\n3. Wait for the display to appear',
           buttons: [
             { text: 'Yes, it\'s on', goto: 'player-led', style: 'primary' },
             { text: 'No, it\'s off', goto: 'turn-on', style: 'secondary' }
@@ -832,14 +811,12 @@
         id: 'contact',
         type: 'contact',
         content: {
-          title: 'Let\'s Connect You',
-          subtitle: 'Our support team is ready to help resolve this issue quickly.',
-          phone: '(647) 209-0519',
-          subtitle:'Have your location details ready',
-          note: 'Ask for Digital support team',
-          buttons: [
-            { text: 'Start Over', action: 'restart', style: 'primary' }
-          ]
+          title: 'We’ll take it from here',
+          subtitle: 'Our support team can finish this quickly with you.',
+          phone: '1800 268 3676',
+          note: 'Ask for the Digital support team',
+          image: 'ph-phone',
+          buttons: [{ text: 'Start Over', action: 'restart', style: 'primary' }]
         }
       },
       {
@@ -858,8 +835,8 @@
         type: 'static-action',
         content: {
           title: 'Turn ON Your TV',
-          subtitle: 'Let\'s try puging cable properly connected to both the wall outlet and your TV:',
-          instruction: '1. Turn on the TV using the remote or power button\n2. Wait 10 seconds\n3. Wait for the display to appear',
+          subtitle: 'Ensure the power cable is connected properly in both ends the wall outlet and your TV:',
+          instruction: '1. Turn on the TV using the remote or power button\n2. Wait 30 seconds\n3. Wait for the display to appear',
           image: 'https://media.lordicon.com/icons/wired/outline/1745-remote-control.gif',
           buttons: [
             { text: 'TV is ON', goto: 'player-led', style: 'primary' },
